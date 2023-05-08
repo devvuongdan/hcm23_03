@@ -5,4 +5,11 @@ out a message that tells how many years they have to be 100 years old.
 Diff: 1
 */
 
-void main() {}
+import 'dart:io';
+void main() {
+  print("Enter your name: ");
+  String? name = stdin.readLineSync();
+  print("Enter your age: ");
+  int? n = int.parse(stdin.readLineSync()!);
+  print("Hey $name, you will be 100 years old in ${100 - n} years.");
+}

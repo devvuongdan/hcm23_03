@@ -5,4 +5,10 @@ out an appropriate message to the user.
 Diff: 1
 */
 
-void main() {}
+import 'dart:io';
+void main() {
+  int num;
+  print("Enter a number: ");
+  num = int.parse(stdin.readLineSync()!);
+  num % 2 == 0 ? print("This number is even") : print("This number is odd");
+}

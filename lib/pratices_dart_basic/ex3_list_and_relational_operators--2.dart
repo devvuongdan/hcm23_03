@@ -6,4 +6,10 @@ than 5.
 
 Diff: 2
 */
-void main() {}
+void main() {
+  List<int> a = [1, 1, 2, 3, 5, 8, 13, 21, 34, 55, 89];
+  print("All elements in the list that are less than 5 are: ");
+  a.forEach((element) {
+    element < 5 ? print("$element ") : false;
+  });
+}

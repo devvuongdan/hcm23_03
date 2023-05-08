@@ -1,17 +1,17 @@
 import 'package:dartz/dartz.dart';
-
 import '../../../../core/errors/failures.dart';
-import '../../../../core/usecase/usecase.dart';
 import '../entities/todo_entity.dart';
 import '../repositories/todo_repo.dart';
 
-class SaveNewTodo extends UseCase<bool, TodoEntity> {
+import '../../../../core/usecase/usecase.dart';
+
+class UpdateTodo extends UseCase<TodoEntity, TodoEntity> {
   final TodoRepo repo;
-  SaveNewTodo({
+  UpdateTodo({
     required this.repo,
   });
   @override
-  Future<Either<Failure, bool>>? call({required TodoEntity? parram}) {
-    return repo.saveNewTodo(parram);
+  Future<Either<Failure, TodoEntity>>? call({required TodoEntity parram}) {
+    return repo.updateTodo(parram);
   }
 }

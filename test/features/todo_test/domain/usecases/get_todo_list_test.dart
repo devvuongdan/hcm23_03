@@ -13,8 +13,7 @@ void main() {
   final MockTodoRepo mockRepo = MockTodoRepo();
   final GetTodoList usecase = GetTodoList(repo: mockRepo);
 
-  test(
-      "\n =========== Should return List<TodoEntity> when calling success => Passed",
+  test("\n =========== Should return List<TodoEntity> when calling success",
       () async {
     final List<TodoEntity> todoList = [
       TodoEntity(

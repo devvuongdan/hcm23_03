@@ -1,6 +1,6 @@
 import 'package:dartz/dartz.dart';
 import 'package:equatable/equatable.dart';
-import 'package:hcm23_03/core/errors/failures.dart';
+import '../../../../core/errors/failures.dart';
 
 import '../../../../core/usecase/usecase.dart';
 import '../entities/todo_entity.dart';

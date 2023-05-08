@@ -23,7 +23,6 @@ void main() {
       dueTime: DateTime.now().add(
         const Duration(hours: 1),
       ),
-      children: const [],
     );
 
     when(mockRepo.saveNewTodo(any)).thenAnswer((_) async => const Right(true));

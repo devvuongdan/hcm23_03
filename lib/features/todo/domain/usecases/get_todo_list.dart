@@ -1,7 +1,7 @@
 import 'package:dartz/dartz.dart';
 import 'package:equatable/equatable.dart';
-
 import '../../../../core/errors/failures.dart';
+
 import '../../../../core/usecase/usecase.dart';
 import '../entities/todo_entity.dart';
 import '../repositories/todo_repo.dart';

@@ -23,7 +23,6 @@ void main() {
       dueTime: DateTime.now().add(
         const Duration(hours: 1),
       ),
-      children: const [],
     );
 
     when(mockRepo.updateTodo(newTodo)).thenAnswer((_) async => Right(newTodo));

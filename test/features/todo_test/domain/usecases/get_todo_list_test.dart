@@ -24,7 +24,6 @@ void main() {
         dueTime: DateTime.now().add(
           const Duration(hours: 1),
         ),
-        children: const [],
       ),
     ];
 

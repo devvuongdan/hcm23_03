@@ -7,5 +7,15 @@ practice, write this code inside a function.
 
 Diff: 1
 */
-
-void main() {}
+List<num> firstAndLastElements(List<num> a) {
+  List<num> res = [];
+  res.add(a.first);
+  res.add(a.last);
+  return res;
+}
+void main() {
+  List<num> a = [5, 10, 15, 20, 25];
+  List<num> res = firstAndLastElements(a);
+  print("The first and last element of the list are: ");
+  print(res);
+}

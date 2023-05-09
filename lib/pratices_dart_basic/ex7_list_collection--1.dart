@@ -8,4 +8,12 @@ even elements of this list in it.
 Diff: 1
 */
 
-void main() {}
+void main() {
+  List<int> a = [1, 4, 9, 16, 25, 36, 49, 64, 81, 100];
+  List<int> res = [];
+  a.forEach((element) {
+    if(element % 2 == 0) res.add(element);
+  });
+  print("List of even elements: ");
+  print(res);
+}

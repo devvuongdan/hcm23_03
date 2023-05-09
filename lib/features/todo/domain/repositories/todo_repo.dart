@@ -8,5 +8,5 @@ abstract class TodoRepo {
 
   Future<Either<Failure, bool>>? saveNewTodo(TodoEntity? todo);
 
-  Future<Either<Failure, TodoEntity>>? updateTodo(TodoEntity todo);
+  Future<Either<Failure, bool>>? updateTodo(TodoEntity todo);
 }

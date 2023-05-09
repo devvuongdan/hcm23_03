@@ -25,11 +25,12 @@ void main() {
       ),
     );
 
-    when(mockRepo.updateTodo(newTodo)).thenAnswer((_) async => Right(newTodo));
+    when(mockRepo.updateTodo(newTodo))
+        .thenAnswer((_) async => const Right(true));
 
     final result = await usecase.call(parram: newTodo);
 
-    expect(result, Right(newTodo));
+    expect(result, const Right(true));
     verify(mockRepo.updateTodo(newTodo));
   });
 }

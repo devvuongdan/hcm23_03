@@ -46,5 +46,11 @@ void main() {
       final obj = result.toEntity(jsonDecode(jsonString));
       expect(obj, equals(tTodoEntity));
     });
+    test("===== Test fromObject to Entity", () async {
+      final String jsonString = jsonEncode(tTodoModel.toMap());
+      final result = TodoModel.fromMap(jsonDecode(jsonString));
+      final obj = result.toEntityFromModel();
+      expect(obj, equals(tTodoEntity));
+    });
   });
 }

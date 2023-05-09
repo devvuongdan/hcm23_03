@@ -26,4 +26,8 @@ class TodoEntity extends Equatable {
         startTime,
         dueTime,
       ];
+
+  Map<String, dynamic> toNewMap() {
+    return {};
+  }
 }

@@ -1,8 +1,8 @@
 import '../../domain/entities/todo_entity.dart';
 
 class TodoModel extends TodoEntity {
-  final DateTime createdTime;
-  final DateTime updatedTime;
+  final DateTime? createdTime;
+  final DateTime? updatedTime;
   const TodoModel({
     required super.uuid,
     required super.title,
@@ -55,11 +55,23 @@ class TodoModel extends TodoEntity {
     return obj;
   }
 
+  TodoEntity toEntityFromModel() {
+    final TodoEntity obj = TodoEntity(
+      uuid: uuid,
+      title: title,
+      content: content,
+      isDone: isDone,
+      startTime: startTime,
+      dueTime: dueTime,
+    );
+    return obj;
+  }
+
   Map<String, dynamic> toMap() {
     final Map<String, dynamic> map = {
       "uuid": uuid,
-      "createdTime": createdTime.toIso8601String(),
-      "updatedTime": updatedTime.toIso8601String(),
+      "createdTime": createdTime?.toIso8601String(),
+      "updatedTime": updatedTime?.toIso8601String(),
       "title": title,
       "content": content,
       "isDone": isDone,
@@ -67,5 +79,27 @@ class TodoModel extends TodoEntity {
       "dueTime": dueTime.toIso8601String(),
     };
     return map;
+  }
+
+  TodoModel copyWith({
+    required String? title,
+    required String? content,
+    required bool? isDone,
+    required DateTime? startTime,
+    required DateTime? dueTime,
+    required DateTime? updatedTime,
+  }) {
+    return TodoModel(
+      title: title ?? this.title,
+      content: content ?? this.content,
+      isDone: isDone ?? this.isDone,
+      startTime: startTime ?? this.startTime,
+      dueTime: dueTime ?? this.dueTime,
+      updatedTime: updatedTime ?? this.updatedTime,
+
+      //
+      uuid: uuid,
+      createdTime: createdTime,
+    );
   }
 }

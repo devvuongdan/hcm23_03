@@ -28,7 +28,7 @@ void main() {
     when(mockRepo.updateTodo(newTodo))
         .thenAnswer((_) async => const Right(true));
 
-    final result = await usecase.call(parram: newTodo);
+    final result = await usecase.call(params: newTodo);
 
     expect(result, const Right(true));
     verify(mockRepo.updateTodo(newTodo));

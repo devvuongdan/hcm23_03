@@ -5,13 +5,14 @@ import '../repositories/todo_repo.dart';
 
 import '../../../../core/usecase/usecase.dart';
 
-class UpdateTodo extends UseCase<bool, TodoEntity> {
+class UpdateTodo extends UseCase<bool?, TodoEntity> {
   final TodoRepo repo;
   UpdateTodo({
     required this.repo,
   });
+
   @override
-  Future<Either<Failure, bool>>? call({required TodoEntity parram}) {
-    return repo.updateTodo(parram);
+  Future<Either<Failure, bool?>>? call({required TodoEntity params}) {
+    return repo.updateTodo(params);
   }
 }

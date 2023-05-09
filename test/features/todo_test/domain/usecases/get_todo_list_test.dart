@@ -29,7 +29,7 @@ void main() {
 
     when(mockRepo.getTodoList()).thenAnswer((_) async => Right(todoList));
 
-    final result = await usecase.call(parram: NoParam());
+    final result = await usecase.call(params: NoParam());
 
     expect(result, Right(todoList));
     verify(mockRepo.getTodoList());

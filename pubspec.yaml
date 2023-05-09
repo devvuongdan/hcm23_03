@@ -45,6 +45,8 @@ dependencies:
   dartz: ^0.10.1
   connectivity_plus: ^3.0.6
   uuid: ^3.0.7
+  dio: ^5.1.2
+  retrofit: ^4.0.1
 
   # For caching
 

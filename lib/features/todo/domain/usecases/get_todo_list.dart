@@ -1,5 +1,4 @@
 import 'package:dartz/dartz.dart';
-import 'package:equatable/equatable.dart';
 import '../../../../core/errors/failures.dart';
 
 import '../../../../core/usecase/usecase.dart';
@@ -13,12 +12,9 @@ class GetTodoList extends UseCase<List<TodoEntity>, NoParam> {
   });
 
   @override
-  Future<Either<Failure, List<TodoEntity>>>? call({required NoParam parram}) {
+  Future<Either<Failure, List<TodoEntity>>>? call({required NoParam params}) {
     return repo.getTodoList();
   }
 }
 
-class NoParam extends Equatable {
-  @override
-  List<Object?> get props => [];
-}
+class NoParam {}

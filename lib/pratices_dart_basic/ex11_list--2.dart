@@ -7,12 +7,12 @@ practice, write this code inside a function.
 
 Diff: 1
 */
-import 'dart:io';
 
 dynamic getList(List a) {
   var list = [];
   list.add(a[0]); //them phan tu a[0] vao cuoi danh sach list
   list.add(a[a.length - 1]); //them phan tu vao cuoi danh sach list
+  // Mình có .first và .last mà
   print(list);
 }
 

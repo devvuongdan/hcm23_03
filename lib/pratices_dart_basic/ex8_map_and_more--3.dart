@@ -27,9 +27,9 @@ void main() {
       print("Hoa");
     } else if (input == 'bua' && com == 'keo' ||
         input == 'keo' && com == 'bao' ||
-        input == 'bao' && com == 'bua')
+        input == 'bao' && com == 'bua') {
       print("Nguoi choi $name thang!!!");
-    else {
+    } else {
       print("Computer thang!!!");
     }
     print("Ban co muon choi tiep khong(y/n): ");
@@ -37,3 +37,7 @@ void main() {
     if (ctn != 'y') break;
   }
 }
+
+
+// Bài này yêu cầu dùng dữ liệu kiểu Map, tham khảo bài của Tân, nhưng logic thế này OK
+// Đung output và test case, hay

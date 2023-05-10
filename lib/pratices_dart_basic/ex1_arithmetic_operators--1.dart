@@ -9,10 +9,12 @@ import 'dart:io';
 
 void main() {
   print("Input your name: ");
-  String? name=stdin.readLineSync();
+  String? name = stdin.readLineSync();
   print("\nInput your age: ");
   String? input = stdin.readLineSync();
-  int? age = int.tryParse(input ??"")?? 0;
-  var a = 100-age; 
+  int? age = int.tryParse(input ?? "") ?? 0;
+  // Có bắt lỗi, nhưng bắt lỗi thế này là lủng nhé
+  var a = 100 - age;
   print("$name have to be 100 years old about $a years!!");
+  // Tiếng anh lủng vl :))
 }

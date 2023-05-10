@@ -17,8 +17,13 @@ Dif: 1*
 import 'dart:io';
 
 dynamic TestLongString(String s) {
+  // Tên hàm camelCase
   var list = s.split(" ");
-  for (int i = list.length - 1; i >= 0; i--) stdout.write("${list[i]} ");
+  for (int i = list.length - 1; i >= 0; i--) {
+    stdout.write("${list[i]} ");
+    // Sai yêu cầu
+    // input: "hello a" => output là "a hello" chứ không phải "a hello " (có dấu space ở cuối)
+  }
 }
 
 void main() {

@@ -9,11 +9,16 @@ remainder.
 Diff: 3
 */
 import 'dart:io';
+
 void main() {
   print("Input your number: ");
   String? input = stdin.readLineSync();
-  int number=int.tryParse(input ??"")?? 0;
-  for(int i=1;i<=number;i++)
-    if(number %i==0)
+  int number = int.tryParse(input ?? "") ?? 0;
+  // Có bắt lỗi, nhưng bắt lỗi thế này là lủng nhé
+  for (int i = 1; i <= number; i++) {
+    if (number % i == 0) {
       print(i);
+    }
+  }
+  // OK nhưng chưa tối ưu
 }

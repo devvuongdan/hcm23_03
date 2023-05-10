@@ -9,6 +9,7 @@ void main() {
   var list1 = [1, 1, 1, 2, 3, 4, 4, 5, 6, 6, 7, 8, 8, 9];
   Set set1 =
       list1.toSet(); // chuyen list thanh chuoi cac phan tu khong trung nhau
+  // Code tay chứ dùng hàm set thì nói làm gì?
   List list2 = set1.toList(); //chuyen set sang list
   print(list2);
 }

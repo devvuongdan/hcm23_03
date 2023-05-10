@@ -14,5 +14,21 @@ Then I would see the string:
 
 Dif: 1*
 */
+import 'dart:io';
 
-void main() {}
+void printWordBackwards(String str) {
+  print("String in backwards: ");
+  List<String> splitted = str.split(' ');
+  int end = splitted.length - 1;
+  while(end >= 0)
+  {
+    stdout.write(splitted[end]);
+    stdout.write(" ");
+    end--;
+  }
+}
+void main() {
+  print("Enter a long string with space: ");
+  String? str = stdin.readLineSync();
+  printWordBackwards(str!);
+}

@@ -8,5 +8,12 @@ remainder.
 
 Diff: 3
 */
+void main() {
+  var num = 26;
 
-void main() {}
+  for(int i=1; i<=num; i++){
+    if(num%i == 0){
+      print(i);
+    }
+  }
+}

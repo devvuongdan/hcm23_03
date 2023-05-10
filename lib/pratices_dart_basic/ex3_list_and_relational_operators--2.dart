@@ -9,7 +9,17 @@ Diff: 2
 void main() {
   List<int> a = [1, 1, 2, 3, 5, 8, 13, 21, 34, 55, 89];
   print("All elements in the list that are less than 5 are: ");
-  a.forEach((element) {
-    element < 5 ? print("$element ") : false;
-  });
+  for (var element in a) {
+    element < 5 ? print("$element ") : false; // Ý nghĩa dòng này?
+
+    // => Code của thầy:
+    // if (element < 5) {
+    //   print("$element ");
+    // } else {
+    //   continue;
+    // }
+  }
 }
+
+
+// OK

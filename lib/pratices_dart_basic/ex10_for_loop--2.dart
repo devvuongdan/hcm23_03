@@ -10,16 +10,20 @@ import 'dart:math';
 
 bool isPrime(int num) {
   int i;
-  for(i = 2; i < sqrt(num); i++)
-  {
-    if(num % i == 0) {
+  for (i = 2; i < sqrt(num); i++) {
+    if (num % i == 0) {
       return false;
     }
   }
   return true;
 }
+
+// Nếu nhập i = 1 thì sao, chưa bắt hết các case
+
 void main() {
   print("Enter a number: ");
   int? n = int.parse(stdin.readLineSync()!);
-  isPrime(n) ? print("$n is a prime number") : print("$n is not a prime number");
+  isPrime(n)
+      ? print("$n is a prime number")
+      : print("$n is not a prime number");
 }

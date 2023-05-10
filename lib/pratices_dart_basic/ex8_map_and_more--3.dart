@@ -8,6 +8,7 @@ Diff: 3
 
 import 'dart:io';
 import 'dart:math';
+
 void main() {
   const moves = {
     'rock': {
@@ -38,12 +39,10 @@ void main() {
   String? winner = moves[userMove]![computerMove];
   if (winner == 'tie') {
     print('It\'s a tie!');
-  } 
-  else if (winner == 'win') {
+  } else if (winner == 'win') {
     print('You win!');
-  } 
-  else {
+  } else {
     print('Computer wins!');
   }
-
 }
+// OK tạm ổn

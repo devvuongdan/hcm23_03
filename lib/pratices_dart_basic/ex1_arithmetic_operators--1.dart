@@ -5,6 +5,4 @@ out a message that tells how many years they have to be 100 years old.
 Diff: 1
 */
 
-
-
 void main() {}

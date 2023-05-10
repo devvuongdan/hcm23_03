@@ -8,8 +8,13 @@ remainder.
 
 Diff: 3
 */
+
+import 'dart:io';
 void main() {
-  var num = 26;
+  stdout.write("Please enter number: ");
+  String? number = stdin.readLineSync();
+  int num = int.tryParse(number ?? "") ?? 0;
+  print("The divisors of $num is: ");
 
   for(int i=1; i<=num; i++){
     if(num%i == 0){

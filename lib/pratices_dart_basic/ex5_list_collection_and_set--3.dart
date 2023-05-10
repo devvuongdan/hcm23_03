@@ -11,4 +11,4 @@ two lists of different sizes.
 Diff: 3
 */
 
-void main() {}
+void main() { }

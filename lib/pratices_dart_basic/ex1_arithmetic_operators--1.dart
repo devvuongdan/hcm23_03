@@ -7,4 +7,4 @@ Diff: 1
 
 
 
-void main() {}
+void main() { }

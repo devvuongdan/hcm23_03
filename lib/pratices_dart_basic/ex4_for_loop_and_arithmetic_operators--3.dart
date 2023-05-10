@@ -8,5 +8,12 @@ remainder.
 
 Diff: 3
 */
-
-void main() {}
+import 'dart:io';
+void main() {
+  print("Input your number: ");
+  String? input = stdin.readLineSync();
+  int number=int.tryParse(input ??"")?? 0;
+  for(int i=1;i<=number;i++)
+    if(number %i==0)
+      print(i);
+}

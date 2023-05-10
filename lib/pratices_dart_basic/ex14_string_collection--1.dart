@@ -14,5 +14,15 @@ Then I would see the string:
 
 Dif: 1*
 */
+import 'dart:io';
 
-void main() {}
+dynamic TestLongString(String s) {
+  var list = s.split(" ");
+  for (int i = list.length - 1; i >= 0; i--) stdout.write("${list[i]} ");
+}
+
+void main() {
+  print("Nhap chuoi: ");
+  String input = stdin.readLineSync() ?? " ";
+  TestLongString(input);
+}

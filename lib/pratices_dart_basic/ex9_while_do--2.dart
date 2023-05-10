@@ -8,4 +8,29 @@ print this out.
 Diff: 2
 */
 
-void main() {}
+import 'dart:math';
+import 'dart:io';
+void main() {
+  var random=Random();
+  var a=random.nextInt(100);
+  print("So ngau nhien: $a");
+  print("Moi ban doan so ngau nhien: ");
+  int dem=1;
+  while(true){
+    String input=stdin.readLineSync()?? "";
+    int x=int.tryParse(input)?? 0;
+    if(x>a){ 
+      print("So cua ban qua cao! Moi ban doan lai: ");
+      dem++;
+    }
+    else if (x<a) {
+      print("So cua ban qua thap! Moi ban doan lai: ");
+      dem++;
+    }
+    else {
+      print("Ban da doan chinh xac! So lan doan cua ban: $dem");
+      print("Tro choi ket thuc!!!");
+      break;
+    }
+  }
+}

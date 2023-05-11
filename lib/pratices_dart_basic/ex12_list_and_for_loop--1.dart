@@ -9,6 +9,7 @@ generate.
 Dif: 1*
 */
 import 'dart:io';
+
 void printFibonnaciList(int a) {
   print("Fibonnaci List: ");
   int t1 = 0;
@@ -16,18 +17,14 @@ void printFibonnaciList(int a) {
   int sum;
   if (a < 1) {
     print("Invalid number");
-  }
-  else if (a == 1) {
+  } else if (a == 1) {
     stdout.write(t1);
-  }
-  else if (a == 2) {
+  } else if (a == 2) {
     stdout.write("$t1 $t2");
-  }
-  else {
+  } else {
     stdout.write("$t1 $t2 ");
     a -= 2;
-    while(a > 0)
-    {
+    while (a > 0) {
       sum = t1 + t2;
       stdout.write("$sum ");
       t1 = t2;
@@ -36,8 +33,12 @@ void printFibonnaciList(int a) {
     }
   }
 }
+
 void main() {
   print("How many number of fibonnaci you want to print?: ");
   int? n = int.parse(stdin.readLineSync()!);
   printFibonnaciList(n);
 }
+
+
+// Tạm OK

@@ -13,9 +13,11 @@ List<num> firstAndLastElements(List<num> a) {
   res.add(a.last);
   return res;
 }
+
 void main() {
   List<num> a = [5, 10, 15, 20, 25];
   List<num> res = firstAndLastElements(a);
   print("The first and last element of the list are: ");
   print(res);
 }
+//OK

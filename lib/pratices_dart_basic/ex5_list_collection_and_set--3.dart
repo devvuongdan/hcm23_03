@@ -19,34 +19,26 @@ void main() {
   int len = 0;
   bool flag = false;
 
-
-  for(i = 0; i < a.length; i++) 
-  {
-    for(j = 0; j < b.length; j++) 
-    {
-      if(a[i] == b[j]) 
-      {
+  for (i = 0; i < a.length; i++) {
+    for (j = 0; j < b.length; j++) {
+      if (a[i] == b[j]) {
         flag = false;
-        for(k = 0; k < len; k++)
-        {
-          if(res[k] == b[j])
-          {
+        for (k = 0; k < len; k++) {
+          if (res[k] == b[j]) {
             flag = true;
             break;
           }
         }
-        if(flag != true)
-        {
+        if (flag != true) {
           res.add(b[j]);
-          len++;    
+          len++;
           flag = false;
         }
       }
-      
-      
     }
   }
 
   print("The common value are: ");
   print(res);
 }
+// OK tạm ổn

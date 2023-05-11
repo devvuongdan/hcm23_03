@@ -6,6 +6,7 @@ Diff: 1
 */
 
 import 'dart:io';
+
 void main() {
   print("Enter your name: ");
   String? name = stdin.readLineSync();
@@ -13,3 +14,6 @@ void main() {
   int? n = int.parse(stdin.readLineSync()!);
   print("Hey $name, you will be 100 years old in ${100 - n} years.");
 }
+
+
+// Chưa bắt lỗi, nếu người dùng nhập chữ hoặc khoảng trắng thì sao?

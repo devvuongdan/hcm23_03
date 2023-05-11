@@ -10,11 +10,13 @@ Diff: 3
 */
 
 import 'dart:io';
+
 void main() {
   print("Enter a number: ");
   int? n = int.parse(stdin.readLineSync()!);
   print("All divisors of $n are: ");
-  for(int i = 1; i <= n; i++) {
-    if(n % i == 0) print(i);
+  for (int i = 1; i <= n; i++) {
+    if (n % i == 0) print(i);
   }
 }
+// Chưa bắt lỗi, nếu người dùng nhập chữ hoặc khoảng trắng thì sao?

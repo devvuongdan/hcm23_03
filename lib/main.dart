@@ -116,10 +116,39 @@ phần tử trong danh sách, mảng hoặc đối tượng có khả năng lặ
 và loại dữ liệu mà bạn muốn lặp qua.
 
 */
+import 'dart:ffi';
+
 import 'package:flutter/material.dart';
 
+
+
+class House {
+  int? _id;
+  String? _name;
+  double? _prize;
+
+  House(int id, String name, double prize) {
+    this._id = id;
+    this._name = name;
+    this._prize = prize;
+  }
+  void printDetails() {
+    print("Id: $_id");
+    print("Name: $_name");
+    print("Prize: $_prize");
+  }
+}
+
 void main() {
-  runApp(const MyApp());
+  House home1 = House(0, "first", 10.0);
+  House home2 = House(1, "second", 12.0);
+  House home3 = House(2, "third", 14.0);
+  List<House> houseList = [home1, home2, home3];
+  int i;
+  for (i = 0; i < houseList.length; i++) {
+    print("Home $i");
+    houseList[1].printDetails();
+  }
 }
 
 class MyApp extends StatelessWidget {

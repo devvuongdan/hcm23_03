@@ -7,5 +7,26 @@ print this out.
 
 Diff: 2
 */
+import 'dart:io';
+import 'dart:math';
+void main() {
+  Random r = Random();
+  int rNumber = r.nextInt(100) + 1;
+  int count = 0;
+  while (true) {
+    stdout.write('Đoán 1 and 100: ');
+    String input = stdin.readLineSync()!;
+    int guess = int.parse(input);
+    count++;
 
-void main() {}
+    if (guess < rNumber) {
+      print('low');
+    } else if (guess > rNumber) {
+      print('high');
+    } else {
+      print('Ban da doan dung. $rNumber');
+      print('So lan doan $count');
+      break;
+    }
+  }
+}

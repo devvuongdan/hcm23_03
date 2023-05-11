@@ -14,5 +14,12 @@ Then I would see the string:
 
 Dif: 1*
 */
-
-void main() {}
+import 'dart:io';
+void main() {
+  print('Input string:');
+  String input = stdin.readLineSync()!;
+  
+  String text = input.split(' ').reversed.toList().join('');
+  
+  print(text);
+}

@@ -8,5 +8,17 @@ remainder.
 
 Diff: 3
 */
+import 'dart:io';
+void main() {
+  print('Please enter a number:');
+  int n = int.parse(stdin.readLineSync()!);
+   List<int> divisor = [];
 
-void main() {}
+  for (int i = 1; i <= n; i++) {
+    if (n % i == 0) {
+      divisor.add(i);
+    }
+  }
+
+  print('The divisors of $n: $divisor');
+}

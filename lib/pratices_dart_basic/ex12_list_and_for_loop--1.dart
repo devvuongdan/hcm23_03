@@ -9,4 +9,6 @@ generate.
 Dif: 1*
 */
 
-void main() {}
+void main() {
+  // Em chua hieu de nay
+}

@@ -8,6 +8,7 @@ sinh viên như thêm, xóa và hiển thị danh sách sinh viên.
 */
 
 import 'dart:io';
+
 class Student {
   String name;
   int age;
@@ -26,6 +27,8 @@ class StudentManagement {
   void removeStudent(String name) {
     int initialLength = students.length;
     students.removeWhere((student) => student.name == name);
+    // Chỉ có tính năng tìm kiếm mới tìm theo tên thôi.
+    // Em viết thế này là xoá cmn hết Student cùng tên với nhau r
 
     if (students.length < initialLength) {
       print("Removed successfully");
@@ -44,7 +47,7 @@ class StudentManagement {
         found = true;
       }
     }
-    if(!found) print("Student not found");
+    if (!found) print("Student not found");
   }
 
   void showStudents() {
@@ -53,17 +56,17 @@ class StudentManagement {
       return;
     }
     for (var student in students) {
-        print("Student's name: ${student.name}");
-        print("Student's age: ${student.age}");
-        print("Student's score: ${student.score}");
+      print("Student's name: ${student.name}");
+      print("Student's age: ${student.age}");
+      print("Student's score: ${student.score}");
     }
   }
-
 }
+
 void main() {
   StudentManagement studentList = StudentManagement();
   bool flag = true;
-  while(flag) {
+  while (flag) {
     print("===Student Management System===");
     print("1. Add student");
     print("2. Print all students");
@@ -83,7 +86,6 @@ void main() {
           print("Invalid input");
           break;
         }
-          
 
         print("Enter student's age: ");
         int? age = int.parse(stdin.readLineSync()!);
@@ -95,7 +97,7 @@ void main() {
 
         print("Student added successfully!");
         break;
-      
+
       case 2:
         print("All students: ");
         studentList.showStudents();
@@ -121,7 +123,7 @@ void main() {
           break;
         }
         studentList.removeStudent(name);
-        break; 
+        break;
       case 5:
         print("Exiting...");
         flag = false;
@@ -131,5 +133,7 @@ void main() {
         break;
     }
   }
-
 }
+
+
+// OK, 9.5

@@ -8,6 +8,7 @@ của các hình học khác nhau.
 */
 
 import 'dart:io';
+
 abstract class Shape {
   double area();
 }
@@ -46,9 +47,10 @@ class Triangle extends Shape {
     return base * height / 2;
   }
 }
+
 void main() {
   bool flag = true;
-  while(flag) {
+  while (flag) {
     print("+++Calculate Area Program+++");
     print("------Menu------");
     print("1. Circle");
@@ -85,6 +87,9 @@ void main() {
       default:
         print("Invalid input");
         break;
-    }  
+    }
   }
 }
+
+
+// OK bài này gud, anh ít khi khen lắm :)))

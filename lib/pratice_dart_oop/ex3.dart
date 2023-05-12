@@ -8,6 +8,7 @@ và hiển thị danh sách sách trong thư viện.
 */
 
 import 'dart:io';
+
 class Book {
   String title;
   String author;
@@ -55,13 +56,12 @@ class Library {
     }
     if (!found) print("Book not found");
   }
-
 }
 
 void main() {
   Library library = Library();
   bool flag = true;
-  while(flag) {
+  while (flag) {
     print("+++Library Management Program+++");
     print("------Menu------");
     print("1. Add book");
@@ -105,3 +105,6 @@ void main() {
     }
   }
 }
+
+
+// Bài này lỗi y chang bài 1, 9.5

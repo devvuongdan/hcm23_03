@@ -6,11 +6,11 @@ triển khai phương thức tính diện tích theo từng hình học.
 Viết một chương trình sử dụng các lớp trên để tính và hiển thị diện tích 
 của các hình học khác nhau.
 */
-import 'dart:io';
-import 'dart:math';
 
 class Shape {
+  // Đặt thằng shape thành abstract
   double DienTich() {
+    // tên method camelCase
     return 0.0;
   }
 }
@@ -59,3 +59,5 @@ void main() {
   print('Dien tich hinh chu nhat: ${rectangle.DienTich()}');
   print('Dien tich hinh tam giac: ${triangle.DienTich()}');
 }
+
+// Bài này tạm ổn

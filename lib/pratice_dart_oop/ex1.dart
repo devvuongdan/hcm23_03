@@ -19,14 +19,15 @@ class Student {
     this.score = score;
   }
   void display() {
-    print(this.name);
-    print(this.age);
-    print(this.score);
+    print(name);
+    print(age);
+    print(score);
   }
 }
 
 class StudentManagement {
   void AddStudent(var l) {
+    // tên hàm camelCase
     print("Ten: ");
     String? name = stdin.readLineSync();
     print("Tuoi: ");
@@ -41,16 +42,18 @@ class StudentManagement {
   }
 
   void DeleteStudent(String? str, var l) {
+    // tên hàm camelCase
     for (int i = 0; i < l.length; i++) {
-      if (str == l[i].name)
+      if (str == l[i].name) {
         l.remove(l[i]);
-      else {
+      } else {
         print("Khong ton tai sinh vien trong danh sach!");
       }
     }
   }
 
   void SearchStudent(String? s, var l) {
+    // tên hàm camelCase
     bool tmp = false;
     for (int i = 0; i < l.length; i++) {
       if (s == l[i].name) {
@@ -62,11 +65,20 @@ class StudentManagement {
   }
 
   void PrintListStudent(var l) {
+    // tên hàm camelCase
     for (int i = 0; i < l.length; i++) {
       print("---Sinh vien ${i + 1}---");
       l[i].display();
     }
   }
+
+  // Hơi sai yêu cầu, lách luật.
+  // Class này dùng để quản lý sinh viên.
+  // Tại sao em không khởi tạo một field là List<Student> studenList rồi chỉnh sửa ở đó.
+  // Ý nghĩa ở đây là khi người khác gọi đến StudentManagement.studenList ở bất kỳ đâu thì
+  // sẽ get đc listStudents ra.
+  // Còn như em làm là listStudent đc init trong main rồi. Cái class được declare đơn giản để gọi thêm 4 cái hàm?
+  // Làm vậy làm gì cho phức tạp?
 }
 
 void main() {
@@ -111,7 +123,8 @@ void main() {
       stdout.write('\x1B[2J\x1B[0f');
       print("===Danh sach sinh vien====");
       sm.PrintListStudent(list);
-    } else
+    } else {
       break;
+    }
   }
 }

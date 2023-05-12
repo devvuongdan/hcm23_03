@@ -21,9 +21,9 @@ class Book {
   }
 
   void display() {
-    print(this.tieude);
-    print(this.tacgia);
-    print(this.namXB);
+    print(tieude);
+    print(tacgia);
+    print(namXB);
   }
 }
 
@@ -44,9 +44,9 @@ class Library {
 
   void DeleteBook(String? str, var l) {
     for (int i = 0; i < l.length; i++) {
-      if (str == l[i].tieude)
+      if (str == l[i].tieude) {
         l.remove(l[i]);
-      else {
+      } else {
         print("Khong ton tai sach trong thu vien");
       }
     }
@@ -111,7 +111,11 @@ void main() {
       stdout.write('\x1B[2J\x1B[0f');
       print("====Danh sach sach trong thu vien====");
       lb.PrintListBook(list);
-    } else
+    } else {
       break;
+    }
   }
 }
+
+
+// Bài này tương tự bài 1, các lỗi y chang

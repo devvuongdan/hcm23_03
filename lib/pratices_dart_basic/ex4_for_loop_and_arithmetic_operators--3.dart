@@ -8,5 +8,14 @@ remainder.
 
 Diff: 3
 */
-
-void main() {}
+import 'dart:io';
+void main() {
+  stdout.write("Input your number pls?");
+  int numb = int.parse(stdin.readLineSync()!);
+  for(var i=1;i<= numb;i++){
+    if(numb%i==0){
+      print(i);
+    }
+  }
+  
+  }

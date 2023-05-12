@@ -4,5 +4,9 @@ out an appropriate message to the user.
 
 Diff: 1
 */
-
-void main() {}
+import 'dart:io';
+void main() {
+  stdout.write("Hi, input your number pls?");
+  int numb = int.parse(stdin.readLineSync()!);
+  print((numb%2==0)?"$numb is even":"$numb is odd");
+}

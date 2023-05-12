@@ -10,9 +10,10 @@ void main() {
   String? number = stdin.readLineSync();
   int num = int.tryParse(number ?? "") ?? 0;
   
-  if(num%2 == 0){
-    print("$num is even.");
-  } else{
-    print("$num is odd.");
-  }
+  // if(num%2 == 0){
+  //   print("$num is even.");
+  // } else{
+  //   print("$num is odd.");
+  // }
+  print(num%2 == 0 ? "$num is even." : "$num is odd.");
 }

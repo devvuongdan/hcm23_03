@@ -16,7 +16,7 @@ class YinFloatingActionButtonArgs {
     this.stepCount = 2,
     required this.currentStep,
     this.onTap,
-  }) : assert(currentStep <= stepCount);
+  }) : assert(currentStep <= stepCount && currentStep >= 0);
 }
 
 class YinFloatingActionButton extends StatefulWidget {
@@ -34,11 +34,11 @@ class YinFloatingActionButton extends StatefulWidget {
 class _YinFloatingActionButtonState extends State<YinFloatingActionButton>
     with SingleTickerProviderStateMixin {
   late AnimationController _animationController;
-  double _progressValue = 0.0;
+  late double _progressValue;
 
   @override
   void initState() {
-    super.initState();
+    _progressValue = widget.args.currentStep / widget.args.stepCount;
     _animationController = AnimationController(
       vsync: this,
       duration: const Duration(milliseconds: 500),
@@ -50,6 +50,7 @@ class _YinFloatingActionButtonState extends State<YinFloatingActionButton>
       });
     });
     runProgress();
+    super.initState();
   }
 
   @override
@@ -65,8 +66,15 @@ class _YinFloatingActionButtonState extends State<YinFloatingActionButton>
         _progressValue = 0;
       });
     }
-    _animationController.animateTo(_progressValue + 1 / widget.args.stepCount,
+    _animationController.animateTo(
+        widget.args.currentStep / widget.args.stepCount,
         duration: const Duration(milliseconds: 500));
+  }
+
+  @override
+  void didUpdateWidget(covariant YinFloatingActionButton oldWidget) {
+    runProgress();
+    super.didUpdateWidget(oldWidget);
   }
 
   @override
@@ -74,7 +82,6 @@ class _YinFloatingActionButtonState extends State<YinFloatingActionButton>
     return GestureDetector(
       onTap: () {
         widget.args.onTap?.call();
-        runProgress();
       },
       child: Container(
         height: widget.args.size,

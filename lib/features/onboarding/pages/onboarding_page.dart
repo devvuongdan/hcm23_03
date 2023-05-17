@@ -21,8 +21,15 @@ class _OnboardingPageState extends State<OnboardingPage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-<<<<<<< Updated upstream
       backgroundColor: Color.fromARGB(255, 104, 193, 238),
+      floatingActionButton: YinFloatingActionButton(
+        args: YinFloatingActionButtonArgs(
+          size: 58,
+          scaffoldBackgroundColor: const Color(0xFFF4C27F),
+          currentStep: 0,
+          stepCount: 2,
+        ),
+      ),
       body: Center(
         child: Container(
           padding: const EdgeInsets.only(left: 23, right: 25, top: 80),
@@ -61,15 +68,6 @@ class _OnboardingPageState extends State<OnboardingPage> {
               ),
             ],
           ),
-=======
-      backgroundColor: const Color(0xFFF4C27F),
-      floatingActionButton: YinFloatingActionButton(
-        args: YinFloatingActionButtonArgs(
-          size: 58,
-          scaffoldBackgroundColor: const Color(0xFFF4C27F),
-          currentStep: 0,
-          stepCount: 2,
->>>>>>> Stashed changes
         ),
       ),
     );

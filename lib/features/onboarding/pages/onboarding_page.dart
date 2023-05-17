@@ -1,4 +1,8 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_svg/flutter_svg.dart';
+import 'package:google_fonts/google_fonts.dart';
+import 'package:hcm23_03/features/onboarding/widgets/onboarding_floatting_action_button.dart';
+
 
 class OnboardingPage extends StatefulWidget {
   const OnboardingPage({super.key});
@@ -20,15 +24,79 @@ class _OnboardingPageState extends State<OnboardingPage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: const Color(0xFFF4C27F),
-      floatingActionButton: Container(
-        height: 58,
-        width: 58,
-        decoration: const BoxDecoration(
-          shape: BoxShape.circle,
-          color: Colors.red,
-        ),
+      backgroundColor: Color.fromARGB(255, 170, 158, 236),
+      floatingActionButton: YinFloatingActionButton(
+          args: YinFloatingActionButtonArgs(
+            size: 56.0,
+            scaffoldBackgroundColor: Colors.black,
+            stepCount: 2, 
+            currentStep: 0,
+            onTap: () {},
+  ), size: 56, currentStep: 0, stepCount: 2,
+),
+      //   height: 58,
+      //   width: 58,
+      //   decoration: const BoxDecoration(
+      //     shape: BoxShape.circle,
+      //     color: Colors.red,
+      //   ),
+      // ),
+      body: Center(
+        // child: Text(
+        //   'Hello World',
+        //   style: TextStyle(
+        //     fontSize: 30,
+        //     fontWeight: FontWeight.w700,
+        //     color: Colors.white,
+        //   ),
+        // )
+        child: Container(
+          height: 600,
+          padding: const EdgeInsets.symmetric(horizontal: 18, vertical: 0),
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              Text(
+                'A Community Was Build Just For You',
+              //   style: TextStyle(
+              //     fontSize: 24,
+              //     fontWeight: FontWeight.w700,
+              //     height: 1.5,
+              //     color: Colors.white,
+
+              // ),
+              style: GoogleFonts.poppins(
+                fontSize: 24,
+                fontWeight: FontWeight.w700,
+                height: 1.2,
+                color: Colors.white,
+              )
       ),
+              Text(
+                'A community was build for you to share your thought, your concerns and improve yourself with other people',
+              //   style: TextStyle(
+              //     fontSize: 18,
+              //     fontWeight: FontWeight.w400,
+              //     height: 1.5,
+              //     color: Colors.white,
+              // ),
+              style: GoogleFonts.lora(
+                fontSize: 18,
+                fontWeight: FontWeight.w400,
+                height: 1.5,
+                color: Colors.white,
+              ),
+      ),
+            Expanded(child:
+              Center(
+                child: SvgPicture.asset("assets/images/onboarding_img_1.svg"),
+              ),
+            ),
+            ],
+          ),
+          
+        )
+      )
     );
   }
 }

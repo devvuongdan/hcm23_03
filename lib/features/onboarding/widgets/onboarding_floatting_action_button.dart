@@ -23,7 +23,7 @@ class YinFloatingActionButton extends StatefulWidget {
   final YinFloatingActionButtonArgs args;
   const YinFloatingActionButton({
     Key? key,
-    required this.args, required int currentStep, required int size, required int stepCount,
+    required this.args,
   }) : super(key: key);
 
   @override

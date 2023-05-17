@@ -21,6 +21,7 @@ class _OnboardingPageState extends State<OnboardingPage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+<<<<<<< HEAD
       backgroundColor: Color.fromARGB(255, 104, 193, 238),
       floatingActionButton: YinFloatingActionButton(
         args: YinFloatingActionButtonArgs(
@@ -30,13 +31,16 @@ class _OnboardingPageState extends State<OnboardingPage> {
           stepCount: 2,
         ),
       ),
+=======
+      backgroundColor: const Color(0XFF95B6FF),
+>>>>>>> dadc4c9a39614769acf47f0694eae9b4e1153575
       body: Center(
         child: Container(
           padding: const EdgeInsets.only(left: 23, right: 25, top: 80),
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-              Text(
+              const Text(
                 "Always there: more than 1000 cars in Tbilisi",
                 textAlign: TextAlign.left,
                 style: TextStyle(
@@ -47,7 +51,7 @@ class _OnboardingPageState extends State<OnboardingPage> {
                   color: Colors.white,
                 ),
               ),
-              Text(
+              const Text(
                 "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.",
                 textAlign: TextAlign.left,
                 style: TextStyle(
@@ -59,7 +63,7 @@ class _OnboardingPageState extends State<OnboardingPage> {
                 ),
               ),
               Container(
-                padding: EdgeInsets.only(left: 8, top: 33),
+                padding: const EdgeInsets.only(left: 8, top: 33),
                 child: Image.asset(
                   "assets/images/onboarding_img_2.png",
                   width: 300,

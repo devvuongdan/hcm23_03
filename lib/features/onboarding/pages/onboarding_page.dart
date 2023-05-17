@@ -27,28 +27,20 @@ class _OnboardingPageState extends State<OnboardingPage> {
         floatingActionButton: YinFloatingActionButton(
           args: YinFloatingActionButtonArgs(
             size: 60.0,
-            scaffoldBackgroundColor: Colors.black,
+            scaffoldBackgroundColor: const Color.fromARGB(255, 170, 158, 236),
             stepCount: 2,
             currentStep: 0,
             onTap: continues,
           ),
         ),
-        body: Center(
-            // child: Text(
-            //   'Hello World',
-            //   style: TextStyle(
-            //     fontSize: 30,
-            //     fontWeight: FontWeight.w700,
-            //     color: Colors.white,
-            //   ),
-            // )
-
-            child: Container(
-          height: 600,
+        body: Padding(
           padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 0),
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
+              const SizedBox(
+                height: 100,
+              ),
               Text('A Community Was Build Just For You',
                   //   style: TextStyle(
                   //     fontSize: 24,
@@ -85,7 +77,6 @@ class _OnboardingPageState extends State<OnboardingPage> {
               ),
             ],
           ),
-        ))
-      );
+        ));
   }
 }

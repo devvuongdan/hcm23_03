@@ -26,7 +26,7 @@ class _OnboardingPageState extends State<OnboardingPage> {
         backgroundColor: const Color.fromARGB(255, 170, 158, 236),
         floatingActionButton: YinFloatingActionButton(
           args: YinFloatingActionButtonArgs(
-            size: 56.0,
+            size: 60.0,
             scaffoldBackgroundColor: Colors.black,
             stepCount: 2,
             currentStep: 0,
@@ -42,6 +42,7 @@ class _OnboardingPageState extends State<OnboardingPage> {
             //     color: Colors.white,
             //   ),
             // )
+
             child: Container(
           height: 600,
           padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 0),

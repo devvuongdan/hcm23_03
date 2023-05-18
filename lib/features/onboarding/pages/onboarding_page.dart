@@ -52,6 +52,7 @@ class _OnboardingPageState extends State<OnboardingPage> {
           ),
           Center(
             child: Image.asset("assets/images/onboarding_img_1.png"),
+            
           ),
         ],
       ),

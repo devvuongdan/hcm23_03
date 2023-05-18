@@ -13,11 +13,13 @@ class TodoListPage extends StatelessWidget {
               child: Container(
             color: Colors.green,
           )),
-          Expanded(
+          const Expanded(
               // todo: Tan, HaGiaMinh, Nhat
               flex: 4,
-              child: Container(
-                color: Colors.blue,
+              child: Text(
+                "a",
+                style: TextStyle(
+                    leadingDistribution: TextLeadingDistribution.even),
               )),
         ],
       ),

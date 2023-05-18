@@ -21,40 +21,7 @@ class _OnboardingPageState extends State<OnboardingPage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      body: Column(
-        crossAxisAlignment: CrossAxisAlignment.start,
-        children: [
-          const Padding(
-            padding: EdgeInsets.only(top: 127, right: 64, left: 15),
-            child: Text(
-              "Always there: more than 1000 cars in Tbilisi",
-              textAlign: TextAlign.left,
-              style: TextStyle(
-                  // fontFamily: 'DancingScript',
-                  fontSize: 24,
-                  height: 32 / 24,
-                  fontWeight: FontWeight.w700,
-                  color: Colors.white),
-            ),
-          ),
-          const Padding(
-            padding: EdgeInsets.only(top: 10, right: 64, left: 15),
-            child: Text(
-              "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.",
-              textAlign: TextAlign.left,
-              style: TextStyle(
-                  // fontFamily: 'Inconsolata',
-                  fontSize: 18,
-                  height: 24 / 18,
-                  fontWeight: FontWeight.w400,
-                  color: Colors.white),
-            ),
-          ),
-          Center(
-            child: Image.asset("assets/images/onboarding_img_1.png"),
-          ),
-        ],
-      ),
+      body: _buildStep(),
       backgroundColor: const Color(0xFFB7ABFD),
       floatingActionButton: YinFloatingActionButton(
         args: YinFloatingActionButtonArgs(
@@ -64,6 +31,46 @@ class _OnboardingPageState extends State<OnboardingPage> {
           stepCount: 2,
         ),
       ),
+    );
+  }
+
+  Column _buildStep() {
+    return Column(
+      crossAxisAlignment: CrossAxisAlignment.start,
+      children: [
+        const Padding(
+          padding: EdgeInsets.only(top: 127, right: 64, left: 15),
+          child: Text(
+            "ONBOARDING TITLE",
+            textAlign: TextAlign.left,
+            style: TextStyle(
+                // fontFamily: 'DancingScript',
+                fontSize: 24,
+                height: 32 / 24,
+                fontWeight: FontWeight.w700,
+                color: Colors.white),
+          ),
+        ),
+        const Padding(
+          padding: EdgeInsets.only(top: 10, right: 64, left: 15),
+          child: Text(
+            "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.",
+            textAlign: TextAlign.left,
+            style: TextStyle(
+                // fontFamily: 'Inconsolata',
+                fontSize: 18,
+                height: 24 / 18,
+                fontWeight: FontWeight.w400,
+                color: Colors.white),
+          ),
+        ),
+        Center(
+          child: Padding(
+            padding: const EdgeInsets.all(8.0),
+            child: Image.asset("assets/images/onboarding_img_1.png"),
+          ),
+        ),
+      ],
     );
   }
 }

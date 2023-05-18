@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:hcm23_03/features/home/pages/todo_list_page.dart';
 import 'package:hcm23_03/features/onboarding/widgets/onboarding_floatting_action_button.dart';
 
 class OnboardingPage extends StatefulWidget {
@@ -32,7 +33,11 @@ class _OnboardingPageState extends State<OnboardingPage> {
                     duration: const Duration(milliseconds: 500),
                     curve: Curves.easeIn);
               } else {
-                print("Skip");
+                Navigator.of(context).push(
+                  MaterialPageRoute(
+                    builder: (_) => const TodoListPage(),
+                  ),
+                );
               }
             });
           },
@@ -160,44 +165,6 @@ class _OnboardingPageState extends State<OnboardingPage> {
           ],
         ),
       ),
-    );
-  }
-
-  Column _buildStep() {
-    return Column(
-      crossAxisAlignment: CrossAxisAlignment.start,
-      children: [
-        const Padding(
-          padding: EdgeInsets.only(top: 127, right: 64, left: 15),
-          child: Text(
-            "ONBOARDING TITLE",
-            textAlign: TextAlign.left,
-            style: TextStyle(
-                fontSize: 24,
-                height: 32 / 24,
-                fontWeight: FontWeight.w700,
-                color: Colors.white),
-          ),
-        ),
-        const Padding(
-          padding: EdgeInsets.only(top: 10, right: 64, left: 15),
-          child: Text(
-            "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.",
-            textAlign: TextAlign.left,
-            style: TextStyle(
-                fontSize: 18,
-                height: 24 / 18,
-                fontWeight: FontWeight.w400,
-                color: Colors.white),
-          ),
-        ),
-        Center(
-          child: Padding(
-            padding: const EdgeInsets.all(8.0),
-            child: Image.asset("assets/images/onboarding_img_1.png"),
-          ),
-        ),
-      ],
     );
   }
 }

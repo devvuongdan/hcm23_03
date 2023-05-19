@@ -12,6 +12,7 @@ class TodoListPage extends StatelessWidget {
       body: Column(
         children: [
           Expanded(
+<<<<<<< HEAD
             //todo: Trinh voi Dung
             child: Container(
               color: Colors.white,
@@ -58,10 +59,19 @@ class TodoListPage extends StatelessWidget {
             ),
           ),
           Expanded(
+=======
+              //todo: Trinh voi Dung
+              child: Container(
+            color: Colors.green,
+          )),
+          const Expanded(
+>>>>>>> origin/dev-v1
               // todo: Tan, HaGiaMinh, Nhat
               flex: 4,
-              child: Container(
-                color: Colors.blue,
+              child: Text(
+                "a",
+                style: TextStyle(
+                    leadingDistribution: TextLeadingDistribution.even),
               )),
         ],
       ),

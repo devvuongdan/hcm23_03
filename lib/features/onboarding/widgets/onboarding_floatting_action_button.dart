@@ -80,9 +80,7 @@ class _YinFloatingActionButtonState extends State<YinFloatingActionButton>
   @override
   Widget build(BuildContext context) {
     return GestureDetector(
-      onTap: () {
-        widget.args.onTap?.call();
-      },
+      onTap: widget.args.onTap,
       child: Container(
         height: widget.args.size,
         width: widget.args.size,

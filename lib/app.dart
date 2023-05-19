@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
-
-import 'features/onboarding/pages/onboarding_page.dart';
+import 'package:hcm23_03/features/onboarding/pages/onboarding_page.dart';
 
 class MyApp extends StatelessWidget {
   const MyApp({super.key});

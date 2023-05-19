@@ -1,8 +1,5 @@
 buildscript {
-    android {
-  compileSdkVersion 33
-  ...
-}
+    
     ext.kotlin_version = '1.6.10'
     repositories {
         google()
@@ -12,6 +9,9 @@ buildscript {
     dependencies {
         classpath 'com.android.tools.build:gradle:7.1.2'
         classpath "org.jetbrains.kotlin:kotlin-gradle-plugin:$kotlin_version"
+    }
+    android {
+        compileSdkVersion 33
     }
 }
 

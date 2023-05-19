@@ -192,7 +192,11 @@ packages:
       name: path_provider_foundation
       url: "https://pub.dartlang.org"
     source: hosted
+<<<<<<< HEAD
     version: "2.2.3"
+=======
+    version: "2.2.1"
+>>>>>>> origin/dev-v1
   path_provider_linux:
     dependency: transitive
     description:
@@ -326,4 +330,8 @@ packages:
     version: "6.1.0"
 sdks:
   dart: ">=2.18.0 <3.0.0"
+<<<<<<< HEAD
   flutter: ">=3.3.0"
+=======
+  flutter: ">=3.0.0"
+>>>>>>> origin/dev-v1

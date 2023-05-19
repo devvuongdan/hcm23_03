@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:hcm23_03/features/home/pages/todo_list_page.dart';
+import 'package:hcm23_03/features/onboarding/pages/onboarding_page.dart';
 
 class MyApp extends StatelessWidget {
   const MyApp({super.key});
@@ -11,7 +11,7 @@ class MyApp extends StatelessWidget {
       theme: ThemeData(
         primarySwatch: Colors.blue,
       ),
-      home: const TodoListPage(),
+      home: const OnboardingPage(),
     );
   }
 }

@@ -13,9 +13,10 @@ class TodoListPage extends StatelessWidget {
               child: Container(
             color: Colors.green[100],
           )),
-          Expanded(
+          const Expanded(
               // todo: Tan, HaGiaMinh, Nhat
               flex: 4,
+<<<<<<< HEAD
               child: Padding(
                 padding: const EdgeInsets.all(12.0),
                 child: Column(
@@ -118,6 +119,12 @@ class TodoListPage extends StatelessWidget {
                     // ),
                   ],
                 ),
+=======
+              child: Text(
+                "a",
+                style: TextStyle(
+                    leadingDistribution: TextLeadingDistribution.even),
+>>>>>>> origin/dev-v1
               )),
         ],
       ),

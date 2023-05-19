@@ -9,6 +9,14 @@ class LoginPage extends StatelessWidget {
       appBar: AppBar(
         title: const Text("LoginPage"),
       ),
+      body: Center(
+        child: TextButton(
+          onPressed: () {
+            Navigator.of(context).pushNamed("/HomePage");
+          },
+          child: const Text("Go to Home"),
+        ),
+      ),
     );
   }
 }

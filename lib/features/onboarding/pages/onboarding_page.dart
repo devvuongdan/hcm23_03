@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:hcm23_03/features/home/pages/todo_list_page.dart';
 import 'package:hcm23_03/features/onboarding/widgets/onboarding_floatting_action_button.dart';
 
 class OnboardingPage extends StatefulWidget {
@@ -9,60 +10,159 @@ class OnboardingPage extends StatefulWidget {
 }
 
 class _OnboardingPageState extends State<OnboardingPage> {
-  double start = 0;
-  double end = 0.5;
-  void continues() {
-    setState(() {
-      start += 0.5;
-      end += 0.5;
-    });
+  final PageController pageController = PageController();
+  int currentStep = 1;
+  @override
+  void initState() {
+    super.initState();
   }
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      body: Column(
-        crossAxisAlignment: CrossAxisAlignment.start,
+      floatingActionButton: YinFloatingActionButton(
+        args: YinFloatingActionButtonArgs(
+          size: 58,
+          scaffoldBackgroundColor: const Color(0xFFB7ABFD),
+          currentStep: currentStep,
+          stepCount: 2,
+          onTap: () {
+            setState(() {
+              if (currentStep < 2 && currentStep >= 0) {
+                pageController.animateToPage(currentStep,
+                    duration: const Duration(milliseconds: 500),
+                    curve: Curves.easeIn);
+              } else {
+                Navigator.of(context).push(
+                  MaterialPageRoute(
+                    builder: (_) => const TodoListPage(),
+                  ),
+                );
+              }
+            });
+          },
+        ),
+      ),
+      body: Stack(
         children: [
-          const Padding(
-            padding: EdgeInsets.only(top: 127, right: 64, left: 15),
-            child: Text(
-              "Always there: more than 1000 cars in Tbilisi",
+          PageView(
+            controller: pageController,
+            onPageChanged: (value) {
+              setState(() {
+                currentStep = (value + 1);
+              });
+            },
+            physics: const ClampingScrollPhysics(),
+            children: [
+              _buildOnboardingStep(
+                title: "ONBOARDING TITLE",
+                content:
+                    "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.",
+                imageUrl: "assets/images/onboarding_img_1.png",
+                bgColor: const Color(0xFFB7ABFD),
+              ),
+              _buildOnboardingStep(
+                title: "ONBOARDING TITLE",
+                content:
+                    "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.",
+                imageUrl: "assets/images/onboarding_img_2.png",
+                bgColor: const Color(0XFF95B6FF),
+              ),
+            ],
+          ),
+          Padding(
+            padding: const EdgeInsets.all(16.0),
+            child: Column(
+              mainAxisAlignment: MainAxisAlignment.end,
+              children: [
+                SizedBox(
+                  height: 8,
+                  child: ListView.separated(
+                      scrollDirection: Axis.horizontal,
+                      itemCount: 2,
+                      separatorBuilder: (context, index) {
+                        return const SizedBox(
+                          width: 8,
+                        );
+                      },
+                      itemBuilder: (context, idx) {
+                        if (idx == currentStep - 1) {
+                          return Container(
+                            width: 24,
+                            height: 8,
+                            decoration: const BoxDecoration(
+                              borderRadius:
+                                  BorderRadius.all(Radius.circular(4)),
+                              color: Colors.white,
+                            ),
+                          );
+                        } else {
+                          return Container(
+                            width: 8,
+                            height: 8,
+                            decoration: BoxDecoration(
+                              borderRadius:
+                                  const BorderRadius.all(Radius.circular(4)),
+                              color: const Color(0XFFFFFFFF).withOpacity(0.5),
+                            ),
+                          );
+                        }
+                      }),
+                ),
+                const SizedBox(
+                  height: 50,
+                )
+              ],
+            ),
+          ),
+        ],
+      ),
+    );
+  }
+
+  Container _buildOnboardingStep({
+    String title = "",
+    String content = "",
+    String imageUrl = "",
+    required Color bgColor,
+  }) {
+    return Container(
+      color: bgColor,
+      height: double.infinity,
+      width: double.infinity,
+      child: Padding(
+        padding: const EdgeInsets.all(16),
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            const SizedBox(
+              height: 100,
+            ),
+            Text(
+              title,
               textAlign: TextAlign.left,
-              style: TextStyle(
-                  // fontFamily: 'DancingScript',
+              style: const TextStyle(
                   fontSize: 24,
                   height: 32 / 24,
                   fontWeight: FontWeight.w700,
                   color: Colors.white),
             ),
-          ),
-          const Padding(
-            padding: EdgeInsets.only(top: 10, right: 64, left: 15),
-            child: Text(
-              "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.",
+            const SizedBox(
+              height: 12,
+            ),
+            Text(
+              content,
               textAlign: TextAlign.left,
-              style: TextStyle(
-                  // fontFamily: 'Inconsolata',
+              style: const TextStyle(
                   fontSize: 18,
                   height: 24 / 18,
                   fontWeight: FontWeight.w400,
                   color: Colors.white),
             ),
-          ),
-          Center(
-            child: Image.asset("assets/images/onboarding_img_1.png"),
-            
-          ),
-        ],
-      ),
-      backgroundColor: const Color(0xFFB7ABFD),
-      floatingActionButton: YinFloatingActionButton(
-        args: YinFloatingActionButtonArgs(
-          size: 58,
-          scaffoldBackgroundColor: const Color(0xFFB7ABFD),
-          currentStep: 0,
-          stepCount: 2,
+            Expanded(
+              child: Image.asset(imageUrl),
+            ),
+          ],
         ),
       ),
     );

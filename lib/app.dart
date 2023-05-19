@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:hcm23_03/features/onboarding/pages/onboarding_page.dart';
+import 'package:hcm23_03/features/splash/pages/splash_page.dart';
 
 class MyApp extends StatelessWidget {
   const MyApp({super.key});
@@ -11,7 +12,7 @@ class MyApp extends StatelessWidget {
       theme: ThemeData(
         primarySwatch: Colors.blue,
       ),
-      home: const OnboardingPage(),
+      home: const SplashPage(),
     );
   }
 }

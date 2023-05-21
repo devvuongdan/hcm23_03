@@ -1,6 +1,10 @@
 import 'package:flutter/material.dart';
+import 'package:hcm23_03/app.dart';
+import 'package:hcm23_03/features/home/pages/home_page.dart';
 import 'package:hcm23_03/features/home/pages/todo_list_page.dart';
+import 'package:hcm23_03/features/login/pages/login_page.dart';
 import 'package:hcm23_03/features/onboarding/widgets/onboarding_floatting_action_button.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
 class OnboardingPage extends StatefulWidget {
   const OnboardingPage({super.key});
@@ -9,15 +13,41 @@ class OnboardingPage extends StatefulWidget {
   State<OnboardingPage> createState() => _OnboardingPageState();
 }
 
+// bool? seenOnboard;
+// int? isViewed;
+// Future<void> main() async {
+//   WidgetsFlutterBinding.ensureInitialized();
+//   SharedPreferences pref = await SharedPreferences.getInstance();
+//   isViewed = pref.getInt('onBoard');
+//   await pref.setInt('onBoard', 1);
+
+// }
 class _OnboardingPageState extends State<OnboardingPage> {
   final PageController pageController = PageController();
   int currentStep = 1;
-  @override
-  void initState() {
-    super.initState();
-  }
 
   @override
+
+  // _storeOnBoardInfo() async {
+  //   int isViewed = 0;
+  //   print("Shared pref called");
+  //   SharedPreferences prefs = await SharedPreferences.getInstance();
+  //   await prefs.setInt('onBoard', isViewed);
+  //   print(prefs.getInt('onBoard'));
+  // }
+
+  // Future setSeenonboard() async {
+  //   SharedPreferences prefs = await SharedPreferences.getInstance();
+  //   seenOnboard = await prefs.setBool('seenOnboard', true);
+  // }
+
+  @override
+  void initState() {
+    // TODO: implement initState
+    super.initState();
+    // setSeenonboard();
+  }
+
   Widget build(BuildContext context) {
     return Scaffold(
       floatingActionButton: YinFloatingActionButton(
@@ -27,20 +57,58 @@ class _OnboardingPageState extends State<OnboardingPage> {
           currentStep: currentStep,
           stepCount: 2,
           onTap: () {
-            setState(() {
+            setState(() async {
               if (currentStep < 2 && currentStep >= 0) {
                 pageController.animateToPage(currentStep,
                     duration: const Duration(milliseconds: 500),
                     curve: Curves.easeIn);
               } else {
-                Navigator.of(context).push(
+                // void checkIsFirstTime(BuildContext chk) async {
+                //   const String onboardingKey = "onboardingkey";
+                //   final SharedPreferences preferences =
+                //       await SharedPreferences.getInstance();
+                //   bool? value = preferences.getBool(onboardingKey);
+                //   if (value == false) {
+                //     Navigator.of(chk).pushAndRemoveUntil(
+                //         MaterialPageRoute(
+                //           builder: (_) =>const LoginPage() ,
+                //           ),
+                //           (route) => false,
+                //           );
+                //   } else {
+                //      Navigator.of(chk).pushAndRemoveUntil(
+                //         MaterialPageRoute(
+                //           builder: (_) =>const OnboardingPage() ,
+                //           ),
+                //           (route) => false,
+                //           );
+                //   }
+                // }
+
+                // await _storeOnBoardInfo();
+                final prefs = await SharedPreferences.getInstance();
+                seenOnboard = await prefs.setBool('seenOnboard', true);
+                Navigator.of(context).pushReplacement(
                   MaterialPageRoute(
-                    builder: (_) => const TodoListPage(),
+                    builder: (_) => const LoginPage(),
                   ),
+                  
                 );
               }
             });
           },
+          // void checkIsFirstTime(BuildContext chk) async {
+          //   const String onboardingKey = "onboardingkey";
+          //   final SharedPreferences preferences = await SharedPreferences.getInstance();
+          //   bool? value = preferences.getBool(onboardingKey);
+          //   if (value == false) {
+          //     Navigator.of(chk)
+          //     .pushNamedAndRemoveUntil('/HomePage', (Route<dynamic> route) => false);
+          //   }else{
+          //     Navigator.of(chk)
+          //     .pushNamedAndRemoveUntil('/OnboardingPage', (Route<dynamic> route) => false);
+          //   }
+          // }
         ),
       ),
       body: Stack(

@@ -9,14 +9,14 @@ class SplashPage extends StatelessWidget {
       appBar: AppBar(
         title: const Text("SplashPage"),
       ),
-     body: Center( child: TextButton(
-         onPressed: () { 
-          Navigator.of(context) 
-          .push(MaterialPageRoute(
-            builder: (_) => const LoginPage())); }, 
-            child: const Text("Go to Screen1"), 
-            ), 
-            ),
+      body: Center(
+        child: TextButton(
+          onPressed: () {
+            Navigator.of(context).pushNamed("/LoginPage");
+          },
+          child: const Text("Go to Login"),
+        ),
+      ),
     );
 
   }

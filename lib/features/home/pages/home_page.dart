@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:hcm23_03/features/login/pages/login_page.dart';
 
 class HomePage extends StatelessWidget {
   const HomePage({super.key});
@@ -46,19 +47,17 @@ class Screen1 extends StatelessWidget {
           children: [
             TextButton(
               onPressed: () {
+                Navigator.of(context).pushNamed("/Screen2");
+              },
+              child: const Text("Go to Screen2"),
+            ),
+            TextButton(
+              onPressed: () {
                 Navigator.of(context).popUntil(
                   ModalRoute.withName("/LoginPage"),
                 );
               },
               child: const Text("Pop to Login"),
-            ),
-            TextButton(
-              onPressed: () {
-                Navigator.of(context).popUntil(
-                  ModalRoute.withName("/SplashPage"),
-                );
-              },
-              child: const Text("Pop to Splash"),
             ),
           ],
         ),

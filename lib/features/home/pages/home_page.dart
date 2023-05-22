@@ -14,8 +14,12 @@ class HomePage extends StatefulWidget {
 
 class _HomePageState extends State<HomePage> {
   int? currentIndex = 1;
-  final PageController pageController = PageController(initialPage: 1);
-  void changePage(int? idx) {}
+
+  void changePage(int? idx) {
+    setState(() {
+      currentIndex = idx;
+    });
+  }
 
   void createNewTask() async {}
 

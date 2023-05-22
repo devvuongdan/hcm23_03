@@ -5,7 +5,6 @@ import 'package:hcm23_03/features/login/pages/login_page.dart';
 import 'package:hcm23_03/features/onboarding/pages/onboarding_page.dart';
 import 'package:hcm23_03/features/splash/pages/splash_page.dart';
 
-import 'features/onboarding/pages/onboarding_page.dart';
 
 class MyApp extends StatelessWidget {
   const MyApp({super.key});
@@ -21,7 +20,7 @@ class MyApp extends StatelessWidget {
         navigatorObservers: [
           NavigatorObserver(),
         ],
-        home: const TodoListPage(),
+        home: const OnboardingPage(),
         onGenerateRoute: (setting) {
           if (setting.name == "/HomePage") {
             return MaterialPageRoute(

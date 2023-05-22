@@ -97,7 +97,7 @@ Widget _buildTaskList() {
                 child: Text(
                   task.starttime,
                   textAlign: TextAlign.center,
-                  style: TextStyle(
+                  style: const TextStyle(
                     color: Colors.black87,
                     fontSize: 14,
                     height: 1.5,
@@ -125,27 +125,27 @@ Widget _buildTaskList() {
                       children: [
                         Text(
                           task.title,
-                          style: TextStyle(
+                          style: const TextStyle(
                             color: Colors.black87,
                             fontSize: 16,
                             height: 1.5,
                             fontWeight: FontWeight.w700,
                           ),
                         ),
-                        SizedBox(height: 6),
+                        const SizedBox(height: 6),
                         Text(
                           task.description,
-                          style: TextStyle(
+                          style: const TextStyle(
                             color: Colors.black45,
                             fontSize: 12,
                             height: 1.5,
                             fontWeight: FontWeight.w400,
                           ),
                         ),
-                        SizedBox(height: 6),
+                        const SizedBox(height: 6),
                         Text(
-                          task.starttime + " - " + task.duetime,
-                          style: TextStyle(
+                          "${task.starttime} - ${task.duetime}",
+                          style: const TextStyle(
                             color: Colors.black87,
                             fontSize: 13,
                             height: 1.5,

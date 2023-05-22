@@ -6,9 +6,11 @@ import '../../../shared/shared_ui/inputs/input_normal/input_normal.dart';
 
 class TaskStageInput extends StatefulWidget {
   final void Function() onRightIconTaped;
+  final void Function(String?) onChanged;
   const TaskStageInput({
     Key? key,
     required this.onRightIconTaped,
+    required this.onChanged,
   }) : super(key: key);
 
   @override
@@ -33,6 +35,7 @@ class _TaskStageInputState extends State<TaskStageInput> {
               color: Color(0XFF111322),
               fontSize: 14,
             ),
+            onChanged: widget.onChanged,
             decoration: const InputDecoration(contentPadding: EdgeInsets.zero),
           ),
         ),

@@ -1,7 +1,10 @@
 import 'package:flutter/material.dart';
+import 'package:hcm23_03/features/tasks/entities/task_details_page_argument.dart';
 import 'package:hcm23_03/features/tasks/pages/task_details_page.dart';
 
+import '../../../main.dart';
 import '../../../shared/shared_ui/base_screen/base_screen.dart';
+import '../../tasks/entities/task.dart';
 import '../../tasks/pages/today_tasks_page.dart';
 import '../widgets/bubble_bottom_bar.dart';
 
@@ -24,8 +27,32 @@ class _HomePageState extends State<HomePage> {
     });
   }
 
-  void createNewTask() {
-    Navigator.of(context).pushNamed(TaskDetailsPage.routeName, arguments: null);
+  void createNewTask() async {
+    await Navigator.of(context).pushNamed(
+      TaskDetailsPage.routeName,
+      arguments: TaskDetailsPageArgument(addNewTask: addNewTaskSuccess),
+    );
+  }
+
+  void addNewTaskSuccess(Task task) {
+    setState(() {
+      _tasks.add(task);
+    });
+  }
+
+  late List<Task> _tasks = [];
+
+  @override
+  void initState() {
+    getTask();
+    super.initState();
+  }
+
+  void getTask() async {
+    final List<Task> tasks = await loadJsonData();
+    setState(() {
+      _tasks = tasks;
+    });
   }
 
   @override
@@ -46,7 +73,7 @@ class _HomePageState extends State<HomePage> {
           onTap: changePage,
           borderRadius: const BorderRadius.vertical(
             top: Radius.circular(16),
-          ), //border radius doesn't work when the notch is enabled.
+          ),
           elevation: 8,
           tilesPadding: const EdgeInsets.symmetric(
             vertical: 8.0,
@@ -101,7 +128,14 @@ class _HomePageState extends State<HomePage> {
                 child: Text("Tính năng đang trong quá trình phát triển"),
               ),
             ),
-            const TodayTasksPage(),
+            TodayTasksPage(
+              tasks: _tasks,
+              deleteTask: ((taskId) {
+                setState(() {
+                  _tasks.removeWhere((element) => element.id == taskId);
+                });
+              }),
+            ),
             Scaffold(
               appBar: AppBar(),
               body: const Center(

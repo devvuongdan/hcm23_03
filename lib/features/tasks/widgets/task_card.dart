@@ -1,5 +1,6 @@
 // ignore_for_file: public_member_api_docs, sort_constructors_first
 import 'package:flutter/material.dart';
+import 'package:hcm23_03/features/tasks/entities/task_details_page_argument.dart';
 import 'package:intl/intl.dart';
 
 import '../entities/task.dart';
@@ -8,10 +9,12 @@ import '../pages/task_details_page.dart';
 class TaskCard extends StatefulWidget {
   final Task task;
   final Color color;
+  final void Function() deleteTask;
   const TaskCard({
     Key? key,
     required this.task,
     required this.color,
+    required this.deleteTask,
   }) : super(key: key);
 
   @override
@@ -33,11 +36,9 @@ class _TaskCardState extends State<TaskCard> {
     }
   }
 
-  void deleteTask() {}
-
   void viewTask() {
-    Navigator.of(context)
-        .pushNamed(TaskDetailsPage.routeName, arguments: widget.task);
+    Navigator.of(context).pushNamed(TaskDetailsPage.routeName,
+        arguments: TaskDetailsPageArgument(currentTask: widget.task));
   }
 
   @override
@@ -106,7 +107,9 @@ class _TaskCardState extends State<TaskCard> {
               child: Column(
                 children: [
                   IconButton(
-                    onPressed: deleteTask,
+                    onPressed: () {
+                      widget.deleteTask.call();
+                    },
                     icon: const Icon(
                       Icons.delete,
                       color: Colors.red,

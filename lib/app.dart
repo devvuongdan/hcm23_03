@@ -4,9 +4,8 @@ import 'package:hcm23_03/features/login/pages/login_page.dart';
 import 'package:hcm23_03/features/onboarding/pages/onboarding_page.dart';
 import 'package:hcm23_03/features/register/pages/register_page.dart';
 import 'package:hcm23_03/features/splash/pages/splash_page.dart';
+import 'package:hcm23_03/features/tasks/entities/task_details_page_argument.dart';
 import 'package:hcm23_03/features/tasks/pages/task_details_page.dart';
-
-import 'features/tasks/entities/task.dart';
 
 class MyApp extends StatelessWidget {
   const MyApp({super.key});
@@ -57,11 +56,12 @@ class MyApp extends StatelessWidget {
             );
           }
           if (setting.name == TaskDetailsPage.routeName) {
-            final task = setting.arguments as Task?;
+            final arg = setting.arguments as TaskDetailsPageArgument;
+
             return MaterialPageRoute(
               settings: const RouteSettings(name: TaskDetailsPage.routeName),
               builder: (_) => TaskDetailsPage(
-                currentTask: task,
+                arg: arg,
               ),
             );
           }

@@ -1,24 +1,27 @@
 // ignore_for_file: public_member_api_docs, sort_constructors_first
 import 'dart:math';
+
+import 'package:flutter/material.dart';
+import 'package:intl/intl.dart';
+import 'package:uuid/uuid.dart';
+
 import 'package:hcm23_03/features/home/pages/home_page.dart';
+import 'package:hcm23_03/features/tasks/entities/task_details_state.dart';
 import 'package:hcm23_03/shared/shared_ui/btn/btn_default/btn_default.dart';
 import 'package:hcm23_03/shared/shared_ui/inputs/input_normal/input_normal.dart';
-import 'package:intl/intl.dart';
-import 'package:flutter/material.dart';
-
-import 'package:hcm23_03/features/tasks/entities/task_details_state.dart';
 
 import '../../../shared/shared_ui/base_screen/base_screen.dart';
 import '../entities/task.dart';
+import '../entities/task_details_page_argument.dart';
 import '../widgets/task_stage_input.dart';
 
 class TaskDetailsPage extends StatefulWidget {
   static const String routeName = "/TaskDetailsPage";
-  final Task? currentTask;
+  final TaskDetailsPageArgument arg;
 
   const TaskDetailsPage({
     Key? key,
-    required this.currentTask,
+    required this.arg,
   }) : super(key: key);
 
   @override
@@ -32,8 +35,8 @@ class _TaskDetailsPageState extends State<TaskDetailsPage> {
   void toggleState() {
     setState(() {
       if (state == TaskDetailsState.view &&
-          status(widget.currentTask) != TaskProgress.done &&
-          status(widget.currentTask) != TaskProgress.failure) {
+          status(widget.arg.currentTask) != TaskProgress.done &&
+          status(widget.arg.currentTask) != TaskProgress.failure) {
         state = TaskDetailsState.edit;
       } else {
         state = TaskDetailsState.view;
@@ -45,13 +48,36 @@ class _TaskDetailsPageState extends State<TaskDetailsPage> {
   void addNewBlankTaskStage() {
     setState(() {
       _taskStage.add(
-        TaskStage(id: "", description: ""),
+        TaskStage(id: "", description: "", isDone: false),
       );
     });
   }
 
+  late DateTime newTaskStartTime;
+  late DateTime newTaskDueTime;
+
   void createNewTask() {
-    Navigator.of(context).popUntil(ModalRoute.withName(HomePage.routeName));
+    if (_taskStage.isNotEmpty ||
+        titleController.text.isNotEmpty ||
+        descriptionController.text.isNotEmpty) {
+      //todo: implement
+      newTaskStartTime = DateTime.now();
+      newTaskDueTime = DateTime.now().add(const Duration(hours: 3));
+      final Task newTask = Task(
+        title: titleController.text,
+        description: descriptionController.text,
+        id: const Uuid().v4(),
+        startTime: newTaskStartTime,
+        dueTime: newTaskDueTime,
+        teamMembers: const [],
+        taskStages: _taskStage,
+      );
+      widget.arg.addNewTask?.call(newTask);
+    }
+
+    Navigator.of(context).popUntil(ModalRoute.withName(
+      HomePage.routeName,
+    ));
   }
 
   void onRemove(int index) {
@@ -66,14 +92,14 @@ class _TaskDetailsPageState extends State<TaskDetailsPage> {
       return Scaffold(
         appBar: AppBar(
           title: Text(
-            widget.currentTask == null ? "New Task" : "Task Details",
+            widget.arg.currentTask == null ? "New Task" : "Task Details",
           ),
           elevation: 0,
           actions: [
             IconButton(
               onPressed:
-                  widget.currentTask == null ? createNewTask : toggleState,
-              icon: widget.currentTask == null
+                  widget.arg.currentTask == null ? createNewTask : toggleState,
+              icon: widget.arg.currentTask == null
                   ? const Icon(
                       Icons.check_rounded,
                       size: 20,
@@ -97,28 +123,28 @@ class _TaskDetailsPageState extends State<TaskDetailsPage> {
                 ),
                 _buildTitle(
                   state,
-                  widget.currentTask,
+                  widget.arg.currentTask,
                 ),
                 const SizedBox(
                   height: 20,
                 ),
                 _buildDuetime(
                   state,
-                  widget.currentTask,
+                  widget.arg.currentTask,
                 ),
                 const SizedBox(
                   height: 20,
                 ),
                 _buildDescription(
                   state,
-                  widget.currentTask,
+                  widget.arg.currentTask,
                 ),
                 const SizedBox(
                   height: 28,
                 ),
                 _buildStagesOfTask(
                   state,
-                  widget.currentTask,
+                  widget.arg.currentTask,
                 )
               ],
             ),
@@ -129,11 +155,13 @@ class _TaskDetailsPageState extends State<TaskDetailsPage> {
   }
 
   Widget _buildTaskStageInput(int index) {
-    return TaskStageInput(
-      onRightIconTaped: () {
-        onRemove(index);
-      },
-    );
+    return TaskStageInput(onRightIconTaped: () {
+      onRemove(index);
+    }, onChanged: ((p0) {
+      _taskStage[index] = _taskStage[index].copyWith(
+        description: p0,
+      );
+    }));
   }
 
   Column _buildStagesOfTask(
@@ -218,7 +246,10 @@ class _TaskDetailsPageState extends State<TaskDetailsPage> {
                   BtnDefault(
                     onTap: addNewBlankTaskStage,
                     customChild: const Center(
-                      child: Icon(Icons.add),
+                      child: Icon(
+                        Icons.add,
+                        color: Colors.white,
+                      ),
                     ),
                   ),
                 ],
@@ -231,7 +262,10 @@ class _TaskDetailsPageState extends State<TaskDetailsPage> {
     TaskDetailsState state,
     Task? currentTask,
   ) {
-    descriptionController.text = currentTask?.description ?? "";
+    if (currentTask != null) {
+      descriptionController.text = currentTask.description ?? "";
+    }
+
     return Column(
       mainAxisSize: MainAxisSize.min,
       crossAxisAlignment: CrossAxisAlignment.start,
@@ -280,7 +314,7 @@ class _TaskDetailsPageState extends State<TaskDetailsPage> {
         const SizedBox(
           height: 12,
         ),
-        if (widget.currentTask != null)
+        if (widget.arg.currentTask != null)
           Row(
             children: [
               SizedBox(
@@ -480,7 +514,10 @@ class _TaskDetailsPageState extends State<TaskDetailsPage> {
     TaskDetailsState state,
     Task? currentTask,
   ) {
-    titleController.text = currentTask?.title ?? "";
+    if (currentTask != null) {
+      titleController.text = currentTask.title ?? "";
+    }
+
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [

@@ -135,6 +135,17 @@ class _HomePageState extends State<HomePage> {
                   _tasks.removeWhere((element) => element.id == taskId);
                 });
               }),
+              updateTask: (task) {
+                setState(() {
+                  final int indexOfTask =
+                      _tasks.indexWhere((element) => element.id == task?.id);
+                  if (indexOfTask != -1) {
+                    setState(() {
+                      _tasks[indexOfTask] = task!;
+                    });
+                  }
+                });
+              },
             ),
             Scaffold(
               appBar: AppBar(),

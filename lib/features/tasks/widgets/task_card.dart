@@ -1,7 +1,8 @@
 // ignore_for_file: public_member_api_docs, sort_constructors_first
 import 'package:flutter/material.dart';
-import 'package:hcm23_03/features/tasks/entities/task_details_page_argument.dart';
 import 'package:intl/intl.dart';
+
+import 'package:hcm23_03/features/tasks/entities/task_details_page_argument.dart';
 
 import '../entities/task.dart';
 import '../pages/task_details_page.dart';
@@ -10,11 +11,13 @@ class TaskCard extends StatefulWidget {
   final Task task;
   final Color color;
   final void Function() deleteTask;
+  final void Function(Task? task) updateTask;
   const TaskCard({
     Key? key,
     required this.task,
     required this.color,
     required this.deleteTask,
+    required this.updateTask,
   }) : super(key: key);
 
   @override
@@ -38,7 +41,8 @@ class _TaskCardState extends State<TaskCard> {
 
   void viewTask() {
     Navigator.of(context).pushNamed(TaskDetailsPage.routeName,
-        arguments: TaskDetailsPageArgument(currentTask: widget.task));
+        arguments: TaskDetailsPageArgument(
+            currentTask: widget.task, updateTask: widget.updateTask));
   }
 
   @override

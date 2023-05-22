@@ -40,6 +40,15 @@ class _TaskDetailsPageState extends State<TaskDetailsPage> {
         state = TaskDetailsState.edit;
       } else {
         state = TaskDetailsState.view;
+        final Task task = widget.arg.currentTask!.copyWith(
+          title: titleController.text,
+          description: descriptionController.text,
+          stages: [..._taskStage],
+        );
+        widget.arg.updateTask?.call(task);
+        Navigator.of(context).popUntil(ModalRoute.withName(
+          HomePage.routeName,
+        ));
       }
     });
   }
@@ -84,6 +93,15 @@ class _TaskDetailsPageState extends State<TaskDetailsPage> {
     setState(() {
       _taskStage.removeAt(index);
     });
+  }
+
+  @override
+  void initState() {
+    super.initState();
+    if (widget.arg.currentTask != null) {
+      titleController.text = widget.arg.currentTask?.title ?? "";
+      descriptionController.text = widget.arg.currentTask?.description ?? "";
+    }
   }
 
   @override
@@ -262,10 +280,6 @@ class _TaskDetailsPageState extends State<TaskDetailsPage> {
     TaskDetailsState state,
     Task? currentTask,
   ) {
-    if (currentTask != null) {
-      descriptionController.text = currentTask.description ?? "";
-    }
-
     return Column(
       mainAxisSize: MainAxisSize.min,
       crossAxisAlignment: CrossAxisAlignment.start,
@@ -304,7 +318,7 @@ class _TaskDetailsPageState extends State<TaskDetailsPage> {
                             contentPadding: EdgeInsets.zero),
                       )
                     : Text(
-                        currentTask.description ?? "",
+                        descriptionController.text,
                         style: const TextStyle(
                           fontSize: 14,
                           color: Color(0XFF111322),
@@ -514,10 +528,6 @@ class _TaskDetailsPageState extends State<TaskDetailsPage> {
     TaskDetailsState state,
     Task? currentTask,
   ) {
-    if (currentTask != null) {
-      titleController.text = currentTask.title ?? "";
-    }
-
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
@@ -554,7 +564,7 @@ class _TaskDetailsPageState extends State<TaskDetailsPage> {
                         children: [
                           Expanded(
                             child: Text(
-                              currentTask.title ?? "",
+                              titleController.text,
                               style: const TextStyle(
                                 fontSize: 20,
                                 fontWeight: FontWeight.w700,

@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:hcm23_03/features/tasks/pages/task_details_page.dart';
 
 import '../../../shared/shared_ui/base_screen/base_screen.dart';
 import '../../tasks/pages/today_tasks_page.dart';
@@ -13,8 +14,8 @@ class HomePage extends StatefulWidget {
 }
 
 class _HomePageState extends State<HomePage> {
-  int? currentIndex = 0;
-  final PageController pageController = PageController();
+  int? currentIndex = 1;
+  final PageController pageController = PageController(initialPage: 1);
   void changePage(int? idx) {
     setState(() {
       pageController.animateToPage(idx ?? 0,
@@ -23,12 +24,16 @@ class _HomePageState extends State<HomePage> {
     });
   }
 
+  void createNewTask() {
+    Navigator.of(context).pushNamed(TaskDetailsPage.routeName, arguments: null);
+  }
+
   @override
   Widget build(BuildContext context) {
     return BaseScreen(builder: (context) {
       return Scaffold(
         floatingActionButton: FloatingActionButton(
-          onPressed: () {},
+          onPressed: createNewTask,
           backgroundColor: const Color(0xFFB7ABFD),
           child: const Icon(Icons.add),
         ),

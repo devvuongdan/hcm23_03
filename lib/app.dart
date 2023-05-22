@@ -57,7 +57,7 @@ class MyApp extends StatelessWidget {
             );
           }
           if (setting.name == TaskDetailsPage.routeName) {
-            final task = setting.arguments as Task;
+            final task = setting.arguments as Task?;
             return MaterialPageRoute(
               settings: const RouteSettings(name: TaskDetailsPage.routeName),
               builder: (_) => TaskDetailsPage(

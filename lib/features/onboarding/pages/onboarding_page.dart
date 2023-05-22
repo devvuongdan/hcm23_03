@@ -88,11 +88,11 @@ class _OnboardingPageState extends State<OnboardingPage> {
                 // await _storeOnBoardInfo();
                 final prefs = await SharedPreferences.getInstance();
                 seenOnboard = await prefs.setBool('seenOnboard', true);
-                Navigator.of(context).pushReplacement(
+                Navigator.of(context).pushAndRemoveUntil(
                   MaterialPageRoute(
                     builder: (_) => const LoginPage(),
                   ),
-                  
+                  (route) => false,
                 );
               }
             });

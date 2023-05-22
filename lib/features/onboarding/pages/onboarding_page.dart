@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:hcm23_03/features/home/pages/todo_list_page.dart';
+import 'package:hcm23_03/features/login/pages/login_page.dart';
 import 'package:hcm23_03/features/onboarding/widgets/onboarding_floatting_action_button.dart';
 
 class OnboardingPage extends StatefulWidget {
@@ -33,10 +34,11 @@ class _OnboardingPageState extends State<OnboardingPage> {
                     duration: const Duration(milliseconds: 500),
                     curve: Curves.easeIn);
               } else {
-                Navigator.of(context).push(
+                Navigator.of(context).pushAndRemoveUntil(
                   MaterialPageRoute(
-                    builder: (_) => const TodoListPage(),
+                    builder: (_) => const LoginPage(),
                   ),
+                  (route) => false,
                 );
               }
             });

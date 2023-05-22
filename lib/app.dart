@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:hcm23_03/features/home/pages/home_page.dart';
+import 'package:hcm23_03/features/home/pages/todo_list_page.dart';
 import 'package:hcm23_03/features/login/pages/login_page.dart';
+import 'package:hcm23_03/features/onboarding/pages/onboarding_page.dart';
 import 'package:hcm23_03/features/splash/pages/splash_page.dart';
 
 class MyApp extends StatelessWidget {
@@ -17,6 +19,7 @@ class MyApp extends StatelessWidget {
         navigatorObservers: [
           NavigatorObserver(),
         ],
+        home: const TodoListPage(),
         onGenerateRoute: (setting) {
           if (setting.name == "/HomePage") {
             return MaterialPageRoute(
@@ -42,10 +45,16 @@ class MyApp extends StatelessWidget {
               builder: (_) => const Screen2(),
             );
           }
-          if (setting.name == "/") {
+          if (setting.name == "/SplashPage") {
             return MaterialPageRoute(
               settings: const RouteSettings(name: "/SplashPage"),
               builder: (_) => const SplashPage(),
+            );
+          }
+          if (setting.name == "/") {
+            return MaterialPageRoute(
+              settings: const RouteSettings(name: "/TodoListPage"),
+              builder: (_) => const OnboardingPage(),
             );
           }
           return null;

@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:hcm23_03/features/home/pages/task/data.dart';
 
 class TodoListPage extends StatelessWidget {
   const TodoListPage({super.key});
@@ -13,14 +14,28 @@ class TodoListPage extends StatelessWidget {
               child: Container(
             color: Colors.green[100],
           )),
-          const Expanded(
-              // todo: Tan, HaGiaMinh, Nhat
-              flex: 4,
-              child: Text(
-                "a",
-                style: TextStyle(
-                    leadingDistribution: TextLeadingDistribution.even),
-              )),
+          Expanded(
+            flex: 4,
+            child: Padding(
+              padding: const EdgeInsets.symmetric(horizontal: 16),
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  const Text(
+                    'Task List',
+                    style: TextStyle(
+                      fontSize: 18,
+                      fontWeight: FontWeight.bold,
+                    ),
+                  ),
+                  const SizedBox(height: 8),
+                  Expanded(
+                    child: _buildTaskList(),
+                  ),
+                ],
+              ),
+            ),
+          ),
         ],
       ),
     );
@@ -28,51 +43,49 @@ class TodoListPage extends StatelessWidget {
 }
 
 Widget _buildTaskList() {
-  List<String> startTime = [
-    '''
-    8:30
-    AM
-    ''',
-    '''
-    9:30
-    AM
-    ''',
-    '''
-    10:30
-    AM
-    ''',
-  ];
+  // List<String> startTime = [
+  //   '''
+  //   8:30
+  //   AM
+  //   ''',
+  //   '''
+  //   9:30
+  //   AM
+  //   ''',
+  //   '''
+  //   10:30
+  //   AM
+  //   ''',
+  // ];
 
-  List<String> taskTitles = [
-    'Meeting with Client',
-    'Lunch Break',
-    'Daily Stand-up',
-  ];
-  List<String> taskDescriptions = [
-    'To discuss about the upcoming project & organization of figma files.',
-    'To discuss about the upcoming meeting.',
-    'A stand-up meeting is a meeting in which attendees typically participate while standing. The discomfort...',
-  ];
-  List<String> taskTimes = [
-    '08:30 AM - 09:30 AM',
-    '9:30 AM - 10:30 AM',
-    '10:30 AM - 11:30 AM',
-  ];
+  // List<String> taskTitles = [
+  //   'Meeting with Client',
+  //   'Lunch Break',
+  //   'Daily Stand-up',
+  // ];
+  // List<String> taskDescriptions = [
+  //   'To discuss about the upcoming project & organization of figma files.',
+  //   'To discuss about the upcoming meeting.',
+  //   'A stand-up meeting is a meeting in which attendees typically participate while standing. The discomfort...',
+  // ];
+  // List<String> taskTimes = [
+  //   '08:30 AM - 09:30 AM',
+  //   '9:30 AM - 10:30 AM',
+  //   '10:30 AM - 11:30 AM',
+  // ];
 
   return ListView.builder(
-    itemCount: taskTitles.length,
+    itemCount: tasks.length,
     itemBuilder: (context, index) {
+      Task task = tasks[index];
       Color containerColor;
       if (index % 3 == 0) {
         containerColor = const Color.fromRGBO(182, 146, 246, 0.15);
       } else if (index % 3 == 1) {
         containerColor = const Color.fromRGBO(253, 234, 235, 1);
-
       } else {
         containerColor = const Color.fromRGBO(232, 245, 243, 1);
-
       }
-
 
       return Column(
         children: [
@@ -82,7 +95,7 @@ Widget _buildTaskList() {
               Expanded(
                 flex: 1,
                 child: Text(
-                  startTime[index],
+                  task.starttime,
                   textAlign: TextAlign.center,
                   style: TextStyle(
                     color: Colors.black87,
@@ -111,7 +124,7 @@ Widget _buildTaskList() {
                       mainAxisAlignment: MainAxisAlignment.center,
                       children: [
                         Text(
-                          taskTitles[index],
+                          task.title,
                           style: TextStyle(
                             color: Colors.black87,
                             fontSize: 16,
@@ -121,7 +134,7 @@ Widget _buildTaskList() {
                         ),
                         SizedBox(height: 6),
                         Text(
-                          taskDescriptions[index],
+                          task.description,
                           style: TextStyle(
                             color: Colors.black45,
                             fontSize: 12,
@@ -131,7 +144,7 @@ Widget _buildTaskList() {
                         ),
                         SizedBox(height: 6),
                         Text(
-                          taskTimes[index],
+                          task.starttime + " - " + task.duetime,
                           style: TextStyle(
                             color: Colors.black87,
                             fontSize: 13,
@@ -146,15 +159,17 @@ Widget _buildTaskList() {
               ),
             ],
           ),
-          if (index != taskTitles.length - 1)
-          
+          if (index != tasks.length - 1)
             const Divider(
               color: Colors.black12,
               thickness: 1,
               height: 48,
-          ),
+            ),
         ],
       );
     },
   );
 }
+
+// ignore_for_file: public_member_api_docs, sort_constructors_first, must_be_immutable
+

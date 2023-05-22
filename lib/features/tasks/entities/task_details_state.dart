@@ -1,0 +1,4 @@
+enum TaskDetailsState {
+  view,
+  edit,
+}

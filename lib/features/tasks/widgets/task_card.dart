@@ -24,17 +24,7 @@ class TaskCard extends StatefulWidget {
 class _TaskCardState extends State<TaskCard> {
   bool isSelecting = false;
 
-  void openMenu() async {
-    setState(() {
-      isSelecting = true;
-    });
-    await Future.delayed(const Duration(seconds: 2));
-    if (mounted) {
-      setState(() {
-        isSelecting = false;
-      });
-    }
-  }
+  void openMenu() async {}
 
   void viewTask() {}
 

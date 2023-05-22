@@ -53,7 +53,7 @@ class _TaskDetailsPageState extends State<TaskDetailsPage> {
     });
   }
 
-  final List<TaskStage> _taskStage = [];
+  List<TaskStage> _taskStage = [];
   void addNewBlankTaskStage() {
     setState(() {
       _taskStage.add(
@@ -101,6 +101,7 @@ class _TaskDetailsPageState extends State<TaskDetailsPage> {
     if (widget.arg.currentTask != null) {
       titleController.text = widget.arg.currentTask?.title ?? "";
       descriptionController.text = widget.arg.currentTask?.description ?? "";
+      _taskStage = [...widget.arg.currentTask?.taskStages ?? []];
     }
   }
 

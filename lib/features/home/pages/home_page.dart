@@ -60,7 +60,7 @@ class _HomePageState extends State<HomePage> {
   Widget build(BuildContext context) {
     return BaseScreen(builder: (context) {
       return Scaffold(
-        drawer: HomeDrawer(),
+        drawer: const HomeDrawer(),
         floatingActionButton: FloatingActionButton(
           onPressed: createNewTask,
           backgroundColor: const Color(0xFFB7ABFD),

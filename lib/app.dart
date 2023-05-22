@@ -3,31 +3,10 @@ import 'package:flutter/services.dart';
 import 'package:hcm23_03/features/home/pages/home_page.dart';
 import 'package:hcm23_03/features/login/pages/login_page.dart';
 import 'package:hcm23_03/features/onboarding/pages/onboarding_page.dart';
+import 'package:hcm23_03/features/register/pages/register_page.dart';
 import 'package:hcm23_03/features/splash/pages/splash_page.dart';
-import 'package:shared_preferences/shared_preferences.dart';
-bool? seenOnboard;
-Future main() async {
-  WidgetsFlutterBinding.ensureInitialized();
-  // SystemChrome.setEnabledSystemUIOverlays([SystemUiOverlay.bottom,SystemUiOverlay.top]);
-  
-//   SystemChrome.setEnabledSystemUIMode(SystemUiMode.manual, overlays: [SystemUiOverlay.bottom,
-//   SystemUiOverlay.top
-// ]);
-  final pref = await SharedPreferences.getInstance();
-  final seenOnboard = pref.getBool('seenOnboard')??false;
-  runApp(MyApp());
-  
-}
-// int? isViewed;
-// Future<void> main() async {
-//   WidgetsFlutterBinding.ensureInitialized();
-//   SharedPreferences pref = await SharedPreferences.getInstance();   
-//   isViewed = pref.getInt('onBoard');
-//   await pref.setInt('onBoard', 1);
-//   runApp(MyApp());
-// }
-
-import 'features/onboarding/pages/onboarding_page.dart';
+import 'package:hcm23_03/features/tasks/entities/task_details_page_argument.dart';
+import 'package:hcm23_03/features/tasks/pages/task_details_page.dart';
 
 class MyApp extends StatelessWidget {
   const MyApp({super.key});
@@ -57,15 +36,18 @@ class MyApp extends StatelessWidget {
         // home: isviewed != 0 ? OnboardingPage() : LoginPage(),
         home: seenOnboard ==true? LoginPage(): OnboardingPage(),
         theme: ThemeData(
-          primarySwatch: Colors.blue,
-        ),
-        
+            primarySwatch: Colors.blue,
+            appBarTheme: const AppBarTheme(
+              elevation: 0.5,
+              backgroundColor: Color(0xFFB7ABFD),
+            )),
         navigatorObservers: [
           NavigatorObserver(),
         ],
         onGenerateRoute: (setting) {
-          if (setting.name == "/HomePage") {
+          if (setting.name == SplashPage.routeName) {
             return MaterialPageRoute(
+<<<<<<< HEAD
               settings: const RouteSettings(name: "/HomePage"),
               builder: (_) => const HomePage(),
             );
@@ -109,6 +91,47 @@ class MyApp extends StatelessWidget {
 
 =======
 >>>>>>> dev-v1
+=======
+              settings: const RouteSettings(name: SplashPage.routeName),
+              builder: (_) => const SplashPage(),
+            );
+          }
+          if (setting.name == OnboardingPage.routeName) {
+            return MaterialPageRoute(
+              settings: const RouteSettings(name: OnboardingPage.routeName),
+              builder: (_) => const OnboardingPage(),
+            );
+          }
+          if (setting.name == LoginPage.routeName) {
+            return MaterialPageRoute(
+              settings: const RouteSettings(name: LoginPage.routeName),
+              builder: (_) => const LoginPage(),
+            );
+          }
+          if (setting.name == RegisterPage.routeName) {
+            return MaterialPageRoute(
+              settings: const RouteSettings(name: RegisterPage.routeName),
+              builder: (_) => const RegisterPage(),
+            );
+          }
+          if (setting.name == HomePage.routeName) {
+            return MaterialPageRoute(
+              settings: const RouteSettings(name: HomePage.routeName),
+              builder: (_) => const HomePage(),
+            );
+          }
+          if (setting.name == TaskDetailsPage.routeName) {
+            final arg = setting.arguments as TaskDetailsPageArgument;
+
+            return MaterialPageRoute(
+              settings: const RouteSettings(name: TaskDetailsPage.routeName),
+              builder: (_) => TaskDetailsPage(
+                arg: arg,
+              ),
+            );
+          }
+
+>>>>>>> dev-v1-trainer
           return null;
         },
         initialRoute: "/",

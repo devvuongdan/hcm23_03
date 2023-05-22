@@ -116,11 +116,34 @@ phần tử trong danh sách, mảng hoặc đối tượng có khả năng lặ
 và loại dữ liệu mà bạn muốn lặp qua.
 
 */
+
+import 'dart:convert';
+
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
+import 'package:hcm23_03/features/tasks/entities/task.dart';
 
 import 'app.dart';
 
-void main() {
+void main() async {
   WidgetsFlutterBinding.ensureInitialized();
+
+  await loadJsonData();
   runApp(const MyApp());
+}
+
+Future<List<Task>> loadJsonData() async {
+  String jsonContent = await rootBundle.loadString('assets/jsons/tasks.json');
+  final List jsons = jsonDecode(jsonContent) as List;
+  List<Task> tasks = [];
+  for (dynamic item in jsons) {
+    final String itemToJson = jsonEncode(item);
+    final Map<String, dynamic> itemMap = jsonDecode(itemToJson);
+    final Task task = Task.fromMap(itemMap);
+    tasks.add(task);
+  }
+  tasks.sort((a, b) =>
+      (a.startTime ?? DateTime.now()).compareTo(b.startTime ?? DateTime.now()));
+
+  return tasks;
 }

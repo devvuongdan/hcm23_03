@@ -2,7 +2,10 @@
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
 
+import 'package:hcm23_03/features/tasks/entities/task_details_page_argument.dart';
+
 import '../entities/task.dart';
+import '../pages/task_details_page.dart';
 
 class TaskCard extends StatefulWidget {
   final Task task;
@@ -24,9 +27,23 @@ class TaskCard extends StatefulWidget {
 class _TaskCardState extends State<TaskCard> {
   bool isSelecting = false;
 
-  void openMenu() async {}
+  void openMenu() async {
+    setState(() {
+      isSelecting = true;
+    });
+    await Future.delayed(const Duration(seconds: 2));
+    if (mounted) {
+      setState(() {
+        isSelecting = false;
+      });
+    }
+  }
 
-  void viewTask() {}
+  void viewTask() {
+    Navigator.of(context).pushNamed(TaskDetailsPage.routeName,
+        arguments: TaskDetailsPageArgument(
+            currentTask: widget.task, updateTask: widget.updateTask));
+  }
 
   @override
   Widget build(BuildContext context) {

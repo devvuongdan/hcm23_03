@@ -1,8 +1,10 @@
 import 'package:flutter/material.dart';
+import 'package:hcm23_03/features/login/pages/login_page.dart';
 import 'package:hcm23_03/features/onboarding/widgets/onboarding_floatting_action_button.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 class OnboardingPage extends StatefulWidget {
+  static const String routeName = "/OnboardingPage";
   const OnboardingPage({super.key});
 
   @override
@@ -43,9 +45,8 @@ class _OnboardingPageState extends State<OnboardingPage> {
                     duration: const Duration(milliseconds: 500),
                     curve: Curves.easeIn);
               } else {
-                Navigator.of(context)
-                    .pushNamedAndRemoveUntil("/HomePage", (route) => false);
-                // Navigator.of(context).pushNamed("/HomePage");
+                Navigator.of(context).pushNamedAndRemoveUntil(
+                    LoginPage.routeName, (route) => false);
               }
             });
           },

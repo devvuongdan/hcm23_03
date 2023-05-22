@@ -14,13 +14,9 @@ class HomePage extends StatefulWidget {
 }
 
 class _HomePageState extends State<HomePage> {
-  int? currentIndex = 1;
-
-  void changePage(int? idx) {
-    setState(() {
-      currentIndex = idx;
-    });
-  }
+  int? currentIndex = 0;
+  final PageController pageController = PageController(initialPage: 1);
+  void changePage(int? idx) {}
 
   void createNewTask() async {}
 
@@ -30,6 +26,7 @@ class _HomePageState extends State<HomePage> {
     });
   }
 
+  void viewTask() {}
   late final List<Task> _tasks = [];
 
   @override
@@ -48,65 +45,19 @@ class _HomePageState extends State<HomePage> {
         backgroundColor: const Color(0xFFB7ABFD),
         child: const Icon(Icons.add),
       ),
-<<<<<<< HEAD
-      body: Center(
-        child: Column(
-          children: [
-            TextButton(
-              onPressed: () {
-                Navigator.of(context).pushNamed("/Screen2");
-              },
-              child: const Text("Go to Screen2"),
-            ),
-            TextButton(
-              onPressed: () {
-                Navigator.of(context).popUntil(
-                  ModalRoute.withName("/LoginPage"),
-                );
-              },
-              child: const Text("Pop to Login"),
-            ),
-          ],
-        ),
-      ),
-    );
-  }
-}
-
-class Screen2 extends StatelessWidget {
-  const Screen2({super.key});
-
-  @override
-  Widget build(BuildContext context) {
-    return Scaffold(
-      appBar: AppBar(
-        title: const Text("Screen2"),
-      ),
-      body: Center(
-        child: Column(
-          children: [
-            TextButton(
-              onPressed: () {
-                Navigator.of(context).pop();
-              },
-              child: const Text("Pop to last Screen (Screen 1)"),
-            ),
-            TextButton(
-              onPressed: () {},
-              child: const Text("Pop to Home page"),
-            ),
-          ],
-=======
       floatingActionButtonLocation: FloatingActionButtonLocation.endDocked,
       bottomNavigationBar: BubbleBottomBar(
         hasNotch: true,
         fabLocation: BubbleBottomBarFabLocation.end,
         opacity: .2,
         currentIndex: currentIndex,
-        onTap: changePage,
+        onTap: (int? index) {
+          setState(() {
+            currentIndex = index;
+          });
+        },
         borderRadius: const BorderRadius.vertical(
           top: Radius.circular(16),
->>>>>>> dev-v1
         ),
         elevation: 8,
         tilesPadding: const EdgeInsets.symmetric(
@@ -115,7 +66,7 @@ class Screen2 extends StatelessWidget {
         items: const <BubbleBottomBarItem>[
           BubbleBottomBarItem(
             showBadge: true,
-            // badge: Text("1"),
+            //badge: Text("1"),
             badgeColor: Colors.deepPurpleAccent,
             backgroundColor: Colors.red,
             icon: Icon(
@@ -126,7 +77,7 @@ class Screen2 extends StatelessWidget {
               Icons.dashboard,
               color: Colors.red,
             ),
-            title: Text("All Tasks"),
+            title: Text("All Task"),
           ),
           BubbleBottomBarItem(
               backgroundColor: Colors.deepPurple,
@@ -149,12 +100,25 @@ class Screen2 extends StatelessWidget {
                 Icons.access_time,
                 color: Colors.deepPurple,
               ),
-              title: Text("")),
+              title: Text("Time")),
         ],
       ),
-      body: TodayTasksPage(
-        tasks: _tasks,
-      ),
+      body: _buildBody(currentIndex ?? 1),
     );
+  }
+
+  Widget _buildBody(int index) {
+    switch (index) {
+      case 1:
+        return TodayTasksPage(
+          tasks: _tasks,
+        );
+      default:
+        return Center(
+          child: Text(
+            "Tinh nang dang trong qua trinh phat trien",
+          ),
+        );
+    }
   }
 }

@@ -5,6 +5,8 @@ import 'package:hcm23_03/features/login/pages/login_page.dart';
 import 'package:hcm23_03/features/onboarding/pages/onboarding_page.dart';
 import 'package:hcm23_03/features/splash/pages/splash_page.dart';
 
+import 'features/onboarding/pages/onboarding_page.dart';
+
 class MyApp extends StatelessWidget {
   const MyApp({super.key});
 
@@ -33,27 +35,16 @@ class MyApp extends StatelessWidget {
               builder: (_) => const LoginPage(),
             );
           }
-          if (setting.name == "/Screen1") {
-            return MaterialPageRoute(
-              settings: const RouteSettings(name: "/Screen1"),
-              builder: (_) => const Screen1(),
-            );
-          }
-          if (setting.name == "/Screen2") {
-            return MaterialPageRoute(
-              settings: const RouteSettings(name: "/Screen2"),
-              builder: (_) => const Screen2(),
-            );
-          }
-          if (setting.name == "/SplashPage") {
+
+          if (setting.name == "/") {
             return MaterialPageRoute(
               settings: const RouteSettings(name: "/SplashPage"),
               builder: (_) => const SplashPage(),
             );
           }
-          if (setting.name == "/") {
+          if (setting.name == "/OnboardingPage") {
             return MaterialPageRoute(
-              settings: const RouteSettings(name: "/TodoListPage"),
+              settings: const RouteSettings(name: "/OnboardingPage"),
               builder: (_) => const OnboardingPage(),
             );
           }

@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:hcm23_03/features/home/pages/todo_list_page.dart';
 import 'package:hcm23_03/features/onboarding/widgets/onboarding_floatting_action_button.dart';
 
 class OnboardingPage extends StatefulWidget {
@@ -18,6 +17,11 @@ class _OnboardingPageState extends State<OnboardingPage> {
   }
 
   @override
+  void dispose() {
+    super.dispose();
+  }
+
+  @override
   Widget build(BuildContext context) {
     return Scaffold(
       floatingActionButton: YinFloatingActionButton(
@@ -33,11 +37,9 @@ class _OnboardingPageState extends State<OnboardingPage> {
                     duration: const Duration(milliseconds: 500),
                     curve: Curves.easeIn);
               } else {
-                Navigator.of(context).push(
-                  MaterialPageRoute(
-                    builder: (_) => const TodoListPage(),
-                  ),
-                );
+                Navigator.of(context)
+                    .pushNamedAndRemoveUntil("/HomePage", (route) => false);
+                // Navigator.of(context).pushNamed("/HomePage");
               }
             });
           },

@@ -14,22 +14,13 @@ class HomePage extends StatefulWidget {
 
 class _HomePageState extends State<HomePage> {
   int? currentIndex = 0;
-
+  final PageController pageController = PageController();
   void changePage(int? idx) {
     setState(() {
+      pageController.animateToPage(idx ?? 0,
+          duration: const Duration(milliseconds: 250), curve: Curves.linear);
       currentIndex = idx;
     });
-  }
-
-  Widget body(int index) {
-    switch (index) {
-      case 1:
-        return const TodayTasksPage();
-      default:
-        return const Center(
-          child: Text("Tính năng đang trong quá trình phát triển"),
-        );
-    }
   }
 
   @override
@@ -95,7 +86,25 @@ class _HomePageState extends State<HomePage> {
                 title: Text("")),
           ],
         ),
-        body: body(currentIndex ?? 0),
+        body: PageView(
+          physics: const NeverScrollableScrollPhysics(),
+          controller: pageController,
+          children: [
+            Scaffold(
+              appBar: AppBar(),
+              body: const Center(
+                child: Text("Tính năng đang trong quá trình phát triển"),
+              ),
+            ),
+            const TodayTasksPage(),
+            Scaffold(
+              appBar: AppBar(),
+              body: const Center(
+                child: Text("Tính năng đang trong quá trình phát triển"),
+              ),
+            ),
+          ],
+        ),
       );
     });
   }

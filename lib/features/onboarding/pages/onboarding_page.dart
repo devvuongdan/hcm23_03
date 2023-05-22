@@ -1,8 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:hcm23_03/app.dart';
-import 'package:hcm23_03/features/home/pages/home_page.dart';
-import 'package:hcm23_03/features/home/pages/todo_list_page.dart';
-import 'package:hcm23_03/features/login/pages/login_page.dart';
 import 'package:hcm23_03/features/onboarding/widgets/onboarding_floatting_action_button.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
@@ -63,37 +59,8 @@ class _OnboardingPageState extends State<OnboardingPage> {
                     duration: const Duration(milliseconds: 500),
                     curve: Curves.easeIn);
               } else {
-                // void checkIsFirstTime(BuildContext chk) async {
-                //   const String onboardingKey = "onboardingkey";
-                //   final SharedPreferences preferences =
-                //       await SharedPreferences.getInstance();
-                //   bool? value = preferences.getBool(onboardingKey);
-                //   if (value == false) {
-                //     Navigator.of(chk).pushAndRemoveUntil(
-                //         MaterialPageRoute(
-                //           builder: (_) =>const LoginPage() ,
-                //           ),
-                //           (route) => false,
-                //           );
-                //   } else {
-                //      Navigator.of(chk).pushAndRemoveUntil(
-                //         MaterialPageRoute(
-                //           builder: (_) =>const OnboardingPage() ,
-                //           ),
-                //           (route) => false,
-                //           );
-                //   }
-                // }
-
-                // await _storeOnBoardInfo();
-                final prefs = await SharedPreferences.getInstance();
-                seenOnboard = await prefs.setBool('seenOnboard', true);
-                Navigator.of(context).pushAndRemoveUntil(
-                  MaterialPageRoute(
-                    builder: (_) => const LoginPage(),
-                  ),
-                  (route) => false,
-                );
+                Navigator.of(context)
+                    .pushNamedAndRemoveUntil("/HomePage", (route) => false);
               }
             });
           },

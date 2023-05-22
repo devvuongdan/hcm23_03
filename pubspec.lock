@@ -8,6 +8,13 @@ packages:
       url: "https://pub.dartlang.org"
     source: hosted
     version: "2.9.0"
+  badges:
+    dependency: "direct main"
+    description:
+      name: badges
+      url: "https://pub.dartlang.org"
+    source: hosted
+    version: "3.1.1"
   bloc:
     dependency: transitive
     description:
@@ -150,12 +157,17 @@ packages:
     source: hosted
     version: "4.0.2"
   intl:
+<<<<<<< HEAD
     dependency: transitive
+=======
+    dependency: "direct main"
+>>>>>>> dev-v1
     description:
       name: intl
       url: "https://pub.dartlang.org"
     source: hosted
     version: "0.18.1"
+<<<<<<< HEAD
   js:
     dependency: transitive
     description:
@@ -163,6 +175,8 @@ packages:
       url: "https://pub.dartlang.org"
     source: hosted
     version: "0.6.4"
+=======
+>>>>>>> dev-v1
   lints:
     dependency: transitive
     description:

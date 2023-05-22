@@ -42,7 +42,12 @@ dependencies:
   google_fonts: ^4.0.4
   flutter_bloc: ^8.1.2
   equatable: ^2.0.5
+<<<<<<< HEAD
   shared_preferences: ^2.1.1
+=======
+  intl: ^0.18.1
+  badges: ^3.1.1
+>>>>>>> dev-v1
 
 dev_dependencies:
   flutter_test:

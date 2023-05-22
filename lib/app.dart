@@ -27,6 +27,8 @@ Future main() async {
 //   runApp(MyApp());
 // }
 
+import 'features/onboarding/pages/onboarding_page.dart';
+
 class MyApp extends StatelessWidget {
   const MyApp({super.key});
 
@@ -74,6 +76,7 @@ class MyApp extends StatelessWidget {
               builder: (_) => const LoginPage(),
             );
           }
+<<<<<<< HEAD
           if (setting.name == "/Screen1") {
             return MaterialPageRoute(
               settings: const RouteSettings(name: "/Screen1"),
@@ -87,6 +90,10 @@ class MyApp extends StatelessWidget {
             );
           }
           if (setting.name == "/SplashPage") {
+=======
+
+          if (setting.name == "/") {
+>>>>>>> dev-v1
             return MaterialPageRoute(
               settings: const RouteSettings(name: "/SplashPage"),
               builder: (_) => const SplashPage(),
@@ -98,7 +105,10 @@ class MyApp extends StatelessWidget {
               builder: (_) => const OnboardingPage(),
             );
           }
+<<<<<<< HEAD
 
+=======
+>>>>>>> dev-v1
           return null;
         },
         initialRoute: "/",

@@ -26,7 +26,9 @@ class _TaskCardState extends State<TaskCard> {
 
   void openMenu() async {}
 
-  void viewTask() {}
+  void viewTask() {
+    Navigator.of(context).pushNamed("/TaskDetailsPage", arguments: widget.task);
+  }
 
   @override
   Widget build(BuildContext context) {

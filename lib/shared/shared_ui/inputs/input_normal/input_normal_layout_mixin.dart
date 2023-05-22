@@ -142,7 +142,7 @@ mixin InputNormalLayoutMixin {
         enabled: enable,
         readOnly: viewOnly == true,
         cursorColor: cursorColor ?? const Color(0XFF000000),
-        cursorHeight: cursorHeight ?? 14,
+        cursorHeight: cursorHeight ?? valueTextStyle?.height,
         cursorWidth: cursorWidth ?? 1.0,
         decoration: decoration?.copyWith(
           fillColor: fillColor ?? const Color(0XDDDBDFEF).withOpacity(0.2),

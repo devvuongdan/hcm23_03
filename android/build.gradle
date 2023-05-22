@@ -1,8 +1,5 @@
 buildscript {
-    android {
-  compileSdkVersion 33
-  ...
-}
+ 
     ext.kotlin_version = '1.6.10'
     repositories {
         google()

@@ -12,8 +12,8 @@ const double _kBottomMargin = 8.0;
 enum BubbleBottomBarFabLocation { end, center }
 
 // ignore: must_be_immutable
-class BubbleBottomBar extends StatefulWidget {
-  BubbleBottomBar({
+class HomeBottomBar extends StatefulWidget {
+  HomeBottomBar({
     Key? key,
     required this.items,
     this.onTap,
@@ -238,14 +238,14 @@ class _Label extends StatelessWidget {
   }
 }
 
-class _BottomNavigationBarState extends State<BubbleBottomBar>
+class _BottomNavigationBarState extends State<HomeBottomBar>
     with TickerProviderStateMixin {
   late List<AnimationController> _controllers = <AnimationController>[];
   late List<CurvedAnimation> _animations;
   Color? _backgroundColor;
   ValueListenable<ScaffoldGeometry>? geometryListenable;
   bool fabExists = false;
-  BubbleBottomBar? holder;
+  HomeBottomBar? holder;
   Animatable<double>? _flexTween;
 
   @override
@@ -305,7 +305,7 @@ class _BottomNavigationBarState extends State<BubbleBottomBar>
       _flexTween!.evaluate(animation);
 
   @override
-  void didUpdateWidget(BubbleBottomBar oldWidget) {
+  void didUpdateWidget(HomeBottomBar oldWidget) {
     super.didUpdateWidget(oldWidget);
 
     if (widget.items.length != oldWidget.items.length) {

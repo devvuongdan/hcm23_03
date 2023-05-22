@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:hcm23_03/features/home/widgets/home_drawer.dart';
 import 'package:hcm23_03/features/tasks/entities/task_details_page_argument.dart';
 import 'package:hcm23_03/features/tasks/pages/task_details_page.dart';
 
@@ -6,7 +7,7 @@ import '../../../main.dart';
 import '../../../shared/shared_ui/base_screen/base_screen.dart';
 import '../../tasks/entities/task.dart';
 import '../../tasks/pages/today_tasks_page.dart';
-import '../widgets/bubble_bottom_bar.dart';
+import '../widgets/home_bottom_bar.dart';
 
 class HomePage extends StatefulWidget {
   static const String routeName = "/HomePage";
@@ -59,13 +60,14 @@ class _HomePageState extends State<HomePage> {
   Widget build(BuildContext context) {
     return BaseScreen(builder: (context) {
       return Scaffold(
+        drawer: HomeDrawer(),
         floatingActionButton: FloatingActionButton(
           onPressed: createNewTask,
           backgroundColor: const Color(0xFFB7ABFD),
           child: const Icon(Icons.add),
         ),
         floatingActionButtonLocation: FloatingActionButtonLocation.endDocked,
-        bottomNavigationBar: BubbleBottomBar(
+        bottomNavigationBar: HomeBottomBar(
           hasNotch: true,
           fabLocation: BubbleBottomBarFabLocation.end,
           opacity: .2,

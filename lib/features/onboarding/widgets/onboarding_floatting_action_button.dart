@@ -41,7 +41,7 @@ class _YinFloatingActionButtonState extends State<YinFloatingActionButton>
     _progressValue = widget.args.currentStep / widget.args.stepCount;
     _animationController = AnimationController(
       vsync: this,
-      duration: const Duration(milliseconds: 500),
+      duration: const Duration(milliseconds: 300),
     );
 
     _animationController.addListener(() {
@@ -68,7 +68,7 @@ class _YinFloatingActionButtonState extends State<YinFloatingActionButton>
     }
     _animationController.animateTo(
         widget.args.currentStep / widget.args.stepCount,
-        duration: const Duration(milliseconds: 500));
+        duration: const Duration(milliseconds: 300));
   }
 
   @override

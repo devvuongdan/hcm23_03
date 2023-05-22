@@ -1,7 +1,4 @@
-import 'dart:math';
-
 import 'package:flutter/material.dart';
-import 'package:flutter_svg/flutter_svg.dart';
 
 class TodoListPage extends StatelessWidget {
   const TodoListPage({super.key});
@@ -43,7 +40,7 @@ class TodoListPage extends StatelessWidget {
         itemCount: cal.length,
         itemBuilder: (context, index) {
           if (cal[index][1] != "15") {
-            return Container(
+            return SizedBox(
               width: 400 / 6,
               height: 70,
               child: Column(
@@ -51,7 +48,7 @@ class TodoListPage extends StatelessWidget {
                   Text(
                     cal[index][0],
                     textAlign: TextAlign.center,
-                    style: TextStyle(
+                    style: const TextStyle(
                       fontSize: 20,
                       fontWeight: FontWeight.w400,
                       height: 20 / 14,
@@ -65,13 +62,13 @@ class TodoListPage extends StatelessWidget {
                         color: Colors.white,
                         shape: BoxShape.circle,
                         border: Border.all(
-                          color: Color(0xFFEAECF0),
+                          color: const Color(0xFFEAECF0),
                           width: 2.0,
                         )),
                     child: Center(
                       child: Text(
                         cal[index][1],
-                        style: TextStyle(
+                        style: const TextStyle(
                           leadingDistribution: TextLeadingDistribution.even,
                           color: Colors.black,
                           fontSize: 18,
@@ -84,7 +81,7 @@ class TodoListPage extends StatelessWidget {
               ),
             );
           } else {
-            return Container(
+            return SizedBox(
               width: 400 / 6,
               height: 70,
               child: Column(
@@ -92,7 +89,7 @@ class TodoListPage extends StatelessWidget {
                   Text(
                     cal[index][0],
                     textAlign: TextAlign.center,
-                    style: TextStyle(
+                    style: const TextStyle(
                       fontSize: 20,
                       fontWeight: FontWeight.w400,
                       height: 20 / 14,
@@ -102,14 +99,14 @@ class TodoListPage extends StatelessWidget {
                   Container(
                     width: 36,
                     height: 36,
-                    decoration: BoxDecoration(
+                    decoration: const BoxDecoration(
                       color: Color.fromARGB(255, 111, 74, 203),
                       shape: BoxShape.circle,
                     ),
                     child: Center(
                       child: Text(
                         cal[index][1],
-                        style: TextStyle(
+                        style: const TextStyle(
                           leadingDistribution: TextLeadingDistribution.even,
                           color: Colors.white,
                           fontSize: 18,

@@ -95,7 +95,7 @@ List<Task> tasks = [
     title: 'Meeting with Client',
     description:
         'To discuss about the upcoming project & organization of figma files.',
-    starttime: '8:30 AM',
+    starttime: '08:30 AM',
     duetime: '09:30 AM',
     teamMembers: [
       TeamMember(id: '1', avatarUrl: 'avatar_url_1'),
@@ -112,7 +112,7 @@ List<Task> tasks = [
     id: '2',
     title: 'Lunch Break',
     description: 'To discuss about the upcoming meeting.',
-    starttime: '9:30 AM',
+    starttime: '09:30 AM',
     duetime: '10:30 AM',
     teamMembers: [
       TeamMember(id: '1', avatarUrl: 'avatar_url_1'),

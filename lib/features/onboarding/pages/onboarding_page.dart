@@ -23,27 +23,11 @@ class _OnboardingPageState extends State<OnboardingPage> {
   int currentStep = 1;
 
   @override
-
-  // _storeOnBoardInfo() async {
-  //   int isViewed = 0;
-  //   print("Shared pref called");
-  //   SharedPreferences prefs = await SharedPreferences.getInstance();
-  //   await prefs.setInt('onBoard', isViewed);
-  //   print(prefs.getInt('onBoard'));
-  // }
-
-  // Future setSeenonboard() async {
-  //   SharedPreferences prefs = await SharedPreferences.getInstance();
-  //   seenOnboard = await prefs.setBool('seenOnboard', true);
-  // }
-
-  @override
-  void initState() {
-    // TODO: implement initState
-    super.initState();
-    // setSeenonboard();
+  void dispose() {
+    super.dispose();
   }
 
+  @override
   Widget build(BuildContext context) {
     return Scaffold(
       floatingActionButton: YinFloatingActionButton(
@@ -61,6 +45,7 @@ class _OnboardingPageState extends State<OnboardingPage> {
               } else {
                 Navigator.of(context)
                     .pushNamedAndRemoveUntil("/HomePage", (route) => false);
+                // Navigator.of(context).pushNamed("/HomePage");
               }
             });
           },

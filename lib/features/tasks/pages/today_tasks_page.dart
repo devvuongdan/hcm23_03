@@ -19,6 +19,52 @@ class TodayTasksPage extends StatefulWidget {
 }
 
 class _TodayRecordsPageState extends State<TodayTasksPage> {
+  final List<Task> _hcm23Task = [
+    Task(
+        id: "1",
+        title: "R2s",
+        description: "Hoc Flutter 22/5",
+        startTime: DateTime.now(),
+        dueTime: DateTime.now().add(
+          const Duration(hours: 3),
+        ),
+        teamMembers: const [],
+        taskStages: [
+          TaskStage(id: '1', isDone: false, description: 'Stage 1'),
+          TaskStage(id: '2', isDone: true, description: 'Stage 2'),
+          TaskStage(id: '3', isDone: false, description: 'Stage 3'),
+        ]),
+    Task(
+        id: "2",
+        title: "R2s2",
+        description:
+            "To discuss about the upcoming project & organization of figma files.",
+        startTime: DateTime.now(),
+        dueTime: DateTime.now().add(
+          const Duration(hours: 3),
+        ),
+        teamMembers: const [],
+        taskStages: [
+          TaskStage(id: '1', isDone: false, description: 'Stage 1'),
+          TaskStage(id: '2', isDone: true, description: 'Stage 2'),
+          TaskStage(id: '3', isDone: false, description: 'Stage 3'),
+        ]),
+    Task(
+        id: "3",
+        title: "R2s3",
+        description:
+            "To discuss about the upcoming project & organization of figma files. 22/5",
+        startTime: DateTime.now(),
+        dueTime: DateTime.now().add(
+          const Duration(hours: 3),
+        ),
+        teamMembers: const [],
+        taskStages: [
+          TaskStage(id: '1', isDone: false, description: 'Stage 1'),
+          TaskStage(id: '2', isDone: true, description: 'Stage 2'),
+          TaskStage(id: '3', isDone: false, description: 'Stage 3'),
+        ]),
+  ];
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -31,7 +77,7 @@ class _TodayRecordsPageState extends State<TodayTasksPage> {
         padding: const EdgeInsets.all(16),
         width: double.infinity,
         height: double.infinity,
-        child: widget.tasks.isNotEmpty
+        child: _hcm23Task.isNotEmpty
             ? ListView.separated(
                 padding: const EdgeInsets.only(bottom: 20),
                 itemBuilder: (context, index) {
@@ -40,7 +86,7 @@ class _TodayRecordsPageState extends State<TodayTasksPage> {
                           .withOpacity(0.1);
                   return TaskCard(
                     key: UniqueKey(),
-                    task: widget.tasks[index],
+                    task: _hcm23Task[index],
                     color: color,
                     deleteTask: () {},
                     updateTask: ((task) {}),
@@ -54,7 +100,7 @@ class _TodayRecordsPageState extends State<TodayTasksPage> {
                     color: Colors.black.withOpacity(0.5),
                   );
                 },
-                itemCount: widget.tasks.length,
+                itemCount: _hcm23Task.length,
               )
             : const Center(
                 child: CircularProgressIndicator(),

@@ -18,6 +18,11 @@ class _OnboardingPageState extends State<OnboardingPage> {
   }
 
   @override
+  void dispose() {
+    super.dispose();
+  }
+
+  @override
   Widget build(BuildContext context) {
     return Scaffold(
       floatingActionButton: YinFloatingActionButton(
@@ -35,6 +40,7 @@ class _OnboardingPageState extends State<OnboardingPage> {
               } else {
                 Navigator.of(context)
                     .pushNamedAndRemoveUntil("/HomePage", (route) => false);
+                // Navigator.of(context).pushNamed("/HomePage");
               }
             });
           },

@@ -17,12 +17,19 @@ class AuthCubit extends Cubit<AuthState> {
     BuildContext context,
     UserCredential user,
   ) async {
-    final db = FirebaseDatabase.instanceFor(app: firebaseApp);
-    emit(Authenticated(FirebaseDatabase.instanceFor(app: firebaseApp),
-        user: user));
+    emit(
+      Authenticated(
+        FirebaseDatabase.instanceFor(app: firebaseApp),
+        user: user,
+      ),
+    );
   }
 
   void logout() async {
-    emit(UnAuthenticated(FirebaseDatabase.instanceFor(app: firebaseApp)));
+    emit(
+      UnAuthenticated(
+        FirebaseDatabase.instanceFor(app: firebaseApp),
+      ),
+    );
   }
 }

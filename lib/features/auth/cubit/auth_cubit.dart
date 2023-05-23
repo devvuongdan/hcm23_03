@@ -1,20 +1,28 @@
+// ignore_for_file: public_member_api_docs, sort_constructors_first
+import 'package:firebase_auth/firebase_auth.dart';
+import 'package:firebase_core/firebase_core.dart';
+import 'package:firebase_database/firebase_database.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:hcm23_03/features/auth/entities/hcm23_user.dart';
 
 part 'auth_state.dart';
 
 class AuthCubit extends Cubit<AuthState> {
-  AuthCubit() : super(UnAuthenticated());
+  final FirebaseApp firebaseApp;
+  AuthCubit(
+    this.firebaseApp,
+  ) : super(UnAuthenticated(FirebaseDatabase.instanceFor(app: firebaseApp)));
 
   void login(
     BuildContext context,
-    Hcm23User? user,
+    UserCredential user,
   ) async {
-    emit(Authenticated());
+    final db = FirebaseDatabase.instanceFor(app: firebaseApp);
+    emit(Authenticated(FirebaseDatabase.instanceFor(app: firebaseApp),
+        user: user));
   }
 
   void logout() async {
-    emit(UnAuthenticated());
+    emit(UnAuthenticated(FirebaseDatabase.instanceFor(app: firebaseApp)));
   }
 }

@@ -1,12 +1,15 @@
+// ignore_for_file: public_member_api_docs, sort_constructors_first
+import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:flutter_easyloading/flutter_easyloading.dart';
+
 import 'package:hcm23_03/features/home/pages/home_page.dart';
 import 'package:hcm23_03/features/login/pages/login_page.dart';
 import 'package:hcm23_03/features/onboarding/pages/onboarding_page.dart';
 import 'package:hcm23_03/features/register/pages/register_page.dart';
 import 'package:hcm23_03/features/splash/pages/splash_page.dart';
 import 'package:hcm23_03/features/task/pages/task_details_page.dart';
-import 'package:flutter_easyloading/flutter_easyloading.dart';
 import 'package:hcm23_03/features/task/pages/task_details_page_arg.dart';
 
 import 'features/auth/cubit/auth_cubit.dart';
@@ -17,7 +20,11 @@ import 'features/splash/cubit/splash_cubit.dart';
 import 'features/task/cubit/task_cubit.dart';
 
 class MyApp extends StatelessWidget {
-  const MyApp({super.key});
+  final FirebaseApp firebaseApp;
+  const MyApp({
+    Key? key,
+    required this.firebaseApp,
+  }) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -25,7 +32,7 @@ class MyApp extends StatelessWidget {
       return MultiBlocProvider(
         providers: [
           BlocProvider(
-            create: (context) => AuthCubit(),
+            create: (context) => AuthCubit(firebaseApp),
           ),
         ],
         child: MaterialApp(

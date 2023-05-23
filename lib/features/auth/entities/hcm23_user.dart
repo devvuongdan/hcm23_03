@@ -4,14 +4,10 @@ import 'dart:convert';
 class Hcm23User {
   final String? uuid;
   final String? email;
-  final String? fullName;
-  final String? phone;
   final String? avatar;
   Hcm23User({
     this.uuid,
     this.email,
-    this.fullName,
-    this.phone,
     this.avatar,
   });
 
@@ -19,8 +15,6 @@ class Hcm23User {
     return <String, dynamic>{
       'uuid': uuid,
       'email': email,
-      'fullName': fullName,
-      'phone': phone,
       'avatar': avatar,
     };
   }
@@ -29,8 +23,6 @@ class Hcm23User {
     return Hcm23User(
       uuid: map['uuid'] != null ? map['uuid'] as String : null,
       email: map['email'] != null ? map['email'] as String : null,
-      fullName: map['fullName'] != null ? map['fullName'] as String : null,
-      phone: map['phone'] != null ? map['phone'] as String : null,
       avatar: map['avatar'] != null ? map['avatar'] as String : null,
     );
   }

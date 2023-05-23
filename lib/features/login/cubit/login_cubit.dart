@@ -4,7 +4,6 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:equatable/equatable.dart';
 import 'package:flutter_easyloading/flutter_easyloading.dart';
-import 'package:hcm23_03/features/auth/cubit/auth_cubit.dart';
 
 part 'login_state.dart';
 
@@ -21,7 +20,7 @@ class LoginCubit extends Cubit<LoginState> {
     EasyLoading.show();
     await Future.delayed(const Duration(seconds: 1));
 
-    context.read<AuthCubit>().login(context, null);
+    // context.read<AuthCubit>().login(context, null);
     EasyLoading.dismiss();
   }
 

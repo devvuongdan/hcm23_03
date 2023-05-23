@@ -6,11 +6,12 @@ import 'firebase_options.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
-  await Firebase.initializeApp(
+  final app = await Firebase.initializeApp(
     options: DefaultFirebaseOptions.currentPlatform,
     name: "Hcm23_03",
   );
 
-  // await loadJsonData();
-  runApp(const MyApp());
+  runApp(MyApp(
+    firebaseApp: app,
+  ));
 }

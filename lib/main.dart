@@ -11,6 +11,5 @@ void main() async {
     name: "Hcm23_03",
   );
 
-  // await loadJsonData();
   runApp(const MyApp());
 }

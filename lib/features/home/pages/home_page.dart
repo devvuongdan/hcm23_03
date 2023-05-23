@@ -37,7 +37,7 @@ class _HomePageState extends State<HomePage> {
   @override
   void initState() {
     super.initState();
-    context.read<HomeCubit>().getTask();
+    context.read<HomeCubit>().getTask(context);
   }
 
   @override

@@ -41,6 +41,15 @@ class RegisterCubit extends Cubit<RegisterState> {
         email: usernameController.text,
         avatar: "",
       ).toMap());
+      // String jsonContent =
+      //     await rootBundle.loadString('assets/jsons/tasks.json');
+      // final List jsons = jsonDecode(jsonContent) as List;
+      // final DatabaseReference ref2 = ctx
+      //     .read<AuthCubit>()
+      //     .state
+      //     .db
+      //     .ref("tasks/${userCre.value.user?.uid}");
+      // ref2.set(jsons);
 
       ctx.read<AuthCubit>().login(ctx, userCre.value);
     } else if (userCre is Left<String, UserCredential>) {

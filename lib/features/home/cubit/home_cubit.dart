@@ -1,9 +1,11 @@
+import 'package:dartz/dartz.dart' hide Task;
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_easyloading/flutter_easyloading.dart';
 import 'package:hcm23_03/features/auth/cubit/auth_cubit.dart';
-import 'package:hcm23_03/features/home/repo/tasks_repo.dart';
 
+import '../../../repositories/tasks_repo.dart';
+import '../../../shared/shared_ui/dialogs/hcm23_dialog.dart';
 import '../../task/entities/task.dart';
 
 part 'home_state.dart';
@@ -30,9 +32,33 @@ class HomeCubit extends Cubit<HomeState> {
     emit(state.copyWith(currentPage: idx));
   }
 
-  void getTask() async {
-    final List<Task> tasks = await TasksRepo.getTasks();
-    emit(state.copyWith(tasks: tasks));
+  void getTask(BuildContext ctx) async {
+    final Either<String, List<Task>> data = await TasksRepo.getTasks(ctx);
+    if (data is Right<String, List<Task>>) {
+      await Future.delayed(const Duration(seconds: 1));
+
+      emit(state.copyWith(tasks: data.value));
+    } else if (data is Left<String, List<Task>>) {
+      showDialog(
+        context: ctx,
+        builder: (context) => HCM23Dialog(
+          title: 'Error',
+          content: data.value,
+          backgroundColor: Colors.red.withOpacity(0.4),
+          titleTextStyle: const TextStyle(
+              fontSize: 25, fontWeight: FontWeight.bold, color: Colors.white),
+          contentTextStyle: const TextStyle(fontSize: 16, color: Colors.white),
+          actions: [
+            CleanDialogActionButtons(
+              actionTitle: 'OK',
+              onPressed: () {
+                Navigator.of(context).pop();
+              },
+            ),
+          ],
+        ),
+      );
+    }
   }
 
   void addNewTask(Task newTask) {

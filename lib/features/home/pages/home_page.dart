@@ -1,12 +1,13 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:hcm23_03/features/home/cubit/home_cubit.dart';
 import 'package:hcm23_03/features/home/widgets/home_drawer.dart';
-import 'package:hcm23_03/features/tasks/entities/task_details_page_argument.dart';
-import 'package:hcm23_03/features/tasks/pages/task_details_page.dart';
+import 'package:hcm23_03/features/task/pages/task_details_page.dart';
+import 'package:hcm23_03/features/task/pages/task_details_page_arg.dart';
 
-import '../../../main.dart';
 import '../../../shared/shared_ui/base_screen/base_screen.dart';
-import '../../tasks/entities/task.dart';
-import '../../tasks/pages/today_tasks_page.dart';
+import '../../task/entities/task.dart';
+import '../../task/pages/today_tasks_page.dart';
 import '../widgets/home_bottom_bar.dart';
 
 class HomePage extends StatefulWidget {
@@ -18,145 +19,117 @@ class HomePage extends StatefulWidget {
 }
 
 class _HomePageState extends State<HomePage> {
-  int? currentIndex = 1;
-  final PageController pageController = PageController(initialPage: 1);
   void changePage(int? idx) {
-    setState(() {
-      pageController.animateToPage(idx ?? 0,
-          duration: const Duration(milliseconds: 250), curve: Curves.linear);
-      currentIndex = idx;
-    });
+    context.read<HomeCubit>().changePage(idx);
   }
 
   void createNewTask() async {
     await Navigator.of(context).pushNamed(
       TaskDetailsPage.routeName,
-      arguments: TaskDetailsPageArgument(addNewTask: addNewTaskSuccess),
+      arguments: TaskDetailsPageArg(homeCubit: context.read<HomeCubit>()),
     );
   }
 
-  void addNewTaskSuccess(Task task) {
-    setState(() {
-      _tasks.add(task);
-    });
-  }
+  void addNewTaskSuccess(Task task) {}
 
-  late List<Task> _tasks = [];
+  // late List<Task> _tasks = [];
 
   @override
   void initState() {
-    getTask();
     super.initState();
-  }
-
-  void getTask() async {
-    final List<Task> tasks = await loadJsonData();
-    setState(() {
-      _tasks = tasks;
-    });
+    context.read<HomeCubit>().getTask();
   }
 
   @override
   Widget build(BuildContext context) {
     return BaseScreen(builder: (context) {
-      return Scaffold(
-        drawer: const HomeDrawer(),
-        floatingActionButton: FloatingActionButton(
-          onPressed: createNewTask,
-          backgroundColor: const Color(0xFFB7ABFD),
-          child: const Icon(Icons.add),
-        ),
-        floatingActionButtonLocation: FloatingActionButtonLocation.endDocked,
-        bottomNavigationBar: HomeBottomBar(
-          hasNotch: true,
-          fabLocation: BubbleBottomBarFabLocation.end,
-          opacity: .2,
-          currentIndex: currentIndex,
-          onTap: changePage,
-          borderRadius: const BorderRadius.vertical(
-            top: Radius.circular(16),
-          ),
-          elevation: 8,
-          tilesPadding: const EdgeInsets.symmetric(
-            vertical: 8.0,
-          ),
-          items: const <BubbleBottomBarItem>[
-            BubbleBottomBarItem(
-              showBadge: true,
-              // badge: Text("1"),
-              badgeColor: Colors.deepPurpleAccent,
-              backgroundColor: Colors.red,
-              icon: Icon(
-                Icons.dashboard,
-                color: Colors.black,
-              ),
-              activeIcon: Icon(
-                Icons.dashboard,
-                color: Colors.red,
-              ),
-              title: Text("All Tasks"),
+      return BlocBuilder<HomeCubit, HomeState>(
+        builder: (context, state) {
+          return Scaffold(
+            drawer: const HomeDrawer(),
+            floatingActionButton: FloatingActionButton(
+              onPressed: createNewTask,
+              backgroundColor: const Color(0xFFB7ABFD),
+              child: const Icon(Icons.add),
             ),
-            BubbleBottomBarItem(
-                backgroundColor: Colors.deepPurple,
-                icon: Icon(
-                  Icons.calendar_month,
-                  color: Colors.black,
-                ),
-                activeIcon: Icon(
-                  Icons.calendar_month,
-                  color: Colors.deepPurple,
-                ),
-                title: Text("T Tasks")),
-            BubbleBottomBarItem(
-                backgroundColor: Colors.deepPurple,
-                icon: Icon(
-                  Icons.access_time,
-                  color: Colors.black,
-                ),
-                activeIcon: Icon(
-                  Icons.access_time,
-                  color: Colors.deepPurple,
-                ),
-                title: Text("")),
-          ],
-        ),
-        body: PageView(
-          physics: const NeverScrollableScrollPhysics(),
-          controller: pageController,
-          children: [
-            Scaffold(
-              appBar: AppBar(),
-              body: const Center(
-                child: Text("Tính năng đang trong quá trình phát triển"),
+            floatingActionButtonLocation:
+                FloatingActionButtonLocation.endDocked,
+            bottomNavigationBar: HomeBottomBar(
+              hasNotch: true,
+              fabLocation: BubbleBottomBarFabLocation.end,
+              opacity: .2,
+              currentIndex: state.currentPage,
+              onTap: changePage,
+              borderRadius: const BorderRadius.vertical(
+                top: Radius.circular(16),
               ),
-            ),
-            TodayTasksPage(
-              tasks: _tasks,
-              deleteTask: ((taskId) {
-                setState(() {
-                  _tasks.removeWhere((element) => element.id == taskId);
-                });
-              }),
-              updateTask: (task) {
-                setState(() {
-                  final int indexOfTask =
-                      _tasks.indexWhere((element) => element.id == task?.id);
-                  if (indexOfTask != -1) {
-                    setState(() {
-                      _tasks[indexOfTask] = task!;
-                    });
-                  }
-                });
-              },
-            ),
-            Scaffold(
-              appBar: AppBar(),
-              body: const Center(
-                child: Text("Tính năng đang trong quá trình phát triển"),
+              elevation: 8,
+              tilesPadding: const EdgeInsets.symmetric(
+                vertical: 8.0,
               ),
+              items: const <BubbleBottomBarItem>[
+                BubbleBottomBarItem(
+                  showBadge: true,
+                  // badge: Text("1"),
+                  badgeColor: Colors.deepPurpleAccent,
+                  backgroundColor: Colors.red,
+                  icon: Icon(
+                    Icons.dashboard,
+                    color: Colors.black,
+                  ),
+                  activeIcon: Icon(
+                    Icons.dashboard,
+                    color: Colors.red,
+                  ),
+                  title: Text("All Tasks"),
+                ),
+                BubbleBottomBarItem(
+                    backgroundColor: Colors.deepPurple,
+                    icon: Icon(
+                      Icons.calendar_month,
+                      color: Colors.black,
+                    ),
+                    activeIcon: Icon(
+                      Icons.calendar_month,
+                      color: Colors.deepPurple,
+                    ),
+                    title: Text("T Tasks")),
+                BubbleBottomBarItem(
+                    backgroundColor: Colors.deepPurple,
+                    icon: Icon(
+                      Icons.access_time,
+                      color: Colors.black,
+                    ),
+                    activeIcon: Icon(
+                      Icons.access_time,
+                      color: Colors.deepPurple,
+                    ),
+                    title: Text("")),
+              ],
             ),
-          ],
-        ),
+            body: PageView(
+              physics: const NeverScrollableScrollPhysics(),
+              controller: context.read<HomeCubit>().pageController,
+              children: [
+                Scaffold(
+                  appBar: AppBar(),
+                  body: const Center(
+                    child: Text("Tính năng đang trong quá trình phát triển"),
+                  ),
+                ),
+                TodayTasksPage(
+                  tasks: state.tasks,
+                ),
+                Scaffold(
+                  appBar: AppBar(),
+                  body: const Center(
+                    child: Text("Tính năng đang trong quá trình phát triển"),
+                  ),
+                ),
+              ],
+            ),
+          );
+        },
       );
     });
   }

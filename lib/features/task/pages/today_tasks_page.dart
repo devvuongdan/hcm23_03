@@ -9,14 +9,10 @@ import '../widgets/task_card.dart';
 
 class TodayTasksPage extends StatefulWidget {
   final List<Task> tasks;
-  final void Function(String taskId) deleteTask;
-  final void Function(Task? task) updateTask;
 
   const TodayTasksPage({
     Key? key,
     required this.tasks,
-    required this.deleteTask,
-    required this.updateTask,
   }) : super(key: key);
 
   @override
@@ -48,10 +44,6 @@ class _TodayRecordsPageState extends State<TodayTasksPage> {
                       key: UniqueKey(),
                       task: widget.tasks[index],
                       color: color,
-                      deleteTask: () {
-                        widget.deleteTask(widget.tasks[index].id ?? "");
-                      },
-                      updateTask: widget.updateTask,
                     );
                   },
                   separatorBuilder: (context, index) {

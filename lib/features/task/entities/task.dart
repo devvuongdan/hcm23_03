@@ -36,7 +36,7 @@ class Task extends Equatable {
     DateTime? startTime,
     DateTime? dueTime,
     List<TeamMember>? teamMembers,
-    List<TaskStage>? stages,
+    List<TaskStage>? taskStages,
   }) {
     return Task(
       id: id ?? this.id,
@@ -45,7 +45,7 @@ class Task extends Equatable {
       startTime: startTime ?? this.startTime,
       dueTime: dueTime ?? this.dueTime,
       teamMembers: teamMembers ?? this.teamMembers,
-      taskStages: stages ?? taskStages,
+      taskStages: taskStages ?? this.taskStages,
     );
   }
 

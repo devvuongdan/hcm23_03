@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:hcm23_03/features/login/pages/login_page.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:hcm23_03/features/home/cubit/home_cubit.dart';
 import 'package:hcm23_03/shared/shared_ui/btn/btn_default/btn_default.dart';
 import 'package:hcm23_03/shared/shared_ui/themes/text_styles.dart';
 
@@ -17,8 +18,7 @@ class HomeDrawer extends StatefulWidget {
 
 class _HomeDrawerState extends State<HomeDrawer> {
   void logout() {
-    Navigator.of(context)
-        .pushNamedAndRemoveUntil(LoginPage.routeName, (route) => false);
+    context.read<HomeCubit>().logout(context);
   }
 
   @override

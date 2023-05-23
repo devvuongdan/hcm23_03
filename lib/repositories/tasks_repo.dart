@@ -32,7 +32,7 @@ class TasksRepo {
         tasks.sort((a, b) => (a.startTime ?? DateTime.now())
             .compareTo(b.startTime ?? DateTime.now()));
       });
-      print(DateTime.now());
+
       return Right(tasks);
     } catch (e) {
       return const Left("Có lỗi xảy ra");

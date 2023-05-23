@@ -3,7 +3,7 @@ import 'package:hcm23_03/features/login/pages/login_page.dart';
 import 'package:hcm23_03/features/onboarding/widgets/onboarding_floatting_action_button.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
-const String onboardingKey = "onboardingKeyyyyyy";
+const String onboardingKey = "onboardingK";
 
 class OnboardingPage extends StatefulWidget {
   static const String routeName = "/OnboardingPage";

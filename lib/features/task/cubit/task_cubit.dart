@@ -63,7 +63,7 @@ class TaskCubit extends Cubit<TaskState> {
       descriptionController.addListener(
         () {
           emit(state.copyWith(
-              newTask: state.newTask
+              task: state.task
                   ?.copyWith(description: descriptionController.text)));
         },
       );

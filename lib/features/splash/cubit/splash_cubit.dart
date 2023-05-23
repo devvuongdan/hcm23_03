@@ -17,7 +17,7 @@ class SplashCubit extends Cubit<SplashState> {
     final SharedPreferences preferences = await SharedPreferences.getInstance();
     final bool? value = preferences.getBool(onboardingKey);
 
-    if (value != true) {
+    if (value == false) {
       Navigator.of(context)
           .pushNamedAndRemoveUntil(LoginPage.routeName, (route) => false);
     } else {

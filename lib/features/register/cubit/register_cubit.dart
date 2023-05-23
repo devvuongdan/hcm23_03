@@ -1,5 +1,6 @@
 // ignore_for_file: use_build_context_synchronously
 
+import 'package:dartz/dartz.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_database/firebase_database.dart';
 import 'package:flutter/material.dart';
@@ -7,7 +8,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:equatable/equatable.dart';
 import 'package:flutter_easyloading/flutter_easyloading.dart';
 import 'package:hcm23_03/features/auth/entities/hcm23_user.dart';
-import 'package:hcm23_03/features/register/repo/register_repo.dart';
+import 'package:hcm23_03/repositories/auth_repo.dart';
 
 import '../../auth/cubit/auth_cubit.dart';
 
@@ -23,20 +24,23 @@ class RegisterCubit extends Cubit<RegisterState> {
 
   void registerWithUsernameAndPw(BuildContext context) async {
     EasyLoading.show();
-    final UserCredential? userCre =
-        await RegisterRepo.createUserWithEmailAndPassword(
+    final Either<String, UserCredential> userCre =
+        await AuthRepo.createUserWithEmailAndPassword(
       email: usernameController.text,
       password: passwordController.text,
     );
-    if (userCre != null) {
-      final DatabaseReference ref =
-          context.read<AuthCubit>().state.db.ref("users/${userCre.user?.uid}");
+    if (userCre is Right<String, UserCredential>) {
+      final DatabaseReference ref = context
+          .read<AuthCubit>()
+          .state
+          .db
+          .ref("users/${userCre.value.user?.uid}");
       ref.set(Hcm23User(
-              uuid: userCre.user?.uid,
+              uuid: userCre.value.user?.uid,
               email: usernameController.text,
               avatar: "")
           .toMap());
-      context.read<AuthCubit>().login(context, userCre);
+      context.read<AuthCubit>().login(context, userCre.value);
     }
 
     EasyLoading.dismiss();

@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:hcm23_03/features/home/pages/home_page.dart';
 import 'package:hcm23_03/features/login/pages/login_page.dart';
 import 'package:hcm23_03/features/onboarding/pages/onboarding_page.dart';
@@ -6,6 +7,8 @@ import 'package:hcm23_03/features/register/pages/register_page.dart';
 import 'package:hcm23_03/features/splash/pages/splash_page.dart';
 import 'package:hcm23_03/features/tasks/entities/task_details_page_argument.dart';
 import 'package:hcm23_03/features/tasks/pages/task_details_page.dart';
+
+import 'features/splash/cubit/splash_cubit.dart';
 
 class MyApp extends StatelessWidget {
   const MyApp({super.key});
@@ -28,7 +31,10 @@ class MyApp extends StatelessWidget {
           if (setting.name == SplashPage.routeName) {
             return MaterialPageRoute(
               settings: const RouteSettings(name: SplashPage.routeName),
-              builder: (_) => const SplashPage(),
+              builder: (_) => BlocProvider(
+                create: (context) => SplashCubit(),
+                child: const SplashPage(),
+              ),
             );
           }
           if (setting.name == OnboardingPage.routeName) {

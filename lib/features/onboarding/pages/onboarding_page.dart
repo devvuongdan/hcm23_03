@@ -1,6 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:hcm23_03/features/login/pages/login_page.dart';
 import 'package:hcm23_03/features/onboarding/widgets/onboarding_floatting_action_button.dart';
+import 'package:shared_preferences/shared_preferences.dart';
+
+const String onboardingKey = "onboardingKey";
 
 class OnboardingPage extends StatefulWidget {
   static const String routeName = "/OnboardingPage";
@@ -18,6 +21,24 @@ class _OnboardingPageState extends State<OnboardingPage> {
     super.initState();
   }
 
+  void handleFloatingActionButton() async {
+    setState(() {
+      if (currentStep < 2 && currentStep >= 0) {
+        pageController.animateToPage(currentStep,
+            duration: const Duration(milliseconds: 500), curve: Curves.easeIn);
+      } else {
+        saveOnboardingKey();
+        Navigator.of(context)
+            .pushNamedAndRemoveUntil(LoginPage.routeName, (route) => false);
+      }
+    });
+  }
+
+  void saveOnboardingKey() async {
+    final SharedPreferences preferences = await SharedPreferences.getInstance();
+    preferences.setBool(onboardingKey, false);
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -27,18 +48,7 @@ class _OnboardingPageState extends State<OnboardingPage> {
           scaffoldBackgroundColor: const Color(0xFFB7ABFD),
           currentStep: currentStep,
           stepCount: 2,
-          onTap: () {
-            setState(() {
-              if (currentStep < 2 && currentStep >= 0) {
-                pageController.animateToPage(currentStep,
-                    duration: const Duration(milliseconds: 500),
-                    curve: Curves.easeIn);
-              } else {
-                Navigator.of(context).pushNamedAndRemoveUntil(
-                    LoginPage.routeName, (route) => false);
-              }
-            });
-          },
+          onTap: handleFloatingActionButton,
         ),
       ),
       body: Stack(

@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:hcm23_03/features/onboarding/pages/onboarding_page.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:hcm23_03/features/splash/cubit/splash_cubit.dart';
 import 'package:hcm23_03/shared/shared_ui/base_screen/base_screen.dart';
 
 class SplashPage extends StatefulWidget {
@@ -15,8 +16,7 @@ class _SplashPageState extends State<SplashPage> {
   void initState() {
     super.initState();
     WidgetsBinding.instance.addPostFrameCallback((timeStamp) {
-      Navigator.of(context)
-          .pushNamedAndRemoveUntil(OnboardingPage.routeName, (route) => false);
+      context.read<SplashCubit>().checkNewUser(context);
     });
   }
 

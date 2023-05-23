@@ -10,6 +10,7 @@ import 'package:flutter_easyloading/flutter_easyloading.dart';
 import 'package:hcm23_03/features/auth/entities/hcm23_user.dart';
 import 'package:hcm23_03/repositories/auth_repo.dart';
 
+import '../../../shared/shared_ui/dialogs/hcm23_dialog.dart';
 import '../../auth/cubit/auth_cubit.dart';
 
 part 'register_state.dart';
@@ -22,7 +23,7 @@ class RegisterCubit extends Cubit<RegisterState> {
           hidePassword: true,
         ));
 
-  void registerWithUsernameAndPw(BuildContext context) async {
+  void registerWithUsernameAndPw(BuildContext ctx) async {
     EasyLoading.show();
     final Either<String, UserCredential> userCre =
         await AuthRepo.createUserWithEmailAndPassword(
@@ -30,17 +31,38 @@ class RegisterCubit extends Cubit<RegisterState> {
       password: passwordController.text,
     );
     if (userCre is Right<String, UserCredential>) {
-      final DatabaseReference ref = context
+      final DatabaseReference ref = ctx
           .read<AuthCubit>()
           .state
           .db
           .ref("users/${userCre.value.user?.uid}");
       ref.set(Hcm23User(
-              uuid: userCre.value.user?.uid,
-              email: usernameController.text,
-              avatar: "")
-          .toMap());
-      context.read<AuthCubit>().login(context, userCre.value);
+        uuid: userCre.value.user?.uid,
+        email: usernameController.text,
+        avatar: "",
+      ).toMap());
+
+      ctx.read<AuthCubit>().login(ctx, userCre.value);
+    } else if (userCre is Left<String, UserCredential>) {
+      showDialog(
+        context: ctx,
+        builder: (context) => HCM23Dialog(
+          title: 'Error',
+          content: userCre.value,
+          backgroundColor: Colors.red.withOpacity(0.4),
+          titleTextStyle: const TextStyle(
+              fontSize: 25, fontWeight: FontWeight.bold, color: Colors.white),
+          contentTextStyle: const TextStyle(fontSize: 16, color: Colors.white),
+          actions: [
+            CleanDialogActionButtons(
+              actionTitle: 'OK',
+              onPressed: () {
+                Navigator.of(context).pop();
+              },
+            ),
+          ],
+        ),
+      );
     }
 
     EasyLoading.dismiss();

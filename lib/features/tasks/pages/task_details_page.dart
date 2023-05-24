@@ -213,7 +213,7 @@ class TaskDetailsPage extends StatelessWidget {
               Column(
                 children: [
                   for (var i = 0; i < task.taskStages.length; i++)
-                    CheckListRow(content: "${task.taskStages![i].description}"),
+                    CheckListRow(content: "${task.taskStages[i].description}"),
                 ],
               )
             ]),

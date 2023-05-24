@@ -57,12 +57,6 @@ class _TaskDetailsPageState extends State<TaskDetailsPage> {
                 state.task == null ? "New Task" : "Task Details",
               ),
               elevation: 0,
-              leading: IconButton(
-                icon: const Icon(Icons.arrow_back),
-                onPressed: () {
-                  cubit.handleBack(context);
-                },
-              ),
             ),
             body: SingleChildScrollView(
               child: Padding(
@@ -84,7 +78,16 @@ class _TaskDetailsPageState extends State<TaskDetailsPage> {
                     const SizedBox(
                       height: 28,
                     ),
-                    _buildStagesOfTask(state)
+                    _buildStagesOfTask(state),
+                    BtnDefault(
+                      onTap: () {
+                        cubit.handleBack(context);
+                      },
+                      title: "Save change",
+                    ),
+                    const SizedBox(
+                      height: 48,
+                    ),
                   ],
                 ),
               ),

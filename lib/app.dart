@@ -10,7 +10,7 @@ import 'package:hcm23_03/features/onboarding/pages/onboarding_page.dart';
 import 'package:hcm23_03/features/register/pages/register_page.dart';
 import 'package:hcm23_03/features/splash/pages/splash_page.dart';
 import 'package:hcm23_03/features/task/pages/task_details_page.dart';
-import 'package:hcm23_03/features/task/pages/task_details_page_arg.dart';
+import 'package:hcm23_03/features/task/entities/task_details_page_arg.dart';
 import 'package:hcm23_03/features/user/pages/user_profile_pages.dart';
 
 import 'features/auth/cubit/auth_cubit.dart';

@@ -2,7 +2,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:hcm23_03/features/home/cubit/home_cubit.dart';
-import 'package:hcm23_03/features/task/pages/task_details_page_arg.dart';
+import 'package:hcm23_03/features/task/entities/task_details_page_arg.dart';
 import 'package:intl/intl.dart';
 
 import '../entities/task.dart';

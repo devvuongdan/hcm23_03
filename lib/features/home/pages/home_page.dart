@@ -3,7 +3,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:hcm23_03/features/home/cubit/home_cubit.dart';
 import 'package:hcm23_03/features/home/widgets/home_drawer.dart';
 import 'package:hcm23_03/features/task/pages/task_details_page.dart';
-import 'package:hcm23_03/features/task/pages/task_details_page_arg.dart';
+import 'package:hcm23_03/features/task/entities/task_details_page_arg.dart';
 
 import '../../../shared/shared_ui/base_screen/base_screen.dart';
 import '../../task/entities/task.dart';

@@ -51,11 +51,11 @@ class _UserProfilePageState extends State<UserProfilePage> {
                   ],
                 ),
                 const SizedBox(
-                  height: 100,
+                  height: 160,
                 ),
                 InputClear(
-                  labelText: "Username/Email",
-                  placeholderText: "Tài khoản",
+                  hintText: "Display name",
+                  placeholderText: "",
                   clearButton: SvgPicture.asset(
                     "assets/icons/ui_kit/bold/close_square.svg",
                     fit: BoxFit.scaleDown,
@@ -69,29 +69,30 @@ class _UserProfilePageState extends State<UserProfilePage> {
                   ),
                 ),
                 InputClear(
-                  labelText: "Address",
-                  placeholderText: "Tài khoản",
+                  hintText: "Email",
+                  placeholderText: "",
                   clearButton: SvgPicture.asset(
                     "assets/icons/ui_kit/bold/close_square.svg",
                     fit: BoxFit.scaleDown,
                   ),
                   decoration: InputDecoration(
                     prefixIcon: SvgPicture.asset(
-                      "assets/icons/ui_kit/normal/user.svg",
+                      "assets/icons/ui_kit/normal/message.svg",
                       color: const Color(0XFFA2AEBD),
                       fit: BoxFit.scaleDown,
                     ),
                   ),
                 ),
                 InputClear(
-                  placeholderText: "Tài khoản",
+                  hintText: "Phone",
+                  placeholderText: "",
                   clearButton: SvgPicture.asset(
                     "assets/icons/ui_kit/bold/close_square.svg",
                     fit: BoxFit.scaleDown,
                   ),
                   decoration: InputDecoration(
                     prefixIcon: SvgPicture.asset(
-                      "assets/icons/ui_kit/normal/user.svg",
+                      "assets/icons/ui_kit/normal/phone.svg",
                       color: const Color(0XFFA2AEBD),
                       fit: BoxFit.scaleDown,
                     ),

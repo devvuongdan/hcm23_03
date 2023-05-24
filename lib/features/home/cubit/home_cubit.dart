@@ -1,3 +1,5 @@
+// ignore_for_file: use_build_context_synchronously
+
 import 'package:dartz/dartz.dart' hide Task;
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -21,15 +23,17 @@ class HomeCubit extends Cubit<HomeState> {
   void logout(BuildContext context) async {
     EasyLoading.show();
     await Future.delayed(const Duration(seconds: 1));
-    // ignore: use_build_context_synchronously
+
     context.read<AuthCubit>().logout();
     EasyLoading.dismiss();
   }
 
   void changePage(int? idx) {
-    pageController.animateToPage(idx ?? 0,
-        duration: const Duration(milliseconds: 250), curve: Curves.linear);
-    emit(state.copyWith(currentPage: idx));
+    if (idx != state.currentPage) {
+      pageController.animateToPage(idx ?? 0,
+          duration: const Duration(milliseconds: 250), curve: Curves.linear);
+      emit(state.copyWith(currentPage: idx));
+    }
   }
 
   void getTask(BuildContext ctx) async {

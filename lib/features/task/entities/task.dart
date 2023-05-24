@@ -1,7 +1,8 @@
-// ignore_for_file: public_member_api_docs, sort_constructors_first, must_be_immutable
 import 'dart:convert';
 
-import 'package:equatable/equatable.dart';
+import 'package:flutter/foundation.dart';
+
+// ignore_for_file: public_member_api_docs, sort_constructors_first, must_be_immutable
 
 enum TaskProgress {
   imcoming,
@@ -10,7 +11,7 @@ enum TaskProgress {
   failure,
 }
 
-class Task extends Equatable {
+class Task {
   final String? id;
   final String? title;
   final String? description;
@@ -48,17 +49,6 @@ class Task extends Equatable {
       taskStages: taskStages ?? this.taskStages,
     );
   }
-
-  @override
-  List<Object?> get props => [
-        id,
-        title,
-        description,
-        startTime,
-        dueTime,
-        teamMembers,
-        taskStages,
-      ];
 
   Map<String, dynamic> toMap() {
     return <String, dynamic>{
@@ -99,9 +89,38 @@ class Task extends Equatable {
 
   factory Task.fromJson(String source) =>
       Task.fromMap(json.decode(source) as Map<String, dynamic>);
+
+  @override
+  String toString() {
+    return 'Task(id: $id, title: $title, description: $description, startTime: $startTime, dueTime: $dueTime, teamMembers: $teamMembers, taskStages: $taskStages)';
+  }
+
+  @override
+  bool operator ==(covariant Task other) {
+    if (identical(this, other)) return true;
+
+    return other.id == id &&
+        other.title == title &&
+        other.description == description &&
+        other.startTime == startTime &&
+        other.dueTime == dueTime &&
+        listEquals(other.teamMembers, teamMembers) &&
+        listEquals(other.taskStages, taskStages);
+  }
+
+  @override
+  int get hashCode {
+    return id.hashCode ^
+        title.hashCode ^
+        description.hashCode ^
+        startTime.hashCode ^
+        dueTime.hashCode ^
+        teamMembers.hashCode ^
+        taskStages.hashCode;
+  }
 }
 
-class TaskStage extends Equatable {
+class TaskStage {
   final String? id;
   bool? isDone;
   final String? description;
@@ -124,9 +143,6 @@ class TaskStage extends Equatable {
     );
   }
 
-  @override
-  List<Object?> get props => [id, isDone, description];
-
   Map<String, dynamic> toMap() {
     return <String, dynamic>{
       'id': id,
@@ -148,9 +164,25 @@ class TaskStage extends Equatable {
 
   factory TaskStage.fromJson(String source) =>
       TaskStage.fromMap(json.decode(source) as Map<String, dynamic>);
+
+  @override
+  String toString() =>
+      'TaskStage(id: $id, isDone: $isDone, description: $description)';
+
+  @override
+  bool operator ==(covariant TaskStage other) {
+    if (identical(this, other)) return true;
+
+    return other.id == id &&
+        other.isDone == isDone &&
+        other.description == description;
+  }
+
+  @override
+  int get hashCode => id.hashCode ^ isDone.hashCode ^ description.hashCode;
 }
 
-class TeamMember extends Equatable {
+class TeamMember {
   final String? id;
   final String? avatarUrl;
   const TeamMember({
@@ -158,14 +190,21 @@ class TeamMember extends Equatable {
     required this.avatarUrl,
   });
 
-  @override
-  List<Object?> get props => [id, avatarUrl];
-
   Map<String, dynamic> toMap() {
     return <String, dynamic>{
       'id': id,
       'avatarUrl': avatarUrl,
     };
+  }
+
+  TeamMember copyWith({
+    String? id,
+    String? avatarUrl,
+  }) {
+    return TeamMember(
+      id: id ?? this.id,
+      avatarUrl: avatarUrl ?? this.avatarUrl,
+    );
   }
 
   factory TeamMember.fromMap(Map<String, dynamic> map) {
@@ -179,4 +218,17 @@ class TeamMember extends Equatable {
 
   factory TeamMember.fromJson(String source) =>
       TeamMember.fromMap(json.decode(source) as Map<String, dynamic>);
+
+  @override
+  String toString() => 'TeamMember(id: $id, avatarUrl: $avatarUrl)';
+
+  @override
+  bool operator ==(covariant TeamMember other) {
+    if (identical(this, other)) return true;
+
+    return other.id == id && other.avatarUrl == avatarUrl;
+  }
+
+  @override
+  int get hashCode => id.hashCode ^ avatarUrl.hashCode;
 }

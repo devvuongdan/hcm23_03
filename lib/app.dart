@@ -11,6 +11,7 @@ import 'package:hcm23_03/features/register/pages/register_page.dart';
 import 'package:hcm23_03/features/splash/pages/splash_page.dart';
 import 'package:hcm23_03/features/task/pages/task_details_page.dart';
 import 'package:hcm23_03/features/task/pages/task_details_page_arg.dart';
+import 'package:hcm23_03/features/user/pages/user_profile_pages.dart';
 
 import 'features/auth/cubit/auth_cubit.dart';
 import 'features/home/cubit/home_cubit.dart';
@@ -103,6 +104,12 @@ class MyApp extends StatelessWidget {
                   ],
                   child: const TaskDetailsPage(),
                 ),
+              );
+            }
+            if (setting.name == UserProfilePage.routeName) {
+              return MaterialPageRoute(
+                settings: const RouteSettings(name: UserProfilePage.routeName),
+                builder: (_) => const UserProfilePage(),
               );
             }
 

@@ -1,12 +1,17 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:hcm23_03/features/home/cubit/home_cubit.dart';
+import 'package:hcm23_03/features/user/pages/user_profile_pages.dart';
 import 'package:hcm23_03/shared/shared_ui/btn/btn_default/btn_default.dart';
 import 'package:hcm23_03/shared/shared_ui/themes/text_styles.dart';
 
-final List<String> menu = [
-  "Thông tin User",
-  "Đổi mật khẩu",
+final List<Map<String, String>> menu = [
+  {
+    "Thông tin User": UserProfilePage.routeName,
+  },
+  {
+    "Đổi mật khẩu": "",
+  }
 ];
 
 class HomeDrawer extends StatefulWidget {
@@ -82,11 +87,14 @@ class _HomeDrawerState extends State<HomeDrawer> {
               return Align(
                   alignment: Alignment.centerLeft,
                   child: TextButton(
-                      onPressed: () {},
+                      onPressed: () {
+                        Navigator.of(context)
+                            .pushNamed(menu[index].entries.first.value);
+                      },
                       child: Row(
                         mainAxisAlignment: MainAxisAlignment.spaceBetween,
                         children: [
-                          Text(menu[index]),
+                          Text(menu[index].keys.first),
                           const Icon(
                             Icons.arrow_right,
                           )

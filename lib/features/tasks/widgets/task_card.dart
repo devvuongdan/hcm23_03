@@ -5,6 +5,7 @@ import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
 
 import '../entities/task.dart';
+import '../pages/task_details_page.dart';
 
 class TaskCard extends StatefulWidget {
   final Task task;
@@ -37,7 +38,12 @@ class _TaskCardState extends State<TaskCard> {
     });
   }
 
-  void viewTask() {}
+  void viewTask() {
+    Navigator.pushNamed(
+      context, "/taskDetails",
+      arguments: widget.task
+      );
+  }
 
   @override
   Widget build(BuildContext context) {

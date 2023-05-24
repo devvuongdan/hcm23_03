@@ -29,9 +29,9 @@ class TodoListPage extends StatelessWidget {
                     ),
                   ),
                   const SizedBox(height: 8),
-                  Expanded(
-                    child: _buildTaskList(),
-                  ),
+                  // Expanded(
+                  //   child: _buildTaskList(),
+                  // ),
                 ],
               ),
             ),
@@ -42,7 +42,7 @@ class TodoListPage extends StatelessWidget {
   }
 }
 
-Widget _buildTaskList() {
+// Widget _buildTaskList() {
   // List<String> startTime = [
   //   '''
   //   8:30
@@ -74,102 +74,102 @@ Widget _buildTaskList() {
   //   '10:30 AM - 11:30 AM',
   // ];
 
-  return ListView.builder(
-    itemCount: tasks.length,
-    itemBuilder: (context, index) {
-      Task task = tasks[index];
-      Color containerColor;
-      if (index % 3 == 0) {
-        containerColor = const Color.fromRGBO(182, 146, 246, 0.15);
-      } else if (index % 3 == 1) {
-        containerColor = const Color.fromRGBO(253, 234, 235, 1);
-      } else {
-        containerColor = const Color.fromRGBO(232, 245, 243, 1);
-      }
+//   return ListView.builder(
+//     itemCount: tasks.length,
+//     itemBuilder: (context, index) {
+//       Task task = tasks[index];
+//       Color containerColor;
+//       if (index % 3 == 0) {
+//         containerColor = const Color.fromRGBO(182, 146, 246, 0.15);
+//       } else if (index % 3 == 1) {
+//         containerColor = const Color.fromRGBO(253, 234, 235, 1);
+//       } else {
+//         containerColor = const Color.fromRGBO(232, 245, 243, 1);
+//       }
 
-      return Column(
-        children: [
-          Row(
-            mainAxisAlignment: MainAxisAlignment.center,
-            children: [
-              Expanded(
-                flex: 1,
-                child: Text(
-                  task.starttime,
-                  textAlign: TextAlign.center,
-                  style: const TextStyle(
-                    color: Colors.black87,
-                    fontSize: 14,
-                    height: 1.5,
-                    fontWeight: FontWeight.w500,
-                  ),
-                ),
-              ),
-              Expanded(
-                flex: 6,
-                child: Container(
-                  margin: const EdgeInsets.only(left: 16),
-                  decoration: BoxDecoration(
-                    borderRadius: BorderRadius.circular(16),
-                    color: containerColor,
-                  ),
-                  //height: 126,
-                  child: Padding(
-                    padding: const EdgeInsets.symmetric(
-                      horizontal: 16,
-                      vertical: 16,
-                    ),
-                    child: Column(
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      mainAxisAlignment: MainAxisAlignment.center,
-                      children: [
-                        Text(
-                          task.title,
-                          style: const TextStyle(
-                            color: Colors.black87,
-                            fontSize: 16,
-                            height: 1.5,
-                            fontWeight: FontWeight.w700,
-                          ),
-                        ),
-                        const SizedBox(height: 6),
-                        Text(
-                          task.description,
-                          style: const TextStyle(
-                            color: Colors.black45,
-                            fontSize: 12,
-                            height: 1.5,
-                            fontWeight: FontWeight.w400,
-                          ),
-                        ),
-                        const SizedBox(height: 6),
-                        Text(
-                          "${task.starttime} - ${task.duetime}",
-                          style: const TextStyle(
-                            color: Colors.black87,
-                            fontSize: 13,
-                            height: 1.5,
-                            fontWeight: FontWeight.w400,
-                          ),
-                        ),
-                      ],
-                    ),
-                  ),
-                ),
-              ),
-            ],
-          ),
-          if (index != tasks.length - 1)
-            const Divider(
-              color: Colors.black12,
-              thickness: 1,
-              height: 48,
-            ),
-        ],
-      );
-    },
-  );
-}
+//       return Column(
+//         children: [
+//           Row(
+//             mainAxisAlignment: MainAxisAlignment.center,
+//             children: [
+//               Expanded(
+//                 flex: 1,
+//                 child: Text(
+//                   task.starttime,
+//                   textAlign: TextAlign.center,
+//                   style: const TextStyle(
+//                     color: Colors.black87,
+//                     fontSize: 14,
+//                     height: 1.5,
+//                     fontWeight: FontWeight.w500,
+//                   ),
+//                 ),
+//               ),
+//               Expanded(
+//                 flex: 6,
+//                 child: Container(
+//                   margin: const EdgeInsets.only(left: 16),
+//                   decoration: BoxDecoration(
+//                     borderRadius: BorderRadius.circular(16),
+//                     color: containerColor,
+//                   ),
+//                   //height: 126,
+//                   child: Padding(
+//                     padding: const EdgeInsets.symmetric(
+//                       horizontal: 16,
+//                       vertical: 16,
+//                     ),
+//                     child: Column(
+//                       crossAxisAlignment: CrossAxisAlignment.start,
+//                       mainAxisAlignment: MainAxisAlignment.center,
+//                       children: [
+//                         Text(
+//                           task.title,
+//                           style: const TextStyle(
+//                             color: Colors.black87,
+//                             fontSize: 16,
+//                             height: 1.5,
+//                             fontWeight: FontWeight.w700,
+//                           ),
+//                         ),
+//                         const SizedBox(height: 6),
+//                         Text(
+//                           task.description,
+//                           style: const TextStyle(
+//                             color: Colors.black45,
+//                             fontSize: 12,
+//                             height: 1.5,
+//                             fontWeight: FontWeight.w400,
+//                           ),
+//                         ),
+//                         const SizedBox(height: 6),
+//                         Text(
+//                           "${task.starttime} - ${task.duetime}",
+//                           style: const TextStyle(
+//                             color: Colors.black87,
+//                             fontSize: 13,
+//                             height: 1.5,
+//                             fontWeight: FontWeight.w400,
+//                           ),
+//                         ),
+//                       ],
+//                     ),
+//                   ),
+//                 ),
+//               ),
+//             ],
+//           ),
+//           if (index != tasks.length - 1)
+//             const Divider(
+//               color: Colors.black12,
+//               thickness: 1,
+//               height: 48,
+//             ),
+//         ],
+//       );
+//     },
+//   );
+// }
 
 // ignore_for_file: public_member_api_docs, sort_constructors_first, must_be_immutable
 

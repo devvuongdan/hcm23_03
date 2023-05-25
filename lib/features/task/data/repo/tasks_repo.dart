@@ -49,7 +49,7 @@ class TasksRepo {
       final String id =
           (ctx.read<AuthCubit>().state as Authenticated).user.user?.uid ?? "";
       final ref = db.ref("tasks/$id");
-      late List<Task> tasks = [];
+
       ref.onValue.listen((DatabaseEvent event) {
         final jsonContent = event.snapshot.value;
 
@@ -58,6 +58,33 @@ class TasksRepo {
         for (int i = 0; i < jsons.length; i++) {
           if (jsons[i]["uid"] == uid) {
             jsons.removeAt(i);
+          }
+        }
+        ref.set(jsons);
+      });
+
+      return const Right(true);
+    } catch (e) {
+      return const Left("Có lỗi xảy ra");
+    }
+  }
+
+  static Future<Either<String, bool>> updateTask(
+      BuildContext ctx, Task task) async {
+    try {
+      final FirebaseDatabase db = ctx.read<AuthCubit>().state.db;
+      final String id =
+          (ctx.read<AuthCubit>().state as Authenticated).user.user?.uid ?? "";
+      final ref = db.ref("tasks/$id");
+
+      ref.onValue.listen((DatabaseEvent event) {
+        final jsonContent = event.snapshot.value;
+
+        final List jsons = jsonDecode(jsonEncode(jsonContent)) as List;
+
+        for (int i = 0; i < jsons.length; i++) {
+          if (jsons[i]["uid"] == task.uid) {
+            jsons[i] = task.toMap();
           }
         }
         ref.set(jsons);

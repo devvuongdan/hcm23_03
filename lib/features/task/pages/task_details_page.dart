@@ -5,6 +5,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:intl/intl.dart';
 
+import 'package:hcm23_03/features/task/data/entities/task_details_page_arg.dart';
 import 'package:hcm23_03/shared/shared_ui/inputs/input_normal/input_normal.dart';
 
 import '../../../shared/shared_ui/btn/btn_default/btn_default.dart';
@@ -14,9 +15,11 @@ import '../data/entities/task.dart';
 
 class TaskDetailsPage extends StatefulWidget {
   static const String routeName = "/TaskDetailsPage";
+  final TaskDetailsPageArg arg;
 
   const TaskDetailsPage({
     Key? key,
+    required this.arg,
   }) : super(key: key);
 
   @override
@@ -266,7 +269,8 @@ class _TaskDetailsPageState extends State<TaskDetailsPage> {
                           ),
                           BtnDefault(
                             onTap: () {
-                              cubit.handleChange(state.task, context);
+                              cubit.handleChange(
+                                  state.task, context, widget.arg.updateTask);
                             },
                             title: "Save change",
                           ),

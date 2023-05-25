@@ -93,7 +93,7 @@ class MyApp extends StatelessWidget {
             if (setting.name == TaskDetailsPage.routeName) {
               final TaskDetailsPageArg arg =
                   setting.arguments as TaskDetailsPageArg;
-              print(arg.task.taskStages);
+
               return MaterialPageRoute(
                 settings: const RouteSettings(name: TaskDetailsPage.routeName),
                 builder: (_) => MultiBlocProvider(
@@ -102,7 +102,9 @@ class MyApp extends StatelessWidget {
                       create: (context) => TaskDetailsCubit(arg)..initState(),
                     ),
                   ],
-                  child: const TaskDetailsPage(),
+                  child: TaskDetailsPage(
+                    arg: arg,
+                  ),
                 ),
               );
             }

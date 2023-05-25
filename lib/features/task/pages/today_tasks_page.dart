@@ -62,7 +62,9 @@ class _TodayRecordsPageState extends State<TodayTasksPage> {
                                     TaskDetailsPage.routeName,
                                     arguments: TaskDetailsPageArg(
                                       task: state.todayTasks[index],
-                                      taskKey: index.toString(),
+                                      updateTask: context
+                                          .read<TodayTasksCubit>()
+                                          .updateTask,
                                     ),
                                   );
                                   context

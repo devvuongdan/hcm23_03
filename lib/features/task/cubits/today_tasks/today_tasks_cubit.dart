@@ -5,6 +5,7 @@ import 'package:dartz/dartz.dart' hide Task;
 import 'package:flutter/material.dart';
 
 import '../../../../shared/shared_ui/dialogs/hcm23_dialog.dart';
+import '../../../home/pages/home_page.dart';
 import '../../data/entities/task.dart';
 import '../../data/repo/tasks_repo.dart';
 
@@ -54,7 +55,40 @@ class TodayTasksCubit extends Cubit<TodayTasksState> {
 
   void addNewTask(Task newTask) {}
 
-  void editTask(Task task) {}
+  void updateTask(Task task, BuildContext ctx) async {
+    final int index =
+        todayTasks.indexWhere((element) => element.uid == task.uid);
+    if (index != -1) {
+      final Either<String, bool> result = await TasksRepo.updateTask(ctx, task);
+      if (result is Right<String, bool> && result.value == true) {
+        todayTasks.removeAt(index);
+        emit(TodayTaskLoaded(todayTasks: todayTasks));
+      }
+      if (result is Left<String, bool>) {
+        showDialog(
+          context: ctx,
+          builder: (context) => HCM23Dialog(
+            title: 'Error',
+            content: result.value,
+            backgroundColor: Colors.red.withOpacity(0.4),
+            titleTextStyle: const TextStyle(
+                fontSize: 25, fontWeight: FontWeight.bold, color: Colors.white),
+            contentTextStyle:
+                const TextStyle(fontSize: 16, color: Colors.white),
+            actions: [
+              CleanDialogActionButtons(
+                actionTitle: 'OK',
+                onPressed: () {
+                  Navigator.of(context).pop();
+                },
+              ),
+            ],
+          ),
+        );
+      }
+    }
+    Navigator.of(ctx).popUntil(ModalRoute.withName(HomePage.routeName));
+  }
 
   void deleteTask(String uid, BuildContext ctx) async {
     final int index = todayTasks.indexWhere((element) => element.uid == uid);

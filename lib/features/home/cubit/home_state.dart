@@ -3,10 +3,9 @@ part of 'home_cubit.dart';
 
 class HomeState {
   final int currentPage;
-  final List<Task> tasks;
+
   const HomeState({
     required this.currentPage,
-    required this.tasks,
   });
 
   HomeState copyWith({
@@ -15,7 +14,6 @@ class HomeState {
   }) {
     return HomeState(
       currentPage: currentPage ?? this.currentPage,
-      tasks: tasks ?? this.tasks,
     );
   }
 }

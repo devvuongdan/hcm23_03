@@ -2,11 +2,10 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:hcm23_03/features/home/cubit/home_cubit.dart';
 import 'package:hcm23_03/features/home/widgets/home_drawer.dart';
-import 'package:hcm23_03/features/task/pages/task_details_page.dart';
-import 'package:hcm23_03/features/task/entities/task_details_page_arg.dart';
 
-import '../../../shared/shared_ui/base_screen/base_screen.dart';
-import '../../task/entities/task.dart';
+import '../../global/presentation/base_screen/base_screen.dart';
+import '../../task/cubits/today_tasks/today_tasks_cubit.dart';
+import '../../task/data/entities/task.dart';
 import '../../task/pages/today_tasks_page.dart';
 import '../widgets/home_bottom_bar.dart';
 
@@ -24,10 +23,10 @@ class _HomePageState extends State<HomePage> {
   }
 
   void createNewTask() async {
-    await Navigator.of(context).pushNamed(
-      TaskDetailsPage.routeName,
-      arguments: TaskDetailsPageArg(homeCubit: context.read<HomeCubit>()),
-    );
+    // await Navigator.of(context).pushNamed(
+    //   TaskDetailsPage.routeName,
+    //   arguments: TaskDetailsPageArg(homeCubit: context.read<HomeCubit>()),
+    // );
   }
 
   void addNewTaskSuccess(Task task) {}
@@ -37,7 +36,6 @@ class _HomePageState extends State<HomePage> {
   @override
   void initState() {
     super.initState();
-    context.read<HomeCubit>().getTask(context);
   }
 
   @override
@@ -117,8 +115,9 @@ class _HomePageState extends State<HomePage> {
                     child: Text("Tính năng đang trong quá trình phát triển"),
                   ),
                 ),
-                TodayTasksPage(
-                  tasks: state.tasks,
+                BlocProvider(
+                  create: (context) => TodayTasksCubit()..getTask(context),
+                  child: const TodayTasksPage(),
                 ),
                 Scaffold(
                   appBar: AppBar(),

@@ -4,7 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:hcm23_03/features/login/pages/login_page.dart';
-import 'package:hcm23_03/shared/shared_ui/base_screen/base_screen.dart';
+import 'package:hcm23_03/features/global/presentation/base_screen/base_screen.dart';
 
 import '../../../shared/shared_ui/btn/btn_default/btn_default.dart';
 import '../../../shared/shared_ui/inputs/input_clear/input_clear.dart';

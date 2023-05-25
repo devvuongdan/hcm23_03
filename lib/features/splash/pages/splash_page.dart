@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:hcm23_03/features/splash/cubit/splash_cubit.dart';
-import 'package:hcm23_03/shared/shared_ui/base_screen/base_screen.dart';
+import 'package:hcm23_03/features/global/presentation/base_screen/base_screen.dart';
 
 class SplashPage extends StatefulWidget {
   static const String routeName = "/";

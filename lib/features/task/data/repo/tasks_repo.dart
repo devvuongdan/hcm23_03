@@ -4,9 +4,9 @@ import 'package:dartz/dartz.dart' hide Task;
 import 'package:firebase_database/firebase_database.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:hcm23_03/features/auth/cubit/auth_cubit.dart';
 
-import '../features/task/entities/task.dart';
+import '../../../global/cubit/auth_cubit.dart';
+import '../entities/task.dart';
 
 class TasksRepo {
   static Future<Either<String, List<Task>>> getTasks(

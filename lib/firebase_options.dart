@@ -17,24 +17,15 @@ import 'package:flutter/foundation.dart'
 class DefaultFirebaseOptions {
   static FirebaseOptions get currentPlatform {
     if (kIsWeb) {
-      throw UnsupportedError(
-        'DefaultFirebaseOptions have not been configured for web - '
-        'you can reconfigure this by running the FlutterFire CLI again.',
-      );
+      return web;
     }
     switch (defaultTargetPlatform) {
       case TargetPlatform.android:
-        throw UnsupportedError(
-          'DefaultFirebaseOptions have not been configured for android - '
-          'you can reconfigure this by running the FlutterFire CLI again.',
-        );
+        return android;
       case TargetPlatform.iOS:
         return ios;
       case TargetPlatform.macOS:
-        throw UnsupportedError(
-          'DefaultFirebaseOptions have not been configured for macos - '
-          'you can reconfigure this by running the FlutterFire CLI again.',
-        );
+        return macos;
       case TargetPlatform.windows:
         throw UnsupportedError(
           'DefaultFirebaseOptions have not been configured for windows - '
@@ -52,16 +43,45 @@ class DefaultFirebaseOptions {
     }
   }
 
+  static const FirebaseOptions web = FirebaseOptions(
+    apiKey: 'AIzaSyDgFLU4whqoqU893OxJHqCKqmt6F7SX1WE',
+    appId: '1:561058666320:web:8567bc9db01c6b3d503e55',
+    messagingSenderId: '561058666320',
+    projectId: 'hcm2303',
+    authDomain: 'hcm2303.firebaseapp.com',
+    databaseURL: 'https://hcm2303-default-rtdb.asia-southeast1.firebasedatabase.app',
+    storageBucket: 'hcm2303.appspot.com',
+    measurementId: 'G-382LGK37ZT',
+  );
+
+  static const FirebaseOptions android = FirebaseOptions(
+    apiKey: 'AIzaSyAzosHaRq0czp38ATNzC2HgtBAmc3Z1058',
+    appId: '1:561058666320:android:b6ea77804ce7211d503e55',
+    messagingSenderId: '561058666320',
+    projectId: 'hcm2303',
+    databaseURL: 'https://hcm2303-default-rtdb.asia-southeast1.firebasedatabase.app',
+    storageBucket: 'hcm2303.appspot.com',
+  );
+
   static const FirebaseOptions ios = FirebaseOptions(
+    apiKey: 'AIzaSyAwyJA_ath-HqiTjAu9abXudbLp9x8wo_U',
+    appId: '1:561058666320:ios:ccb989e4d4d54f8f503e55',
+    messagingSenderId: '561058666320',
+    projectId: 'hcm2303',
+    databaseURL: 'https://hcm2303-default-rtdb.asia-southeast1.firebasedatabase.app',
+    storageBucket: 'hcm2303.appspot.com',
+    iosClientId: '561058666320-seq1b5adkh0o0ucjhv91end8l3plcbrs.apps.googleusercontent.com',
+    iosBundleId: 'com.vuongdan.hcm2303.dev',
+  );
+
+  static const FirebaseOptions macos = FirebaseOptions(
     apiKey: 'AIzaSyAwyJA_ath-HqiTjAu9abXudbLp9x8wo_U',
     appId: '1:561058666320:ios:26f876564ae0085e503e55',
     messagingSenderId: '561058666320',
     projectId: 'hcm2303',
-    databaseURL:
-        'https://hcm2303-default-rtdb.asia-southeast1.firebasedatabase.app',
+    databaseURL: 'https://hcm2303-default-rtdb.asia-southeast1.firebasedatabase.app',
     storageBucket: 'hcm2303.appspot.com',
-    iosClientId:
-        '561058666320-mm5bc21p08jcn66mmp4ss9vifv8epsng.apps.googleusercontent.com',
+    iosClientId: '561058666320-mm5bc21p08jcn66mmp4ss9vifv8epsng.apps.googleusercontent.com',
     iosBundleId: 'com.example.hcm2303',
   );
 }

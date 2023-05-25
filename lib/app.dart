@@ -9,16 +9,16 @@ import 'package:hcm23_03/features/login/pages/login_page.dart';
 import 'package:hcm23_03/features/onboarding/pages/onboarding_page.dart';
 import 'package:hcm23_03/features/register/pages/register_page.dart';
 import 'package:hcm23_03/features/splash/pages/splash_page.dart';
-import 'package:hcm23_03/features/task/pages/task_details_page.dart';
-import 'package:hcm23_03/features/task/entities/task_details_page_arg.dart';
+import 'package:hcm23_03/features/task/cubits/task_details/task_details_cubit.dart';
+import 'package:hcm23_03/features/task/data/entities/task_details_page_arg.dart';
 import 'package:hcm23_03/features/user/pages/user_profile_pages.dart';
 
-import 'features/auth/cubit/auth_cubit.dart';
+import 'features/global/cubit/auth_cubit.dart';
 import 'features/home/cubit/home_cubit.dart';
 import 'features/login/cubit/login_cubit.dart';
 import 'features/register/cubit/register_cubit.dart';
 import 'features/splash/cubit/splash_cubit.dart';
-import 'features/task/cubit/task_cubit.dart';
+import 'features/task/pages/task_details_page.dart';
 
 class MyApp extends StatelessWidget {
   final FirebaseApp firebaseApp;
@@ -91,15 +91,14 @@ class MyApp extends StatelessWidget {
               );
             }
             if (setting.name == TaskDetailsPage.routeName) {
-              final arg = setting.arguments as TaskDetailsPageArg;
-
+              final TaskDetailsPageArg arg =
+                  setting.arguments as TaskDetailsPageArg;
               return MaterialPageRoute(
                 settings: const RouteSettings(name: TaskDetailsPage.routeName),
                 builder: (_) => MultiBlocProvider(
                   providers: [
                     BlocProvider(
-                      create: (context) =>
-                          TaskCubit(task: arg.task, homeCubit: arg.homeCubit),
+                      create: (context) => TaskDetailsCubit(arg)..initState(),
                     ),
                   ],
                   child: const TaskDetailsPage(),

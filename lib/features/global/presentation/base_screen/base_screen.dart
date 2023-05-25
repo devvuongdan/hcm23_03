@@ -5,7 +5,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:hcm23_03/features/home/pages/home_page.dart';
 import 'package:hcm23_03/features/login/pages/login_page.dart';
 
-import '../../../features/auth/cubit/auth_cubit.dart';
+import '../../cubit/auth_cubit.dart';
 
 class BaseScreen extends StatefulWidget {
   final Widget Function(BuildContext context) builder;

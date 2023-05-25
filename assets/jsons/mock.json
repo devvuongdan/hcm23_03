@@ -1,90 +1,4 @@
-// ignore_for_file: use_build_context_synchronously
-
-import 'package:dartz/dartz.dart';
-import 'package:firebase_auth/firebase_auth.dart';
-import 'package:firebase_database/firebase_database.dart';
-import 'package:flutter/material.dart';
-import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:equatable/equatable.dart';
-import 'package:flutter_easyloading/flutter_easyloading.dart';
-import 'package:hcm23_03/features/global/data/entities/hcm23_user.dart';
-import 'package:hcm23_03/features/global/data/repo/auth_repo.dart';
-
-import '../../../shared/shared_ui/dialogs/hcm23_dialog.dart';
-import '../../global/cubit/auth_cubit.dart';
-
-part 'register_state.dart';
-
-class RegisterCubit extends Cubit<RegisterState> {
-  final TextEditingController usernameController = TextEditingController();
-  final TextEditingController passwordController = TextEditingController();
-  RegisterCubit()
-      : super(const RegisterState(
-          hidePassword: true,
-        ));
-
-  void registerWithUsernameAndPw(BuildContext ctx) async {
-    EasyLoading.show();
-    final Either<String, UserCredential> userCre =
-        await AuthRepo.createUserWithEmailAndPassword(
-      email: usernameController.text,
-      password: passwordController.text,
-    );
-    if (userCre is Right<String, UserCredential>) {
-      final DatabaseReference ref = ctx
-          .read<AuthCubit>()
-          .state
-          .db
-          .ref("users/${userCre.value.user?.uid}");
-      ref.set(UserX.default$(
-              uid: userCre.value.user?.uid ?? "",
-              email: userCre.value.user?.email ?? "")
-          .toMap());
-
-      final DatabaseReference ref2 = ctx
-          .read<AuthCubit>()
-          .state
-          .db
-          .ref("tasks/${userCre.value.user?.uid}");
-      ref2.set(json);
-
-      ctx.read<AuthCubit>().loginWithUsernameAndPw(
-            username: usernameController.text,
-            password: passwordController.text,
-            ctx: ctx,
-            rememberAccount: true,
-          );
-    } else if (userCre is Left<String, UserCredential>) {
-      showDialog(
-        context: ctx,
-        builder: (context) => HCM23Dialog(
-          title: 'Error',
-          content: userCre.value,
-          backgroundColor: Colors.red.withOpacity(0.4),
-          titleTextStyle: const TextStyle(
-              fontSize: 25, fontWeight: FontWeight.bold, color: Colors.white),
-          contentTextStyle: const TextStyle(fontSize: 16, color: Colors.white),
-          actions: [
-            CleanDialogActionButtons(
-              actionTitle: 'OK',
-              onPressed: () {
-                Navigator.of(context).pop();
-              },
-            ),
-          ],
-        ),
-      );
-    }
-
-    EasyLoading.dismiss();
-  }
-
-  void toogleHidePassword() {
-    emit(state.copyWith(hidePassword: !state.hidePassword));
-  }
-}
-
-var json = [
+[
   {
     "uid": "735da0c2-6c27-4fc0-b67e-0c0c9100c8da",
     "title": "Nancy Hicks",
@@ -96,50 +10,42 @@ var json = [
     "teamMembers": [
       {
         "uid": "91604b68-5560-4afd-b785-7e3e09243962",
-        "avatarUrl":
-            "https://cloudflare-ipfs.com/ipfs/Qmd3W5DuhgHirLHGVixi6V76LhCkZUz6pnFt5AJBiyvHye/avatar/618.jpg",
+        "avatarUrl": "https://cloudflare-ipfs.com/ipfs/Qmd3W5DuhgHirLHGVixi6V76LhCkZUz6pnFt5AJBiyvHye/avatar/618.jpg",
         "active": false
       },
       {
         "uid": "adb58416-34c0-4c15-aa1c-9a0e98207526",
-        "avatarUrl":
-            "https://cloudflare-ipfs.com/ipfs/Qmd3W5DuhgHirLHGVixi6V76LhCkZUz6pnFt5AJBiyvHye/avatar/618.jpg",
+        "avatarUrl": "https://cloudflare-ipfs.com/ipfs/Qmd3W5DuhgHirLHGVixi6V76LhCkZUz6pnFt5AJBiyvHye/avatar/618.jpg",
         "active": true
       },
       {
         "uid": "cb04f661-3b65-442e-98f9-ebffff6245b2",
-        "avatarUrl":
-            "https://cloudflare-ipfs.com/ipfs/Qmd3W5DuhgHirLHGVixi6V76LhCkZUz6pnFt5AJBiyvHye/avatar/618.jpg",
+        "avatarUrl": "https://cloudflare-ipfs.com/ipfs/Qmd3W5DuhgHirLHGVixi6V76LhCkZUz6pnFt5AJBiyvHye/avatar/618.jpg",
         "active": false
       },
       {
         "uid": "61d53def-1fb1-48cd-b1d5-966a66a7ac1b",
-        "avatarUrl":
-            "https://cloudflare-ipfs.com/ipfs/Qmd3W5DuhgHirLHGVixi6V76LhCkZUz6pnFt5AJBiyvHye/avatar/618.jpg",
+        "avatarUrl": "https://cloudflare-ipfs.com/ipfs/Qmd3W5DuhgHirLHGVixi6V76LhCkZUz6pnFt5AJBiyvHye/avatar/618.jpg",
         "active": false
       },
       {
         "uid": "34e585e6-c598-47cd-98ca-fd848f2b272d",
-        "avatarUrl":
-            "https://cloudflare-ipfs.com/ipfs/Qmd3W5DuhgHirLHGVixi6V76LhCkZUz6pnFt5AJBiyvHye/avatar/618.jpg",
+        "avatarUrl": "https://cloudflare-ipfs.com/ipfs/Qmd3W5DuhgHirLHGVixi6V76LhCkZUz6pnFt5AJBiyvHye/avatar/618.jpg",
         "active": false
       },
       {
         "uid": "f443fc55-6c34-4249-810a-c733aa073e39",
-        "avatarUrl":
-            "https://cloudflare-ipfs.com/ipfs/Qmd3W5DuhgHirLHGVixi6V76LhCkZUz6pnFt5AJBiyvHye/avatar/618.jpg",
+        "avatarUrl": "https://cloudflare-ipfs.com/ipfs/Qmd3W5DuhgHirLHGVixi6V76LhCkZUz6pnFt5AJBiyvHye/avatar/618.jpg",
         "active": true
       },
       {
         "uid": "e5502d6e-06a3-4418-be79-5353c44e98db",
-        "avatarUrl":
-            "https://cloudflare-ipfs.com/ipfs/Qmd3W5DuhgHirLHGVixi6V76LhCkZUz6pnFt5AJBiyvHye/avatar/618.jpg",
+        "avatarUrl": "https://cloudflare-ipfs.com/ipfs/Qmd3W5DuhgHirLHGVixi6V76LhCkZUz6pnFt5AJBiyvHye/avatar/618.jpg",
         "active": true
       },
       {
         "uid": "6d70adae-0d8d-415c-9bd1-a5b743ad739c",
-        "avatarUrl":
-            "https://cloudflare-ipfs.com/ipfs/Qmd3W5DuhgHirLHGVixi6V76LhCkZUz6pnFt5AJBiyvHye/avatar/618.jpg",
+        "avatarUrl": "https://cloudflare-ipfs.com/ipfs/Qmd3W5DuhgHirLHGVixi6V76LhCkZUz6pnFt5AJBiyvHye/avatar/618.jpg",
         "active": true
       }
     ],
@@ -212,38 +118,32 @@ var json = [
     "teamMembers": [
       {
         "uid": "7c553a64-c15b-4589-a22c-f0c86ebe5b71",
-        "avatarUrl":
-            "https://cloudflare-ipfs.com/ipfs/Qmd3W5DuhgHirLHGVixi6V76LhCkZUz6pnFt5AJBiyvHye/avatar/618.jpg",
+        "avatarUrl": "https://cloudflare-ipfs.com/ipfs/Qmd3W5DuhgHirLHGVixi6V76LhCkZUz6pnFt5AJBiyvHye/avatar/618.jpg",
         "active": false
       },
       {
         "uid": "00b1cbfd-178a-482b-a918-aa1c87e48aa7",
-        "avatarUrl":
-            "https://cloudflare-ipfs.com/ipfs/Qmd3W5DuhgHirLHGVixi6V76LhCkZUz6pnFt5AJBiyvHye/avatar/618.jpg",
+        "avatarUrl": "https://cloudflare-ipfs.com/ipfs/Qmd3W5DuhgHirLHGVixi6V76LhCkZUz6pnFt5AJBiyvHye/avatar/618.jpg",
         "active": false
       },
       {
         "uid": "c2f0c579-efdd-4a1d-8972-8adbd661dd8c",
-        "avatarUrl":
-            "https://cloudflare-ipfs.com/ipfs/Qmd3W5DuhgHirLHGVixi6V76LhCkZUz6pnFt5AJBiyvHye/avatar/618.jpg",
+        "avatarUrl": "https://cloudflare-ipfs.com/ipfs/Qmd3W5DuhgHirLHGVixi6V76LhCkZUz6pnFt5AJBiyvHye/avatar/618.jpg",
         "active": true
       },
       {
         "uid": "f286c320-496d-48b6-8aaa-34d0009f278b",
-        "avatarUrl":
-            "https://cloudflare-ipfs.com/ipfs/Qmd3W5DuhgHirLHGVixi6V76LhCkZUz6pnFt5AJBiyvHye/avatar/618.jpg",
+        "avatarUrl": "https://cloudflare-ipfs.com/ipfs/Qmd3W5DuhgHirLHGVixi6V76LhCkZUz6pnFt5AJBiyvHye/avatar/618.jpg",
         "active": false
       },
       {
         "uid": "d7c92319-882e-4e58-be0d-c0236568eed3",
-        "avatarUrl":
-            "https://cloudflare-ipfs.com/ipfs/Qmd3W5DuhgHirLHGVixi6V76LhCkZUz6pnFt5AJBiyvHye/avatar/618.jpg",
+        "avatarUrl": "https://cloudflare-ipfs.com/ipfs/Qmd3W5DuhgHirLHGVixi6V76LhCkZUz6pnFt5AJBiyvHye/avatar/618.jpg",
         "active": false
       },
       {
         "uid": "e4bdd99c-d0f7-4a7b-b578-e55cce797d64",
-        "avatarUrl":
-            "https://cloudflare-ipfs.com/ipfs/Qmd3W5DuhgHirLHGVixi6V76LhCkZUz6pnFt5AJBiyvHye/avatar/618.jpg",
+        "avatarUrl": "https://cloudflare-ipfs.com/ipfs/Qmd3W5DuhgHirLHGVixi6V76LhCkZUz6pnFt5AJBiyvHye/avatar/618.jpg",
         "active": true
       }
     ],
@@ -292,20 +192,17 @@ var json = [
     "teamMembers": [
       {
         "uid": "723202d4-e855-4ecc-bf5e-9146cf07ba1d",
-        "avatarUrl":
-            "https://cloudflare-ipfs.com/ipfs/Qmd3W5DuhgHirLHGVixi6V76LhCkZUz6pnFt5AJBiyvHye/avatar/618.jpg",
+        "avatarUrl": "https://cloudflare-ipfs.com/ipfs/Qmd3W5DuhgHirLHGVixi6V76LhCkZUz6pnFt5AJBiyvHye/avatar/618.jpg",
         "active": true
       },
       {
         "uid": "f9c209de-5f85-4ce4-8c40-8f3a87630ecd",
-        "avatarUrl":
-            "https://cloudflare-ipfs.com/ipfs/Qmd3W5DuhgHirLHGVixi6V76LhCkZUz6pnFt5AJBiyvHye/avatar/618.jpg",
+        "avatarUrl": "https://cloudflare-ipfs.com/ipfs/Qmd3W5DuhgHirLHGVixi6V76LhCkZUz6pnFt5AJBiyvHye/avatar/618.jpg",
         "active": false
       },
       {
         "uid": "827c60f5-40fe-4a5d-a1c8-62abc76404de",
-        "avatarUrl":
-            "https://cloudflare-ipfs.com/ipfs/Qmd3W5DuhgHirLHGVixi6V76LhCkZUz6pnFt5AJBiyvHye/avatar/618.jpg",
+        "avatarUrl": "https://cloudflare-ipfs.com/ipfs/Qmd3W5DuhgHirLHGVixi6V76LhCkZUz6pnFt5AJBiyvHye/avatar/618.jpg",
         "active": false
       }
     ],
@@ -323,50 +220,42 @@ var json = [
     "teamMembers": [
       {
         "uid": "c71cde99-acae-463c-9600-b0da7ca57520",
-        "avatarUrl":
-            "https://cloudflare-ipfs.com/ipfs/Qmd3W5DuhgHirLHGVixi6V76LhCkZUz6pnFt5AJBiyvHye/avatar/618.jpg",
+        "avatarUrl": "https://cloudflare-ipfs.com/ipfs/Qmd3W5DuhgHirLHGVixi6V76LhCkZUz6pnFt5AJBiyvHye/avatar/618.jpg",
         "active": false
       },
       {
         "uid": "9090b483-bdfa-48ba-8eb6-4587e14e8a80",
-        "avatarUrl":
-            "https://cloudflare-ipfs.com/ipfs/Qmd3W5DuhgHirLHGVixi6V76LhCkZUz6pnFt5AJBiyvHye/avatar/618.jpg",
+        "avatarUrl": "https://cloudflare-ipfs.com/ipfs/Qmd3W5DuhgHirLHGVixi6V76LhCkZUz6pnFt5AJBiyvHye/avatar/618.jpg",
         "active": true
       },
       {
         "uid": "c0cc83c9-df24-4d82-8bb3-dea9053efc78",
-        "avatarUrl":
-            "https://cloudflare-ipfs.com/ipfs/Qmd3W5DuhgHirLHGVixi6V76LhCkZUz6pnFt5AJBiyvHye/avatar/618.jpg",
+        "avatarUrl": "https://cloudflare-ipfs.com/ipfs/Qmd3W5DuhgHirLHGVixi6V76LhCkZUz6pnFt5AJBiyvHye/avatar/618.jpg",
         "active": false
       },
       {
         "uid": "f42d3744-6c63-45cc-ab43-1add75d14184",
-        "avatarUrl":
-            "https://cloudflare-ipfs.com/ipfs/Qmd3W5DuhgHirLHGVixi6V76LhCkZUz6pnFt5AJBiyvHye/avatar/618.jpg",
+        "avatarUrl": "https://cloudflare-ipfs.com/ipfs/Qmd3W5DuhgHirLHGVixi6V76LhCkZUz6pnFt5AJBiyvHye/avatar/618.jpg",
         "active": false
       },
       {
         "uid": "ba60981b-5979-4463-ba86-5e894e81b90b",
-        "avatarUrl":
-            "https://cloudflare-ipfs.com/ipfs/Qmd3W5DuhgHirLHGVixi6V76LhCkZUz6pnFt5AJBiyvHye/avatar/618.jpg",
+        "avatarUrl": "https://cloudflare-ipfs.com/ipfs/Qmd3W5DuhgHirLHGVixi6V76LhCkZUz6pnFt5AJBiyvHye/avatar/618.jpg",
         "active": true
       },
       {
         "uid": "dbce491b-7fb6-4618-a990-cba975695962",
-        "avatarUrl":
-            "https://cloudflare-ipfs.com/ipfs/Qmd3W5DuhgHirLHGVixi6V76LhCkZUz6pnFt5AJBiyvHye/avatar/618.jpg",
+        "avatarUrl": "https://cloudflare-ipfs.com/ipfs/Qmd3W5DuhgHirLHGVixi6V76LhCkZUz6pnFt5AJBiyvHye/avatar/618.jpg",
         "active": true
       },
       {
         "uid": "1d4ace72-95d1-4209-b83e-6296635457d5",
-        "avatarUrl":
-            "https://cloudflare-ipfs.com/ipfs/Qmd3W5DuhgHirLHGVixi6V76LhCkZUz6pnFt5AJBiyvHye/avatar/618.jpg",
+        "avatarUrl": "https://cloudflare-ipfs.com/ipfs/Qmd3W5DuhgHirLHGVixi6V76LhCkZUz6pnFt5AJBiyvHye/avatar/618.jpg",
         "active": true
       },
       {
         "uid": "5bac0747-99a9-4394-8f05-5334549e9f77",
-        "avatarUrl":
-            "https://cloudflare-ipfs.com/ipfs/Qmd3W5DuhgHirLHGVixi6V76LhCkZUz6pnFt5AJBiyvHye/avatar/618.jpg",
+        "avatarUrl": "https://cloudflare-ipfs.com/ipfs/Qmd3W5DuhgHirLHGVixi6V76LhCkZUz6pnFt5AJBiyvHye/avatar/618.jpg",
         "active": true
       }
     ],
@@ -389,8 +278,7 @@ var json = [
   {
     "uid": "dcc4b1e6-0c42-469d-aa0c-8b83fa591ed9",
     "title": "Cecelia Mcknight",
-    "description":
-        "partnership rehospitalization plow chit-chat window restriction ",
+    "description": "partnership rehospitalization plow chit-chat window restriction ",
     "createdAt": 1685310940206,
     "modifiedAt": 1685017383687,
     "startTime": 1685408462755,
@@ -459,44 +347,37 @@ var json = [
     "teamMembers": [
       {
         "uid": "599c647c-39a2-424d-a8ec-9975a62b7f19",
-        "avatarUrl":
-            "https://cloudflare-ipfs.com/ipfs/Qmd3W5DuhgHirLHGVixi6V76LhCkZUz6pnFt5AJBiyvHye/avatar/618.jpg",
+        "avatarUrl": "https://cloudflare-ipfs.com/ipfs/Qmd3W5DuhgHirLHGVixi6V76LhCkZUz6pnFt5AJBiyvHye/avatar/618.jpg",
         "active": true
       },
       {
         "uid": "a0eedbe8-3f5d-4c03-879d-fd64b5cf6382",
-        "avatarUrl":
-            "https://cloudflare-ipfs.com/ipfs/Qmd3W5DuhgHirLHGVixi6V76LhCkZUz6pnFt5AJBiyvHye/avatar/618.jpg",
+        "avatarUrl": "https://cloudflare-ipfs.com/ipfs/Qmd3W5DuhgHirLHGVixi6V76LhCkZUz6pnFt5AJBiyvHye/avatar/618.jpg",
         "active": true
       },
       {
         "uid": "a5c78dbb-a16c-47d5-ae63-938c1e1cf6c8",
-        "avatarUrl":
-            "https://cloudflare-ipfs.com/ipfs/Qmd3W5DuhgHirLHGVixi6V76LhCkZUz6pnFt5AJBiyvHye/avatar/618.jpg",
+        "avatarUrl": "https://cloudflare-ipfs.com/ipfs/Qmd3W5DuhgHirLHGVixi6V76LhCkZUz6pnFt5AJBiyvHye/avatar/618.jpg",
         "active": false
       },
       {
         "uid": "44a55a82-6a35-448c-b701-9a60b1c0737a",
-        "avatarUrl":
-            "https://cloudflare-ipfs.com/ipfs/Qmd3W5DuhgHirLHGVixi6V76LhCkZUz6pnFt5AJBiyvHye/avatar/618.jpg",
+        "avatarUrl": "https://cloudflare-ipfs.com/ipfs/Qmd3W5DuhgHirLHGVixi6V76LhCkZUz6pnFt5AJBiyvHye/avatar/618.jpg",
         "active": false
       },
       {
         "uid": "816ee5f8-5999-461b-8db4-33deef98e8e7",
-        "avatarUrl":
-            "https://cloudflare-ipfs.com/ipfs/Qmd3W5DuhgHirLHGVixi6V76LhCkZUz6pnFt5AJBiyvHye/avatar/618.jpg",
+        "avatarUrl": "https://cloudflare-ipfs.com/ipfs/Qmd3W5DuhgHirLHGVixi6V76LhCkZUz6pnFt5AJBiyvHye/avatar/618.jpg",
         "active": false
       },
       {
         "uid": "9fbbdf03-b5b1-43cd-b1a9-e1d319a88bf8",
-        "avatarUrl":
-            "https://cloudflare-ipfs.com/ipfs/Qmd3W5DuhgHirLHGVixi6V76LhCkZUz6pnFt5AJBiyvHye/avatar/618.jpg",
+        "avatarUrl": "https://cloudflare-ipfs.com/ipfs/Qmd3W5DuhgHirLHGVixi6V76LhCkZUz6pnFt5AJBiyvHye/avatar/618.jpg",
         "active": false
       },
       {
         "uid": "e4313c21-58a3-4a65-a57f-ec789c046420",
-        "avatarUrl":
-            "https://cloudflare-ipfs.com/ipfs/Qmd3W5DuhgHirLHGVixi6V76LhCkZUz6pnFt5AJBiyvHye/avatar/618.jpg",
+        "avatarUrl": "https://cloudflare-ipfs.com/ipfs/Qmd3W5DuhgHirLHGVixi6V76LhCkZUz6pnFt5AJBiyvHye/avatar/618.jpg",
         "active": false
       }
     ],
@@ -569,32 +450,27 @@ var json = [
     "teamMembers": [
       {
         "uid": "03a1c98b-fdd8-49e2-9101-4f86e1efbc56",
-        "avatarUrl":
-            "https://cloudflare-ipfs.com/ipfs/Qmd3W5DuhgHirLHGVixi6V76LhCkZUz6pnFt5AJBiyvHye/avatar/618.jpg",
+        "avatarUrl": "https://cloudflare-ipfs.com/ipfs/Qmd3W5DuhgHirLHGVixi6V76LhCkZUz6pnFt5AJBiyvHye/avatar/618.jpg",
         "active": true
       },
       {
         "uid": "2c77f5d5-c4e1-4454-a66d-d0e7d1acdafd",
-        "avatarUrl":
-            "https://cloudflare-ipfs.com/ipfs/Qmd3W5DuhgHirLHGVixi6V76LhCkZUz6pnFt5AJBiyvHye/avatar/618.jpg",
+        "avatarUrl": "https://cloudflare-ipfs.com/ipfs/Qmd3W5DuhgHirLHGVixi6V76LhCkZUz6pnFt5AJBiyvHye/avatar/618.jpg",
         "active": true
       },
       {
         "uid": "e85d9b9e-bf8e-4674-9a5e-ae5391d57280",
-        "avatarUrl":
-            "https://cloudflare-ipfs.com/ipfs/Qmd3W5DuhgHirLHGVixi6V76LhCkZUz6pnFt5AJBiyvHye/avatar/618.jpg",
+        "avatarUrl": "https://cloudflare-ipfs.com/ipfs/Qmd3W5DuhgHirLHGVixi6V76LhCkZUz6pnFt5AJBiyvHye/avatar/618.jpg",
         "active": true
       },
       {
         "uid": "bfb40c10-ab22-4bc7-a4f5-d77042fef7d1",
-        "avatarUrl":
-            "https://cloudflare-ipfs.com/ipfs/Qmd3W5DuhgHirLHGVixi6V76LhCkZUz6pnFt5AJBiyvHye/avatar/618.jpg",
+        "avatarUrl": "https://cloudflare-ipfs.com/ipfs/Qmd3W5DuhgHirLHGVixi6V76LhCkZUz6pnFt5AJBiyvHye/avatar/618.jpg",
         "active": true
       },
       {
         "uid": "923af247-a80b-4f4b-b1cb-ddf2259c6072",
-        "avatarUrl":
-            "https://cloudflare-ipfs.com/ipfs/Qmd3W5DuhgHirLHGVixi6V76LhCkZUz6pnFt5AJBiyvHye/avatar/618.jpg",
+        "avatarUrl": "https://cloudflare-ipfs.com/ipfs/Qmd3W5DuhgHirLHGVixi6V76LhCkZUz6pnFt5AJBiyvHye/avatar/618.jpg",
         "active": false
       }
     ],
@@ -661,26 +537,22 @@ var json = [
     "teamMembers": [
       {
         "uid": "810eb779-db4d-476f-b070-f002d7c39e43",
-        "avatarUrl":
-            "https://cloudflare-ipfs.com/ipfs/Qmd3W5DuhgHirLHGVixi6V76LhCkZUz6pnFt5AJBiyvHye/avatar/618.jpg",
+        "avatarUrl": "https://cloudflare-ipfs.com/ipfs/Qmd3W5DuhgHirLHGVixi6V76LhCkZUz6pnFt5AJBiyvHye/avatar/618.jpg",
         "active": true
       },
       {
         "uid": "ae0a459d-658f-49ed-93d0-d81dd1d5d4ac",
-        "avatarUrl":
-            "https://cloudflare-ipfs.com/ipfs/Qmd3W5DuhgHirLHGVixi6V76LhCkZUz6pnFt5AJBiyvHye/avatar/618.jpg",
+        "avatarUrl": "https://cloudflare-ipfs.com/ipfs/Qmd3W5DuhgHirLHGVixi6V76LhCkZUz6pnFt5AJBiyvHye/avatar/618.jpg",
         "active": false
       },
       {
         "uid": "1822ff54-45d7-4a9c-9641-42fb931fe5f6",
-        "avatarUrl":
-            "https://cloudflare-ipfs.com/ipfs/Qmd3W5DuhgHirLHGVixi6V76LhCkZUz6pnFt5AJBiyvHye/avatar/618.jpg",
+        "avatarUrl": "https://cloudflare-ipfs.com/ipfs/Qmd3W5DuhgHirLHGVixi6V76LhCkZUz6pnFt5AJBiyvHye/avatar/618.jpg",
         "active": false
       },
       {
         "uid": "70e55f0f-1ac2-40de-8663-af670958359f",
-        "avatarUrl":
-            "https://cloudflare-ipfs.com/ipfs/Qmd3W5DuhgHirLHGVixi6V76LhCkZUz6pnFt5AJBiyvHye/avatar/618.jpg",
+        "avatarUrl": "https://cloudflare-ipfs.com/ipfs/Qmd3W5DuhgHirLHGVixi6V76LhCkZUz6pnFt5AJBiyvHye/avatar/618.jpg",
         "active": false
       }
     ],
@@ -698,38 +570,32 @@ var json = [
     "teamMembers": [
       {
         "uid": "c7b5e7ac-382d-4e9a-91d7-bc0f73a430d0",
-        "avatarUrl":
-            "https://cloudflare-ipfs.com/ipfs/Qmd3W5DuhgHirLHGVixi6V76LhCkZUz6pnFt5AJBiyvHye/avatar/618.jpg",
+        "avatarUrl": "https://cloudflare-ipfs.com/ipfs/Qmd3W5DuhgHirLHGVixi6V76LhCkZUz6pnFt5AJBiyvHye/avatar/618.jpg",
         "active": true
       },
       {
         "uid": "cb6e6b40-9484-4101-911b-e7b0a705b2eb",
-        "avatarUrl":
-            "https://cloudflare-ipfs.com/ipfs/Qmd3W5DuhgHirLHGVixi6V76LhCkZUz6pnFt5AJBiyvHye/avatar/618.jpg",
+        "avatarUrl": "https://cloudflare-ipfs.com/ipfs/Qmd3W5DuhgHirLHGVixi6V76LhCkZUz6pnFt5AJBiyvHye/avatar/618.jpg",
         "active": true
       },
       {
         "uid": "91b1c882-9eab-41a9-8bcd-6e61599455af",
-        "avatarUrl":
-            "https://cloudflare-ipfs.com/ipfs/Qmd3W5DuhgHirLHGVixi6V76LhCkZUz6pnFt5AJBiyvHye/avatar/618.jpg",
+        "avatarUrl": "https://cloudflare-ipfs.com/ipfs/Qmd3W5DuhgHirLHGVixi6V76LhCkZUz6pnFt5AJBiyvHye/avatar/618.jpg",
         "active": false
       },
       {
         "uid": "2b57ce66-238e-4db0-abbc-585fd18982c3",
-        "avatarUrl":
-            "https://cloudflare-ipfs.com/ipfs/Qmd3W5DuhgHirLHGVixi6V76LhCkZUz6pnFt5AJBiyvHye/avatar/618.jpg",
+        "avatarUrl": "https://cloudflare-ipfs.com/ipfs/Qmd3W5DuhgHirLHGVixi6V76LhCkZUz6pnFt5AJBiyvHye/avatar/618.jpg",
         "active": false
       },
       {
         "uid": "6a7b2a5c-2178-434e-83dc-fd5fdbcf61b0",
-        "avatarUrl":
-            "https://cloudflare-ipfs.com/ipfs/Qmd3W5DuhgHirLHGVixi6V76LhCkZUz6pnFt5AJBiyvHye/avatar/618.jpg",
+        "avatarUrl": "https://cloudflare-ipfs.com/ipfs/Qmd3W5DuhgHirLHGVixi6V76LhCkZUz6pnFt5AJBiyvHye/avatar/618.jpg",
         "active": true
       },
       {
         "uid": "274b7a69-44f9-4298-9082-d3d7a642810b",
-        "avatarUrl":
-            "https://cloudflare-ipfs.com/ipfs/Qmd3W5DuhgHirLHGVixi6V76LhCkZUz6pnFt5AJBiyvHye/avatar/618.jpg",
+        "avatarUrl": "https://cloudflare-ipfs.com/ipfs/Qmd3W5DuhgHirLHGVixi6V76LhCkZUz6pnFt5AJBiyvHye/avatar/618.jpg",
         "active": true
       }
     ],
@@ -747,14 +613,12 @@ var json = [
     "teamMembers": [
       {
         "uid": "ea534e1f-47c9-46ae-bc48-c16923465930",
-        "avatarUrl":
-            "https://cloudflare-ipfs.com/ipfs/Qmd3W5DuhgHirLHGVixi6V76LhCkZUz6pnFt5AJBiyvHye/avatar/618.jpg",
+        "avatarUrl": "https://cloudflare-ipfs.com/ipfs/Qmd3W5DuhgHirLHGVixi6V76LhCkZUz6pnFt5AJBiyvHye/avatar/618.jpg",
         "active": false
       },
       {
         "uid": "d99454e9-25d1-47d3-9d77-54075b672e71",
-        "avatarUrl":
-            "https://cloudflare-ipfs.com/ipfs/Qmd3W5DuhgHirLHGVixi6V76LhCkZUz6pnFt5AJBiyvHye/avatar/618.jpg",
+        "avatarUrl": "https://cloudflare-ipfs.com/ipfs/Qmd3W5DuhgHirLHGVixi6V76LhCkZUz6pnFt5AJBiyvHye/avatar/618.jpg",
         "active": false
       }
     ],
@@ -809,20 +673,17 @@ var json = [
     "teamMembers": [
       {
         "uid": "64662304-5cfe-4652-ae52-0543fd404d17",
-        "avatarUrl":
-            "https://cloudflare-ipfs.com/ipfs/Qmd3W5DuhgHirLHGVixi6V76LhCkZUz6pnFt5AJBiyvHye/avatar/618.jpg",
+        "avatarUrl": "https://cloudflare-ipfs.com/ipfs/Qmd3W5DuhgHirLHGVixi6V76LhCkZUz6pnFt5AJBiyvHye/avatar/618.jpg",
         "active": true
       },
       {
         "uid": "041ddd94-125c-45c4-9154-82703e537530",
-        "avatarUrl":
-            "https://cloudflare-ipfs.com/ipfs/Qmd3W5DuhgHirLHGVixi6V76LhCkZUz6pnFt5AJBiyvHye/avatar/618.jpg",
+        "avatarUrl": "https://cloudflare-ipfs.com/ipfs/Qmd3W5DuhgHirLHGVixi6V76LhCkZUz6pnFt5AJBiyvHye/avatar/618.jpg",
         "active": true
       },
       {
         "uid": "b81c0130-f959-4674-97d7-11b1bdc0de00",
-        "avatarUrl":
-            "https://cloudflare-ipfs.com/ipfs/Qmd3W5DuhgHirLHGVixi6V76LhCkZUz6pnFt5AJBiyvHye/avatar/618.jpg",
+        "avatarUrl": "https://cloudflare-ipfs.com/ipfs/Qmd3W5DuhgHirLHGVixi6V76LhCkZUz6pnFt5AJBiyvHye/avatar/618.jpg",
         "active": true
       }
     ],
@@ -878,4 +739,4 @@ var json = [
     ],
     "active": true
   }
-];
+]

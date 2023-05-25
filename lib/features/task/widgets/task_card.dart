@@ -1,21 +1,21 @@
 // ignore_for_file: public_member_api_docs, sort_constructors_first
 import 'package:flutter/material.dart';
-import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:hcm23_03/features/home/cubit/home_cubit.dart';
-import 'package:hcm23_03/features/task/entities/task_details_page_arg.dart';
 import 'package:intl/intl.dart';
 
-import '../entities/task.dart';
-import '../pages/task_details_page.dart';
+import '../data/entities/task.dart';
 
 class TaskCard extends StatefulWidget {
   final Task task;
   final Color color;
+  final void Function() viewTask;
+  final void Function() deleteTask;
 
   const TaskCard({
     Key? key,
     required this.task,
     required this.color,
+    required this.viewTask,
+    required this.deleteTask,
   }) : super(key: key);
 
   @override
@@ -37,21 +37,11 @@ class _TaskCardState extends State<TaskCard> {
     }
   }
 
-  void viewTask() {
-    Navigator.of(context).pushNamed(
-      TaskDetailsPage.routeName,
-      arguments: TaskDetailsPageArg(
-        homeCubit: context.read<HomeCubit>(),
-        task: widget.task,
-      ),
-    );
-  }
-
   @override
   Widget build(BuildContext context) {
     return GestureDetector(
       onLongPress: openMenu,
-      onTap: viewTask,
+      onTap: widget.viewTask,
       child: Row(
         children: [
           _buildLeading(),
@@ -113,7 +103,9 @@ class _TaskCardState extends State<TaskCard> {
               child: Column(
                 children: [
                   IconButton(
-                    onPressed: () {},
+                    onPressed: () {
+                      widget.deleteTask.call();
+                    },
                     icon: const Icon(
                       Icons.delete,
                       color: Colors.red,

@@ -12,66 +12,89 @@ enum TaskProgress {
 }
 
 class Task {
-  final String? id;
+  final String? uid;
   final String? title;
   final String? description;
+  final DateTime? createdAt;
+  final DateTime? modifiedAt;
   final DateTime? startTime;
   final DateTime? dueTime;
   final List<TeamMember> teamMembers;
   final List<TaskStage> taskStages;
+  final bool? active;
 
   const Task({
-    required this.id,
+    required this.uid,
     required this.title,
     required this.description,
+    required this.createdAt,
+    required this.modifiedAt,
     required this.startTime,
     required this.dueTime,
     required this.teamMembers,
     required this.taskStages,
+    required this.active,
   });
 
   Task copyWith({
-    String? id,
+    String? uid,
     String? title,
     String? description,
+    DateTime? createdAt,
+    DateTime? modifiedAt,
     DateTime? startTime,
     DateTime? dueTime,
     List<TeamMember>? teamMembers,
     List<TaskStage>? taskStages,
+    bool? active,
   }) {
     return Task(
-      id: id ?? this.id,
+      uid: uid ?? this.uid,
       title: title ?? this.title,
       description: description ?? this.description,
+      createdAt: createdAt ?? this.createdAt,
+      modifiedAt: modifiedAt ?? this.modifiedAt,
       startTime: startTime ?? this.startTime,
       dueTime: dueTime ?? this.dueTime,
       teamMembers: teamMembers ?? this.teamMembers,
       taskStages: taskStages ?? this.taskStages,
+      active: active ?? this.active,
     );
   }
 
   Map<String, dynamic> toMap() {
     return <String, dynamic>{
-      'id': id,
+      'uid': uid,
       'title': title,
       'description': description,
+      'createdAt': createdAt?.millisecondsSinceEpoch,
+      'modifiedAt': modifiedAt?.millisecondsSinceEpoch,
       'startTime': startTime?.millisecondsSinceEpoch,
       'dueTime': dueTime?.millisecondsSinceEpoch,
       'teamMembers': teamMembers.map((x) => x.toMap()).toList(),
       'taskStages': taskStages.map((x) => x.toMap()).toList(),
+      'active': active,
     };
   }
 
   factory Task.fromMap(Map<String, dynamic> map) {
     return Task(
-      id: map['id'] != null ? map['id'] as String : null,
+      uid: map['uid'] != null ? map['uid'] as String : null,
       title: map['title'] != null ? map['title'] as String : null,
       description:
           map['description'] != null ? map['description'] as String : null,
-      startTime:
-          map['startTime'] != null ? DateTime.tryParse(map['startTime']) : null,
-      dueTime:
-          map['dueTime'] != null ? DateTime.tryParse(map['dueTime']) : null,
+      createdAt: map['createdAt'] != null
+          ? DateTime.fromMillisecondsSinceEpoch(map['createdAt'] as int)
+          : null,
+      modifiedAt: map['modifiedAt'] != null
+          ? DateTime.fromMillisecondsSinceEpoch(map['modifiedAt'] as int)
+          : null,
+      startTime: map['startTime'] != null
+          ? DateTime.fromMillisecondsSinceEpoch(map['startTime'] as int)
+          : null,
+      dueTime: map['dueTime'] != null
+          ? DateTime.fromMillisecondsSinceEpoch(map['dueTime'] as int)
+          : null,
       teamMembers: List<TeamMember>.from(
         (map['teamMembers'] as List? ?? []).map<TeamMember>(
           (x) => TeamMember.fromMap(x as Map<String, dynamic>),
@@ -82,6 +105,7 @@ class Task {
           (x) => TaskStage.fromMap(x as Map<String, dynamic>),
         ),
       ),
+      active: map['active'] != null ? map['active'] as bool : null,
     );
   }
 
@@ -92,71 +116,84 @@ class Task {
 
   @override
   String toString() {
-    return 'Task(id: $id, title: $title, description: $description, startTime: $startTime, dueTime: $dueTime, teamMembers: $teamMembers, taskStages: $taskStages)';
+    return 'Task(uid: $uid, title: $title, description: $description, createdAt: $createdAt, modifiedAt: $modifiedAt, startTime: $startTime, dueTime: $dueTime, teamMembers: $teamMembers, taskStages: $taskStages, active: $active)';
   }
 
   @override
   bool operator ==(covariant Task other) {
     if (identical(this, other)) return true;
 
-    return other.id == id &&
+    return other.uid == uid &&
         other.title == title &&
         other.description == description &&
+        other.createdAt == createdAt &&
+        other.modifiedAt == modifiedAt &&
         other.startTime == startTime &&
         other.dueTime == dueTime &&
         listEquals(other.teamMembers, teamMembers) &&
-        listEquals(other.taskStages, taskStages);
+        listEquals(other.taskStages, taskStages) &&
+        other.active == active;
   }
 
   @override
   int get hashCode {
-    return id.hashCode ^
+    return uid.hashCode ^
         title.hashCode ^
         description.hashCode ^
+        createdAt.hashCode ^
+        modifiedAt.hashCode ^
         startTime.hashCode ^
         dueTime.hashCode ^
         teamMembers.hashCode ^
-        taskStages.hashCode;
+        taskStages.hashCode ^
+        active.hashCode;
   }
 }
 
 class TaskStage {
-  final String? id;
+  final String? uid;
   bool? isDone;
   final String? description;
+  final bool? active;
 
   TaskStage({
-    required this.id,
+    this.uid,
     this.isDone,
-    required this.description,
+    this.description,
+    this.active,
   });
 
   TaskStage copyWith({
     String? id,
+    String? uid,
     bool? isDone,
     String? description,
+    bool? active,
   }) {
     return TaskStage(
-      id: id ?? this.id,
+      uid: uid ?? this.uid,
       isDone: isDone ?? this.isDone,
       description: description ?? this.description,
+      active: active ?? this.active,
     );
   }
 
   Map<String, dynamic> toMap() {
     return <String, dynamic>{
-      'id': id,
+      'uid': uid,
       'isDone': isDone,
       'description': description,
+      'active': active,
     };
   }
 
   factory TaskStage.fromMap(Map<String, dynamic> map) {
     return TaskStage(
-      id: map['id'] != null ? map['id'] as String : null,
+      uid: map['uid'] != null ? map['uid'] as String : null,
       isDone: map['isDone'] != null ? map['isDone'] as bool : null,
       description:
           map['description'] != null ? map['description'] as String : null,
+      active: map['active'] as bool,
     );
   }
 
@@ -166,51 +203,65 @@ class TaskStage {
       TaskStage.fromMap(json.decode(source) as Map<String, dynamic>);
 
   @override
-  String toString() =>
-      'TaskStage(id: $id, isDone: $isDone, description: $description)';
+  String toString() {
+    return 'TaskStage(uid: $uid, isDone: $isDone, description: $description, active: $active)';
+  }
 
   @override
   bool operator ==(covariant TaskStage other) {
     if (identical(this, other)) return true;
 
-    return other.id == id &&
+    return other.uid == uid &&
         other.isDone == isDone &&
-        other.description == description;
+        other.description == description &&
+        other.active == active;
   }
 
   @override
-  int get hashCode => id.hashCode ^ isDone.hashCode ^ description.hashCode;
+  int get hashCode {
+    return uid.hashCode ^
+        isDone.hashCode ^
+        description.hashCode ^
+        active.hashCode;
+  }
 }
 
 class TeamMember {
-  final String? id;
+  final String? uid;
   final String? avatarUrl;
+  final bool? active;
   const TeamMember({
-    required this.id,
-    required this.avatarUrl,
+    this.uid,
+    this.avatarUrl,
+    this.active,
   });
 
   Map<String, dynamic> toMap() {
     return <String, dynamic>{
-      'id': id,
+      'uid': uid,
       'avatarUrl': avatarUrl,
+      'active': active,
     };
   }
 
   TeamMember copyWith({
     String? id,
+    String? uid,
     String? avatarUrl,
+    bool? active,
   }) {
     return TeamMember(
-      id: id ?? this.id,
+      uid: uid ?? this.uid,
       avatarUrl: avatarUrl ?? this.avatarUrl,
+      active: active ?? this.active,
     );
   }
 
   factory TeamMember.fromMap(Map<String, dynamic> map) {
     return TeamMember(
-      id: map['id'] != null ? map['id'] as String : null,
+      uid: map['uid'] != null ? map['uid'] as String : null,
       avatarUrl: map['avatarUrl'] != null ? map['avatarUrl'] as String : null,
+      active: map['active'] != null ? map['active'] as bool : null,
     );
   }
 
@@ -220,15 +271,21 @@ class TeamMember {
       TeamMember.fromMap(json.decode(source) as Map<String, dynamic>);
 
   @override
-  String toString() => 'TeamMember(id: $id, avatarUrl: $avatarUrl)';
+  String toString() {
+    return 'TeamMember(uid: $uid, avatarUrl: $avatarUrl, active: $active)';
+  }
 
   @override
   bool operator ==(covariant TeamMember other) {
     if (identical(this, other)) return true;
 
-    return other.id == id && other.avatarUrl == avatarUrl;
+    return other.uid == uid &&
+        other.avatarUrl == avatarUrl &&
+        other.active == active;
   }
 
   @override
-  int get hashCode => id.hashCode ^ avatarUrl.hashCode;
+  int get hashCode {
+    return uid.hashCode ^ avatarUrl.hashCode ^ active.hashCode;
+  }
 }

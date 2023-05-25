@@ -9,10 +9,10 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_easyloading/flutter_easyloading.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
-import '../../../repositories/auth_repo.dart';
+import '../../global/data/repo/auth_repo.dart';
 import '../../../shared/shared_ui/dialogs/hcm23_dialog.dart';
 import '../../login/cubit/login_cubit.dart';
-import '../entities/hcm23_user.dart';
+import '../../global/data/entities/hcm23_user.dart';
 
 part 'auth_state.dart';
 
@@ -73,7 +73,7 @@ class AuthCubit extends Cubit<AuthState> {
             CleanDialogActionButtons(
               actionTitle: 'OK',
               onPressed: () {
-                Navigator.of(context).pop();
+                logout();
               },
             ),
           ],
@@ -84,6 +84,9 @@ class AuthCubit extends Cubit<AuthState> {
   }
 
   void logout() async {
+    EasyLoading.show();
+    await Future.delayed(const Duration(seconds: 1));
+
     final SharedPreferences preferences = await SharedPreferences.getInstance();
     await preferences.remove(rememberAccountKey);
     emit(
@@ -91,5 +94,6 @@ class AuthCubit extends Cubit<AuthState> {
         FirebaseDatabase.instanceFor(app: firebaseApp),
       ),
     );
+    EasyLoading.dismiss();
   }
 }

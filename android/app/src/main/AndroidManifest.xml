@@ -1,5 +1,5 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
-    package="com.example.hcm23_03">
+    package="com.vuongdan.hcm2303.dev">
    <application
         android:label="hcm23_03"
         android:name="${applicationName}"

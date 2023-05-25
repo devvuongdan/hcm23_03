@@ -52,26 +52,41 @@ class TodayTasksCubit extends Cubit<TodayTasksState> {
     }
   }
 
-  void addNewTask(Task newTask) {
-    // emit(state.copyWith(todayTasks: [
-    //   ...state.todayTasks,
-    //   ...[newTask]
-    // ]));
+  void addNewTask(Task newTask) {}
+
+  void editTask(Task task) {}
+
+  void deleteTask(String uid, BuildContext ctx) async {
+    final int index = todayTasks.indexWhere((element) => element.uid == uid);
+    if (index != -1) {
+      final Either<String, bool> result =
+          await TasksRepo.removeTaskByID(ctx, uid);
+      if (result is Right<String, bool> && result.value == true) {
+        todayTasks.removeAt(index);
+        emit(TodayTaskLoaded(todayTasks: todayTasks));
+      }
+      if (result is Left<String, bool>) {
+        showDialog(
+          context: ctx,
+          builder: (context) => HCM23Dialog(
+            title: 'Error',
+            content: result.value,
+            backgroundColor: Colors.red.withOpacity(0.4),
+            titleTextStyle: const TextStyle(
+                fontSize: 25, fontWeight: FontWeight.bold, color: Colors.white),
+            contentTextStyle:
+                const TextStyle(fontSize: 16, color: Colors.white),
+            actions: [
+              CleanDialogActionButtons(
+                actionTitle: 'OK',
+                onPressed: () {
+                  Navigator.of(context).pop();
+                },
+              ),
+            ],
+          ),
+        );
+      }
+    }
   }
-
-  void editTask(Task task) {
-    // final int index =
-    //     state.todayTasks.indexWhere((element) => element.id == task.id);
-
-    // if (index != -1) {
-    //   final List<Task> tasks = [];
-    //   final List<Task> originTasks = state.todayTasks
-    //     ..replaceRange(index, index + 1, [task]);
-    //   tasks.addAll(originTasks);
-
-    //   emit(state.copyWith(todayTasks: tasks));
-    // }
-  }
-
-  void deleteTask(Task currentTask, BuildContext ctx) {}
 }

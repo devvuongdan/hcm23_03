@@ -58,8 +58,6 @@ class _TodayRecordsPageState extends State<TodayTasksPage> {
                                 task: state.todayTasks[index],
                                 color: color,
                                 viewTask: () async {
-                                  print(state
-                                      .todayTasks[index].taskStages.length);
                                   await Navigator.of(context).pushNamed(
                                     TaskDetailsPage.routeName,
                                     arguments: TaskDetailsPageArg(
@@ -73,7 +71,7 @@ class _TodayRecordsPageState extends State<TodayTasksPage> {
                                 },
                                 deleteTask: () {
                                   context.read<TodayTasksCubit>().deleteTask(
-                                        state.todayTasks[index],
+                                        state.todayTasks[index].uid ?? "",
                                         context,
                                       );
                                 },

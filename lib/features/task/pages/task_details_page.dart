@@ -24,11 +24,6 @@ class TaskDetailsPage extends StatefulWidget {
 }
 
 class _TaskDetailsPageState extends State<TaskDetailsPage> {
-  late DateTime newTaskStartTime;
-  late DateTime newTaskDueTime;
-
-  void onRemove(int index) {}
-
   late final TaskDetailsCubit cubit = context.read<TaskDetailsCubit>();
 
   @override

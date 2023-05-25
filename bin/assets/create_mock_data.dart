@@ -38,7 +38,7 @@ void main() {
       modifiedAt: generateRandomDateTime(minDate, maxDate),
       startTime: generateRandomDateTime(minDate, maxDate),
       dueTime: generateRandomDateTime(minDate, maxDate),
-      teamMembers: List.generate(Random().nextInt(10), (index) {
+      teamMembers: List.generate(Random().nextInt(10) + 1, (index) {
         return TeamMember(
           uid: const Uuid().v4(),
           avatarUrl:
@@ -46,7 +46,7 @@ void main() {
           active: Random().nextBool(),
         );
       }),
-      taskStages: List.generate(Random().nextInt(10), (index) {
+      taskStages: List.generate(Random().nextInt(10) + 1, (index) {
         return TaskStage(
           uid: const Uuid().v4(),
           isDone: Random().nextBool(),

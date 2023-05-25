@@ -24,6 +24,7 @@ class TaskDetailsCubit extends Cubit<TaskDetailsState> {
   ) : super(TaskDetailsLoading());
 
   void initState() async {
+    print(arg.task.taskStages.length);
     originTask = jsonEncode(arg.task);
     await Future.delayed(const Duration(seconds: 1));
     titleController.text = arg.task.title ?? "";

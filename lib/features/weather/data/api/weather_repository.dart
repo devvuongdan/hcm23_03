@@ -23,6 +23,7 @@ class WeatherRepo {
           apiFunction: OpenMeteoApi.getWeather(
             latitude: response.data?.latitude ?? 0,
             longitude: response.data?.longtitude ?? 0,
+            timezone: response.data?.timezone ?? "",
           ),
         ),
       );

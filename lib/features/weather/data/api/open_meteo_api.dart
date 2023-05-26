@@ -51,11 +51,16 @@ class OpenMeteoApi {
   static Future<WeatherModel> getWeather({
     required double latitude,
     required double longitude,
+    required String timezone,
   }) async {
+    String hourly =
+        "temperature_2m,relativehumidity_2m,dewpoint_2m,precipitation,rain,showers,uv_index,is_day";
+    String daily =
+        "weathercode,temperature_2m_max,temperature_2m_min,sunrise,sunset,uv_index_max,uv_index_clear_sky_max,precipitation_sum,rain_sum,showers_sum,snowfall_sum";
     final Dio dio = Dio();
     dio.interceptors.add(loggerInterceptor);
     final weatherResponse = await dio.get(
-        "https://api.open-meteo.com/v1/forecast?latitude=$latitude&longitude=$longitude&current_weather=true");
+        "https://api.open-meteo.com/v1/forecast?latitude=$latitude&longitude=$longitude&current_weather=true&hourly=$hourly&daily=$daily&timezone=$timezone");
 
     if (weatherResponse.statusCode != 200) {
       throw WeatherRequestFailure();

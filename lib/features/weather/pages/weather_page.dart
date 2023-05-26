@@ -1,15 +1,14 @@
-import 'dart:ui';
-
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:hcm23_03/features/weather/data/api/open_meteo_api.dart';
 import 'package:hcm23_03/features/weather/data/api/weather_repository.dart';
 import 'package:hcm23_03/features/weather/data/models/weather.dart';
+import 'package:hcm23_03/features/weather/widgets/weather_form.dart';
 import 'package:hcm23_03/shared/network/data_state.dart';
 import 'package:hcm23_03/shared/shared_ui/themes/colors.dart';
 import 'package:hcm23_03/shared/shared_ui/themes/text_styles.dart';
 
-import 'data/models/location.dart';
+import '../data/models/location.dart';
 
 class WeatherPage extends StatefulWidget {
   final String? city;
@@ -28,9 +27,9 @@ class _WeatherPageState extends State<WeatherPage> {
   Future<String> getLocation(String city) async {
     responseLocation = await OpenMeteoApi.locationSearch(city);
 
-    setState(() {
-      responseLocation;
-    });
+    // setState(() {
+    //   responseLocation;
+    // });
     return city;
   }
 
@@ -131,65 +130,20 @@ class _WeatherPageState extends State<WeatherPage> {
               ),
             ],
           ),
-          ClipRRect(
-            borderRadius: BorderRadius.circular(14),
-            child: Container(
-              width: double.infinity,
-              height: 72,
-              padding: const EdgeInsets.symmetric(horizontal: 16),
-              decoration: BoxDecoration(
-                borderRadius: BorderRadius.circular(12),
-                border: Border.all(
-                  color: Colors.white.withOpacity(0.2),
-                  width: 4,
-                ),
-                gradient: const LinearGradient(
-                  begin: Alignment.centerLeft,
-                  end: Alignment.centerRight,
-                  colors: [
-                    Colors.white24,
-                    Colors.white12,
-                  ],
-                ),
-              ),
-              child: BackdropFilter(
-                filter: ImageFilter.blur(sigmaX: 5, sigmaY: 5),
-                child: Row(
-                  crossAxisAlignment: CrossAxisAlignment.center,
-                  mainAxisSize: MainAxisSize.min,
-                  children: [
-                    Container(
-                      height: 50,
-                      width: 50,
-                      decoration: BoxDecoration(
-                        borderRadius: BorderRadius.circular(12),
-                        color: Colors.white70,
-                        boxShadow: [
-                          BoxShadow(
-                            color: Colors.grey.withOpacity(0.25),
-                            spreadRadius: 2,
-                            blurRadius: 2,
-                            offset: const Offset(
-                                0, 3), // changes position of shadow
-                          ),
-                        ],
-                      ),
-                      child: SvgPicture.asset(
-                        "assets/images/wind.svg",
-                        fit: BoxFit.fitHeight,
-                      ),
-                    ),
-                    const SizedBox(
-                      width: 10,
-                    ),
-                    const Text("Wind"),
-                    const Spacer(),
-                    Text(
-                        "${responseWeather?.data?.currentWeather?.windspeed} m/s"),
-                  ],
-                ),
-              ),
-            ),
+          WeatherForm(
+              iconPath: "assets/images/wind.svg",
+              title: "Wind",
+              displayContext:
+                  "${responseWeather?.data?.currentWeather?.windspeed} m/s"),
+          WeatherForm(
+            iconPath: "assets/images/sun.svg",
+            title: "UV Index",
+            displayContext: "${responseWeather?.data?.daily?.uvIndexMax.first}",
+          ),
+          WeatherForm(
+            iconPath: "assets/images/rain.svg",
+            title: "Rain",
+            displayContext: "${responseWeather?.data?.daily?.rainSum.first} mm",
           ),
         ],
       ),

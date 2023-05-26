@@ -4,7 +4,7 @@ import 'package:hcm23_03/features/home/cubit/home_cubit.dart';
 import 'package:hcm23_03/features/home/widgets/home_drawer.dart';
 import 'package:hcm23_03/features/task/pages/task_details_page.dart';
 import 'package:hcm23_03/features/task/pages/task_details_page_arg.dart';
-import 'package:hcm23_03/features/weather/weather_page.dart';
+import 'package:hcm23_03/features/weather/pages/weather_page.dart';
 import 'package:hcm23_03/shared/shared_ui/themes/text_styles.dart';
 
 import '../../../shared/shared_ui/base_screen/base_screen.dart';
@@ -45,7 +45,7 @@ class _HomePageState extends State<HomePage> {
   }
 
   TextEditingController locationController = TextEditingController();
-  String? city;
+  String city = "Hanoi";
 
   @override
   Widget build(BuildContext context) {

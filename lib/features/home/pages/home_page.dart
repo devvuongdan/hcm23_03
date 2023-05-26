@@ -128,84 +128,83 @@ class _HomePageState extends State<HomePage> {
                   tasks: state.tasks,
                 ),
                 Scaffold(
-                  appBar: AppBar(
-                    actions: [
-                      GestureDetector(
-                        child: const Icon(
-                          Icons.search,
-                          color: Colors.black,
-                          size: 32,
-                        ),
-                        onTap: () {
-                          showModalBottomSheet(
-                            shape: const RoundedRectangleBorder(
-                              borderRadius: BorderRadius.only(
-                                topRight: Radius.circular(16.0),
-                                topLeft: Radius.circular(16.0),
-                              ),
-                            ),
-                            context: context,
-                            builder: (BuildContext context) {
-                              return Padding(
-                                padding: EdgeInsets.only(
-                                    bottom: MediaQuery.of(context)
-                                        .viewInsets
-                                        .bottom),
-                                child: Container(
-                                  height: 165,
-                                  padding: const EdgeInsets.symmetric(
-                                      horizontal: 16, vertical: 8),
-                                  decoration: const BoxDecoration(),
-                                  child: Column(
-                                    mainAxisAlignment:
-                                        MainAxisAlignment.spaceEvenly,
-                                    children: <Widget>[
-                                      Text(
-                                        "Nhập nơi cần tìm",
-                                        style: tStyle
-                                            .paragraph14()
-                                            .w700()
-                                            .copyWith(
-                                                color:
-                                                    Hcm23Colors.colorTextTitle),
-                                      ),
-                                      TextField(
-                                        controller: locationController,
-                                        decoration: InputDecoration(
-                                          border: OutlineInputBorder(
-                                            borderRadius:
-                                                BorderRadius.circular(4.0),
-                                          ),
-                                          contentPadding:
-                                              const EdgeInsets.symmetric(
-                                                  horizontal: 10),
-                                        ),
-                                        style: tStyle.paragraph14().w400(),
-                                      ),
-                                      BtnDefault(
-                                        title: "Tìm vị trí này",
-                                        onTap: (() {
-                                          setState(() {
-                                            city = locationController.text;
-                                          });
-                                          Navigator.pop(context);
-                                        }),
-                                      ),
-                                    ],
-                                  ),
+                    appBar: AppBar(
+                      actions: [
+                        GestureDetector(
+                          child: const Icon(
+                            Icons.search,
+                            color: Colors.black,
+                            size: 32,
+                          ),
+                          onTap: () {
+                            showModalBottomSheet(
+                              shape: const RoundedRectangleBorder(
+                                borderRadius: BorderRadius.only(
+                                  topRight: Radius.circular(16.0),
+                                  topLeft: Radius.circular(16.0),
                                 ),
-                              );
-                            },
-                          );
-                        },
-                      ),
-                    ],
-                  ),
-                  body: WeatherPage(
-                    key: UniqueKey(),
-                    city: city,
-                  ),
-                ),
+                              ),
+                              context: context,
+                              builder: (BuildContext context) {
+                                return Padding(
+                                  padding: EdgeInsets.only(
+                                      bottom: MediaQuery.of(context)
+                                          .viewInsets
+                                          .bottom),
+                                  child: Container(
+                                    height: 165,
+                                    padding: const EdgeInsets.symmetric(
+                                        horizontal: 16, vertical: 8),
+                                    decoration: const BoxDecoration(),
+                                    child: Column(
+                                      mainAxisAlignment:
+                                          MainAxisAlignment.spaceEvenly,
+                                      children: <Widget>[
+                                        Text(
+                                          "Nhập nơi cần tìm",
+                                          style: tStyle
+                                              .paragraph14()
+                                              .w700()
+                                              .copyWith(
+                                                  color: Hcm23Colors
+                                                      .colorTextTitle),
+                                        ),
+                                        TextField(
+                                          controller: locationController,
+                                          decoration: InputDecoration(
+                                            border: OutlineInputBorder(
+                                              borderRadius:
+                                                  BorderRadius.circular(4.0),
+                                            ),
+                                            contentPadding:
+                                                const EdgeInsets.symmetric(
+                                                    horizontal: 10),
+                                          ),
+                                          style: tStyle.paragraph14().w400(),
+                                        ),
+                                        BtnDefault(
+                                          title: "Tìm vị trí này",
+                                          onTap: (() {
+                                            setState(() {
+                                              city = locationController.text;
+                                            });
+                                            Navigator.pop(context);
+                                          }),
+                                        ),
+                                      ],
+                                    ),
+                                  ),
+                                );
+                              },
+                            );
+                          },
+                        ),
+                      ],
+                    ),
+                    body: WeatherProvider(
+                      city: city,
+                      key: UniqueKey(),
+                    )),
               ],
             ),
           );

@@ -17,7 +17,7 @@ class WeatherForm extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Padding(
-      padding: const EdgeInsets.symmetric(vertical: 4),
+      padding: const EdgeInsets.all(4),
       child: ClipRRect(
         borderRadius: BorderRadius.circular(14),
         child: Container(
@@ -61,9 +61,12 @@ class WeatherForm extends StatelessWidget {
                       ),
                     ],
                   ),
-                  child: SvgPicture.asset(
-                    iconPath ?? "",
-                    fit: BoxFit.fitHeight,
+                  child: Container(
+                    padding: const EdgeInsets.all(8),
+                    child: SvgPicture.asset(
+                      iconPath ?? "",
+                      fit: BoxFit.scaleDown,
+                    ),
                   ),
                 ),
                 const SizedBox(

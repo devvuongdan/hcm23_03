@@ -1,10 +1,14 @@
 part of 'weather_bloc.dart';
 
-abstract class WeatherState extends Equatable {
-  const WeatherState();
-  
-  @override
-  List<Object> get props => [];
-}
+@immutable
+abstract class WeatherState extends Equatable {}
 
-class WeatherInitial extends WeatherState {}
+class WeatherInitial extends WeatherState {
+  final String city;
+  WeatherInitial({
+    required this.city,
+  });
+
+  @override
+  List<Object> get props => [city];
+}

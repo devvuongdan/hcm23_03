@@ -134,12 +134,16 @@ class Daily {
   final List sunset;
   final List uvIndexMax;
   final List rainSum;
+  final List tempMax;
+  final List tempMin;
 
   Daily({
     required this.sunrise,
     required this.sunset,
     required this.uvIndexMax,
     required this.rainSum,
+    required this.tempMax,
+    required this.tempMin,
   });
 
   factory Daily.fromJson(String str) => Daily.fromMap(json.decode(str));
@@ -150,6 +154,8 @@ class Daily {
         sunset: json['sunset']?.toList(),
         uvIndexMax: json['uv_index_max']?.toList(),
         rainSum: json['rain_sum'].toList(),
+        tempMax: json['temperature_2m_max'].toList(),
+        tempMin: json['temperature_2m_min'].toList(),
       );
 
   Map<String, dynamic> toMap() => {
@@ -157,5 +163,7 @@ class Daily {
         "sunset": sunset,
         "uv_index_max": uvIndexMax,
         "rain_sum": rainSum,
+        "temperature_2m_max": tempMax,
+        "temperature_2m_min": tempMin,
       };
 }

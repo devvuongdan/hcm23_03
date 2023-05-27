@@ -28,7 +28,7 @@ class TodayTasksCubit extends Cubit<TodayTasksState> {
         todayTasks.add(item);
       }
     } else if (data is Left<String, List<Task>>) {
-      showDialog(
+      await showDialog(
         context: ctx,
         builder: (context) => HCM23Dialog(
           title: 'Error',
@@ -65,7 +65,7 @@ class TodayTasksCubit extends Cubit<TodayTasksState> {
         emit(TodayTaskLoaded(todayTasks: todayTasks));
       }
       if (result is Left<String, bool>) {
-        showDialog(
+        await showDialog(
           context: ctx,
           builder: (context) => HCM23Dialog(
             title: 'Error',
@@ -100,7 +100,7 @@ class TodayTasksCubit extends Cubit<TodayTasksState> {
         emit(TodayTaskLoaded(todayTasks: todayTasks));
       }
       if (result is Left<String, bool>) {
-        showDialog(
+        await showDialog(
           context: ctx,
           builder: (context) => HCM23Dialog(
             title: 'Error',

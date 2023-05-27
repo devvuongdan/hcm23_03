@@ -50,10 +50,10 @@ class TaskDetailsCubit extends Cubit<TaskDetailsState> {
     Task currentTask,
     BuildContext ctx,
     void Function(Task task, BuildContext ctx) updateTask,
-  ) {
+  ) async {
     final String taskJson = jsonEncode(currentTask);
     if (taskJson != originTask) {
-      showDialog(
+      await showDialog(
         context: ctx,
         builder: (context) => HCM23Dialog(
           title: 'Thông báo',

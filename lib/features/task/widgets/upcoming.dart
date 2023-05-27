@@ -10,8 +10,6 @@ class Upcoming extends StatefulWidget {
 class _UpcomingState extends State<Upcoming> {
   @override
   Widget build(BuildContext context) {
-    return Container(
-      child: const Center(child: Text('This is UpcomingScreen')),
-    );
+    return const Center(child: Text('This is UpcomingScreen'));
   }
 }

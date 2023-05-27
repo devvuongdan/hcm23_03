@@ -10,8 +10,6 @@ class Today extends StatefulWidget {
 class _TodayState extends State<Today> {
   @override
   Widget build(BuildContext context) {
-    return Container(
-      child: const Center(child: Text('This is TodayScreen')),
-    );
+    return const Center(child: Text('This is TodayScreen'));
   }
 }

@@ -15,7 +15,6 @@ import 'features/login/cubit/login_cubit.dart';
 import 'features/register/cubit/register_cubit.dart';
 import 'features/splash/cubit/splash_cubit.dart';
 import 'features/task/cubit/task_cubit.dart';
-import 'home/home.dart';
 
 class MyApp extends StatelessWidget {
   const MyApp({super.key});
@@ -56,12 +55,7 @@ class MyApp extends StatelessWidget {
                 builder: (_) => const OnboardingPage(),
               );
             }
-            if (setting.name == Home.routeName) {
-              return MaterialPageRoute(
-                settings: const RouteSettings(name: Home.routeName),
-                builder: (_) => const Home(),
-              );
-            }
+
             if (setting.name == LoginPage.routeName) {
               return MaterialPageRoute(
                 settings: const RouteSettings(name: LoginPage.routeName),

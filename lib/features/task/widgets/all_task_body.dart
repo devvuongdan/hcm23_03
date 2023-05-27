@@ -1,17 +1,17 @@
 import 'package:flutter/material.dart';
-import 'package:hcm23_03/home/myTask/Today.dart';
 
-import 'Completed.dart';
-import 'DueSoon.dart';
-import 'Upcoming.dart';
+import 'completed.dart';
+import 'duesoon.dart';
+import 'today.dart';
+import 'upcoming.dart';
 
-class MyTask extends StatefulWidget {
-  const MyTask({super.key});
+class AllTasksBody extends StatefulWidget {
+  const AllTasksBody({super.key});
   @override
-  State<MyTask> createState() => _MyTaskState();
+  State<AllTasksBody> createState() => _AllTasksBodyState();
 }
 
-class _MyTaskState extends State<MyTask> {
+class _AllTasksBodyState extends State<AllTasksBody> {
   final List<String> categories = [
     'Today',
     'Upcoming',
@@ -80,7 +80,12 @@ class _MyTaskState extends State<MyTask> {
           ),
         ),
         body: const TabBarView(
-          children: <Widget>[Today(), Upcoming(), DueSoon(), Completed()],
+          children: <Widget>[
+            Today(),
+            Upcoming(),
+            DueSoon(),
+            Completed(),
+          ],
         ),
       ),
     );

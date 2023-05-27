@@ -250,49 +250,81 @@ class _TaskDetailsPageState extends State<TaskDetailsPage> {
                                             );
                                           },
                                         )
-                                      : Container(
-                                          padding: const EdgeInsets.symmetric(
-                                            horizontal: 0,
-                                            vertical: 8,
-                                          ),
-                                          decoration: BoxDecoration(
-                                              color: const Color(0XFF000000)
-                                                  .withOpacity(0.05),
-                                              borderRadius:
-                                                  const BorderRadius.all(
-                                                      Radius.circular(8))),
-                                          child: Row(
-                                            children: [
-                                              Checkbox(
-                                                shape: const CircleBorder(),
-                                                value: state.task
-                                                    .taskStages[index].isDone,
-                                                onChanged: (val) {
-                                                  cubit.updateStage(
-                                                    state.task.taskStages[index]
-                                                        .copyWith(isDone: val),
-                                                  );
-                                                },
-                                              ),
-                                              Expanded(
-                                                child: Text(
-                                                  state.task.taskStages[index]
-                                                          .description ??
-                                                      "",
-                                                  style: TextStyle(
-                                                    color:
-                                                        const Color(0xff30374f)
-                                                            .withOpacity(0.7),
-                                                    fontSize: 16,
-                                                    fontWeight: FontWeight.w500,
+                                      : Row(
+                                          children: [
+                                            Expanded(
+                                              child: Container(
+                                                padding:
+                                                    const EdgeInsets.symmetric(
+                                                  horizontal: 0,
+                                                ),
+                                                decoration: BoxDecoration(
+                                                  color: const Color(0XFF000000)
+                                                      .withOpacity(0.05),
+                                                  borderRadius:
+                                                      const BorderRadius.all(
+                                                    Radius.circular(8),
                                                   ),
                                                 ),
+                                                child: Row(
+                                                  children: [
+                                                    Checkbox(
+                                                      shape:
+                                                          const CircleBorder(),
+                                                      value: state
+                                                          .task
+                                                          .taskStages[index]
+                                                          .isDone,
+                                                      onChanged: (val) {
+                                                        cubit.updateStage(
+                                                          state.task
+                                                              .taskStages[index]
+                                                              .copyWith(
+                                                                  isDone: val),
+                                                        );
+                                                      },
+                                                    ),
+                                                    Expanded(
+                                                      child: Text(
+                                                        state
+                                                                .task
+                                                                .taskStages[
+                                                                    index]
+                                                                .description ??
+                                                            "",
+                                                        style: TextStyle(
+                                                          color: const Color(
+                                                                  0xff30374f)
+                                                              .withOpacity(0.7),
+                                                          fontSize: 16,
+                                                          fontWeight:
+                                                              FontWeight.w500,
+                                                        ),
+                                                      ),
+                                                    ),
+                                                    const SizedBox(
+                                                      width: 16,
+                                                    )
+                                                  ],
+                                                ),
                                               ),
-                                              const SizedBox(
-                                                width: 16,
-                                              )
-                                            ],
-                                          ),
+                                            ),
+                                            const SizedBox(
+                                              width: 10,
+                                            ),
+                                            BtnDefault(
+                                              type: BtnDefaultType.secondary,
+                                              width: 40,
+                                              onTap: () {
+                                                cubit.removeTaskStage(state
+                                                    .task.taskStages[index]);
+                                              },
+                                              customChild: const Icon(
+                                                Icons.remove,
+                                                size: 16,
+                                              ),
+                                            ),
+                                          ],
                                         );
                                 }),
                                 separatorBuilder: (context, idx) =>

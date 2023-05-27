@@ -1,12 +1,12 @@
 import 'package:flutter/material.dart';
 
 import 'homeV01/homev01.dart';
-import '../features/myTask/Completed.dart';
-import '../features/myTask/DueSoon.dart';
-import '../features/myTask/Upcoming.dart';
+import 'myTask/Completed.dart';
+import 'myTask/DueSoon.dart';
+import 'myTask/Upcoming.dart';
 
 void main(List<String> args) {
-  runApp(const HomePage());
+  runApp(const Home());
 }
 
 class homePage extends StatelessWidget {
@@ -25,19 +25,20 @@ class homePage extends StatelessWidget {
             .apply(bodyColor: Colors.cyan, displayColor: Colors.yellowAccent),
         fontFamily: 'Monotype Coursiva',
       ),
-      home: const HomePage(),
+      home: const Home(),
     );
   }
 }
 
-class HomePage extends StatefulWidget {
-  const HomePage({super.key});
+class Home extends StatefulWidget {
+  static const String routeName = "/HomePage";
+  const Home({super.key});
 
   @override
-  State<HomePage> createState() => _HomePageState();
+  State<Home> createState() => _HomeState();
 }
 
-class _HomePageState extends State<HomePage> {
+class _HomeState extends State<Home> {
   final PageController pageController = PageController();
   int currentStep = 1;
   int _currentIndex = 0;

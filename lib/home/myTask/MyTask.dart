@@ -1,10 +1,9 @@
 import 'package:flutter/material.dart';
-import 'package:infinite_scroll_tab_view/infinite_scroll_tab_view.dart';
+import 'package:hcm23_03/home/myTask/Today.dart';
 
-import '../../features/myTask/Completed.dart';
-import '../../features/myTask/DueSoon.dart';
-import '../../features/myTask/Today.dart';
-import '../../features/myTask/Upcoming.dart';
+import 'Completed.dart';
+import 'DueSoon.dart';
+import 'Upcoming.dart';
 
 class MyTask extends StatefulWidget {
   const MyTask({super.key});
@@ -21,32 +20,161 @@ class _MyTaskState extends State<MyTask> {
   ];
   @override
   Widget build(BuildContext context) {
-    return Expanded(
-      child: InfiniteScrollTabView(
-          contentLength: categories.length,
-          onTabTap: (index) {
-            debugPrint('You tapped: $index ');
-          },
-          tabBuilder: (index, isSelected) => Text(categories[index],
+    return DefaultTabController(
+      initialIndex: 1,
+      length: 3,
+      child: Scaffold(
+        appBar: AppBar(
+          backgroundColor: Colors.white,
+          centerTitle: false,
+          titleSpacing: 0.0,
+          title: Transform(
+            // you can forcefully translate values left side using Transform
+            transform: Matrix4.translationValues(20.0, 0.0, 0.0),
+            child: const Text(
+              "My Task",
               style: TextStyle(
-                  color: isSelected ? Colors.pink : Colors.black,
-                  fontWeight: FontWeight.bold,
-                  fontSize: 18)),
-          pageBuilder: (context, index, _) {
-            if (index == 0) {
-              return const Today();
-            }
-            if (index == 1) {
-              return const Upcoming();
-            }
-            if (index == 2) {
-              return const DueSoon();
-            }
-            if (index == 4) {
-              return const Completed();
-            }
-            return const Text('Nothing.');
-          }),
+                color: Colors.black,
+              ),
+            ),
+          ),
+          bottom: const TabBar(
+            tabs: <Widget>[
+              Tab(
+                child: Text(
+                  'Today',
+                  style: TextStyle(
+                    fontSize: 13,
+                    color: Colors.black,
+                  ),
+                ),
+              ),
+              Tab(
+                child: Text(
+                  'Upcoming',
+                  style: TextStyle(
+                    fontSize: 13,
+                    color: Colors.black,
+                  ),
+                ),
+              ),
+              Tab(
+                child: Text(
+                  'DueSoon',
+                  style: TextStyle(
+                    fontSize: 13,
+                    color: Colors.black,
+                  ),
+                ),
+              ),
+              Tab(
+                child: Text(
+                  'Completed',
+                  style: TextStyle(
+                    fontSize: 13,
+                    color: Colors.black,
+                  ),
+                ),
+              ),
+            ],
+          ),
+        ),
+        body: const TabBarView(
+          children: <Widget>[Today(), Upcoming(), DueSoon(), Completed()],
+        ),
+      ),
     );
   }
 }
+        // Scaffold(
+        // appBar: AppBar(
+        //   backgroundColor: Colors.white,
+        //   centerTitle: false,
+        //   titleSpacing: 0.0,
+        //   title: Transform(
+        //     // you can forcefully translate values left side using Transform
+        //     transform: Matrix4.translationValues(20.0, 0.0, 0.0),
+        //     child: const Text(
+        //       "My Task",
+        //       style: TextStyle(
+        //         color: Colors.black,
+        //       ),
+        //     ),
+        //   ),
+        //  bottom: TabBar(
+        //     controller: _tabController,
+        //     tabs: <Widget>[
+        //       Expanded(
+        //         child: Container(
+        //           padding: const EdgeInsets.all(10),
+        //           child: Row(
+        //             mainAxisAlignment: MainAxisAlignment.start,
+        //             children: const [
+        //               Text(
+        //                 'Today',
+        //                 style: TextStyle(
+        //                   fontSize: 13,
+        //                   color: Colors.black,
+        //                 ),
+        //               ),
+        //               Text('Upcoming',
+        //                   style: TextStyle(
+        //                     fontSize: 13,
+        //                     color: Colors.black,
+        //                    )),
+        //               Text('DueSoon',
+        //                   style: TextStyle(
+        //                     fontSize: 13,
+        //                     color: Colors.black,
+        //                   )),
+        //               Text('Completed',
+        //                   style: TextStyle(
+        //                     fontSize: 13,
+        //                     color: Colors.black,
+        //                   )),
+        //             ],
+        //           ),
+        //         ),
+        //       ),
+        //       const Text(''),
+        //       const Text(''),
+        //       const Text(''),
+        //     ],
+        //   ),
+        // ),
+        //   body: Container(
+        //     padding: const EdgeInsets.only(left: 20, right: 20),
+        //     child: Column(
+        //       mainAxisAlignment: MainAxisAlignment.start,
+        //       crossAxisAlignment: CrossAxisAlignment.start,
+        //       children: [
+        //         Row(
+        //           children: [
+        //             TextButton(
+        //                 style: TextButton.styleFrom(
+        //                   foregroundColor: Colors.white,
+        //                   textStyle: const TextStyle(fontSize: 20),
+        //                 ),
+        //                 onPressed: () {},
+        //                 child: const Text('Today',
+        //                     style: TextStyle(color: Colors.black, fontSize: 15))),
+        //             const Text('Today',
+        //                 style: TextStyle(color: Colors.black, fontSize: 15)),
+        //             const SizedBox(width: 10),
+        //             const Text('Upcoming',
+        //                 style: TextStyle(color: Colors.black, fontSize: 15)),
+        //             const SizedBox(width: 10),
+        //             const Text('DueSoon',
+        //                 style: TextStyle(color: Colors.black, fontSize: 15)),
+        //             const SizedBox(width: 10),
+        //             const Text('Completed',
+        //                 style: TextStyle(color: Colors.black, fontSize: 15)),
+        //           ],
+        //         ),
+        //         Container(),
+        //       ],
+        //     ),
+        //   ),
+        // );
+
+

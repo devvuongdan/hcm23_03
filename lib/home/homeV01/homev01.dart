@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
 
+import '../myTask/MyTask.dart';
+
 void main(List<String> args) {
   runApp(const home());
 }
@@ -115,20 +117,7 @@ class _homeState extends State<home> {
                 ),
               ),
               const SizedBox(height: 300),
-              Column(
-                children: [
-                  Container(
-                    padding: const EdgeInsets.only(left: 20),
-                    child: const Text("My Task",
-                        style: TextStyle(
-                          fontSize: 25,
-                          color: Colors.black,
-                          fontWeight: FontWeight.w700,
-                        )),
-                  ),
-                  // const Expanded(child: MyTask()),
-                ],
-              )
+              const Expanded(child: MyTask()),
             ],
           ),
         ),

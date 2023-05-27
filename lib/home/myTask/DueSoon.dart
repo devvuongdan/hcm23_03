@@ -1,5 +1,4 @@
-import 'package:flutter/src/widgets/container.dart';
-import 'package:flutter/src/widgets/framework.dart';
+import 'package:flutter/material.dart';
 
 class DueSoon extends StatefulWidget {
   const DueSoon({super.key});
@@ -11,6 +10,8 @@ class DueSoon extends StatefulWidget {
 class _DueSoonState extends State<DueSoon> {
   @override
   Widget build(BuildContext context) {
-    return Container();
+    return Container(
+      child: const Center(child: Text('This is Due Soon Screen')),
+    );
   }
 }

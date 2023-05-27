@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:hcm23_03/features/home/cubit/home_cubit.dart';
 import 'package:hcm23_03/features/home/widgets/home_drawer.dart';
+import 'package:hcm23_03/features/task/pages/app_task_pages.dart';
 
 import '../../global/presentation/base_screen/base_screen.dart';
 import '../../task/cubits/today_tasks/today_tasks_cubit.dart';
@@ -109,12 +110,7 @@ class _HomePageState extends State<HomePage> {
               physics: const NeverScrollableScrollPhysics(),
               controller: context.read<HomeCubit>().pageController,
               children: [
-                Scaffold(
-                  appBar: AppBar(),
-                  body: const Center(
-                    child: Text("Tính năng đang trong quá trình phát triển"),
-                  ),
-                ),
+                const AllTasksPage(),
                 BlocProvider(
                   create: (context) => TodayTasksCubit()..getTask(context),
                   child: const TodayTasksPage(),

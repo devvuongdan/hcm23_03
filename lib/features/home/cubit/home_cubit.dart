@@ -11,9 +11,9 @@ part 'home_state.dart';
 class HomeCubit extends Cubit<HomeState> {
   HomeCubit()
       : super(const HomeState(
-          currentPage: 1,
+          currentPage: 0,
         ));
-  final PageController pageController = PageController(initialPage: 1);
+  final PageController pageController = PageController(initialPage: 0);
 
   void logout(BuildContext context) async {
     context.read<AuthCubit>().logout();

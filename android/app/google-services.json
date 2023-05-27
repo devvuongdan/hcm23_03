@@ -1,41 +1,77 @@
 {
   "project_info": {
-    "project_number": "561058666320",
-    "firebase_url": "https://hcm2303-default-rtdb.asia-southeast1.firebasedatabase.app",
-    "project_id": "hcm2303",
-    "storage_bucket": "hcm2303.appspot.com"
+    "project_number": "219672120318",
+    "firebase_url": "https://com-vuongdan-hcm23demoprj-default-rtdb.asia-southeast1.firebasedatabase.app",
+    "project_id": "com-vuongdan-hcm23demoprj",
+    "storage_bucket": "com-vuongdan-hcm23demoprj.appspot.com"
   },
   "client": [
     {
       "client_info": {
-        "mobilesdk_app_id": "1:561058666320:android:b6ea77804ce7211d503e55",
+        "mobilesdk_app_id": "1:219672120318:android:27b56ab5403b2d8d2aceaf",
         "android_client_info": {
-          "package_name": "com.vuongdan.hcm2303.dev"
+          "package_name": "com.example.hcm23_demo_prj"
         }
       },
       "oauth_client": [
         {
-          "client_id": "561058666320-e0hb7hjo81qo8e6rfq0hi9jj19bm0a6d.apps.googleusercontent.com",
+          "client_id": "219672120318-dbvc4cdkp9dn4bvhp5i642jn21ijbv6n.apps.googleusercontent.com",
           "client_type": 3
         }
       ],
       "api_key": [
         {
-          "current_key": "AIzaSyAzosHaRq0czp38ATNzC2HgtBAmc3Z1058"
+          "current_key": "AIzaSyDZBY9u4fs5i0Km52RvXMmXmpuUDWhnW3U"
         }
       ],
       "services": {
         "appinvite_service": {
           "other_platform_oauth_client": [
             {
-              "client_id": "561058666320-e0hb7hjo81qo8e6rfq0hi9jj19bm0a6d.apps.googleusercontent.com",
+              "client_id": "219672120318-dbvc4cdkp9dn4bvhp5i642jn21ijbv6n.apps.googleusercontent.com",
               "client_type": 3
             },
             {
-              "client_id": "561058666320-mm5bc21p08jcn66mmp4ss9vifv8epsng.apps.googleusercontent.com",
+              "client_id": "219672120318-24q0o6jlvf9c55ulds3ed082koiq73bm.apps.googleusercontent.com",
               "client_type": 2,
               "ios_info": {
-                "bundle_id": "com.example.hcm2303"
+                "bundle_id": "com.vuongDan.hcm23DemoPrj"
+              }
+            }
+          ]
+        }
+      }
+    },
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:219672120318:android:84ff99306175c2612aceaf",
+        "android_client_info": {
+          "package_name": "com.vuongdan.hcm2303.dev"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "219672120318-dbvc4cdkp9dn4bvhp5i642jn21ijbv6n.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyDZBY9u4fs5i0Km52RvXMmXmpuUDWhnW3U"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "219672120318-dbvc4cdkp9dn4bvhp5i642jn21ijbv6n.apps.googleusercontent.com",
+              "client_type": 3
+            },
+            {
+              "client_id": "219672120318-24q0o6jlvf9c55ulds3ed082koiq73bm.apps.googleusercontent.com",
+              "client_type": 2,
+              "ios_info": {
+                "bundle_id": "com.vuongDan.hcm23DemoPrj"
               }
             }
           ]

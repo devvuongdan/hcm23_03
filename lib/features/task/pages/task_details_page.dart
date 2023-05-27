@@ -12,6 +12,7 @@ import '../../../shared/shared_ui/btn/btn_default/btn_default.dart';
 import '../../global/presentation/base_screen/base_screen.dart';
 import '../cubits/task_details/task_details_cubit.dart';
 import '../data/entities/task.dart';
+import '../widgets/task_stage_input.dart';
 
 class TaskDetailsPage extends StatefulWidget {
   static const String routeName = "/TaskDetailsPage";
@@ -76,7 +77,9 @@ class _TaskDetailsPageState extends State<TaskDetailsPage> {
                                         fontWeight: FontWeight.w700,
                                       ),
                                       decoration: const InputDecoration(
-                                          contentPadding: EdgeInsets.zero),
+                                        contentPadding: EdgeInsets.zero,
+                                        enabled: false,
+                                      ),
                                     ),
                                   )
                                 ],
@@ -220,50 +223,95 @@ class _TaskDetailsPageState extends State<TaskDetailsPage> {
                               ListView.separated(
                                 physics: const NeverScrollableScrollPhysics(),
                                 shrinkWrap: true,
+                                padding: const EdgeInsets.symmetric(),
                                 itemBuilder: ((context, index) {
-                                  return Container(
-                                    padding: const EdgeInsets.symmetric(
-                                      horizontal: 0,
-                                      vertical: 24,
-                                    ),
-                                    decoration: BoxDecoration(
-                                        color: const Color(0XFF000000)
-                                            .withOpacity(0.05),
-                                        borderRadius: const BorderRadius.all(
-                                            Radius.circular(8))),
-                                    child: Row(
-                                      children: [
-                                        Checkbox(
-                                          shape: const CircleBorder(),
-                                          value: state
-                                              .task.taskStages[index].isDone,
-                                          onChanged: (val) {},
-                                        ),
-                                        Expanded(
-                                          child: Text(
-                                            state.task.taskStages[index]
-                                                    .description ??
-                                                "",
-                                            style: TextStyle(
-                                              color: const Color(0xff30374f)
-                                                  .withOpacity(0.7),
-                                              fontSize: 16,
-                                              fontWeight: FontWeight.w500,
-                                            ),
-                                          ),
-                                        ),
-                                        const SizedBox(
-                                          width: 16,
+                                  return (state.task.taskStages[index]
+                                              .isEditing ==
+                                          true)
+                                      ? TaskStageInput(
+                                          onChanged: (String? val) {
+                                            cubit.updateStage(
+                                              state.task.taskStages[index]
+                                                  .copyWith(
+                                                description: val ?? "",
+                                              ),
+                                            );
+                                          },
+                                          onRemove: () {
+                                            cubit.removeTaskStage(
+                                                state.task.taskStages[index]);
+                                          },
+                                          onChecked: () {
+                                            cubit.updateStage(
+                                              state.task.taskStages[index]
+                                                  .copyWith(
+                                                isEditing: false,
+                                              ),
+                                            );
+                                          },
                                         )
-                                      ],
-                                    ),
-                                  );
+                                      : Container(
+                                          padding: const EdgeInsets.symmetric(
+                                            horizontal: 0,
+                                            vertical: 8,
+                                          ),
+                                          decoration: BoxDecoration(
+                                              color: const Color(0XFF000000)
+                                                  .withOpacity(0.05),
+                                              borderRadius:
+                                                  const BorderRadius.all(
+                                                      Radius.circular(8))),
+                                          child: Row(
+                                            children: [
+                                              Checkbox(
+                                                shape: const CircleBorder(),
+                                                value: state.task
+                                                    .taskStages[index].isDone,
+                                                onChanged: (val) {
+                                                  cubit.updateStage(
+                                                    state.task.taskStages[index]
+                                                        .copyWith(isDone: val),
+                                                  );
+                                                },
+                                              ),
+                                              Expanded(
+                                                child: Text(
+                                                  state.task.taskStages[index]
+                                                          .description ??
+                                                      "",
+                                                  style: TextStyle(
+                                                    color:
+                                                        const Color(0xff30374f)
+                                                            .withOpacity(0.7),
+                                                    fontSize: 16,
+                                                    fontWeight: FontWeight.w500,
+                                                  ),
+                                                ),
+                                              ),
+                                              const SizedBox(
+                                                width: 16,
+                                              )
+                                            ],
+                                          ),
+                                        );
                                 }),
                                 separatorBuilder: (context, idx) =>
                                     const SizedBox(
                                   height: 12,
                                 ),
-                                itemCount: 2,
+                                itemCount: state.task.taskStages.length,
+                              ),
+                              Align(
+                                alignment: Alignment.centerRight,
+                                child: TextButton(
+                                  onPressed: () {
+                                    cubit.addNewBlankStage();
+                                  },
+                                  child: const Text("+ Stage"),
+                                ),
+                              ),
+                              const SizedBox(
+                                height: 20,
                               )
                             ],
                           ),

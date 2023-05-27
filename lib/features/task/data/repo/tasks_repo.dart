@@ -16,12 +16,9 @@ class TasksRepo {
       final FirebaseDatabase db = ctx.read<AuthCubit>().state.db;
       final String id =
           (ctx.read<AuthCubit>().state as Authenticated).user.user?.uid ?? "";
-      final ref = db.ref("tasks/$id");
       late List<Task> tasks = [];
-      ref.onValue.listen((DatabaseEvent event) {
-        final jsonContent = event.snapshot.value;
-
-        final List jsons = jsonDecode(jsonEncode(jsonContent)) as List;
+      await db.ref("tasks/$id").once().then((value) {
+        final List jsons = jsonDecode(jsonEncode(value.snapshot.value)) as List;
 
         for (dynamic item in jsons) {
           final String itemToJson = jsonEncode(item);
@@ -30,10 +27,7 @@ class TasksRepo {
 
           tasks.add(task);
         }
-        tasks.sort((a, b) => (a.startTime ?? DateTime.now())
-            .compareTo(b.startTime ?? DateTime.now()));
       });
-
       return Right(tasks);
     } catch (e) {
       return const Left("Có lỗi xảy ra");
@@ -46,23 +40,21 @@ class TasksRepo {
   ) async {
     try {
       final FirebaseDatabase db = ctx.read<AuthCubit>().state.db;
+
       final String id =
           (ctx.read<AuthCubit>().state as Authenticated).user.user?.uid ?? "";
       final ref = db.ref("tasks/$id");
 
-      ref.onValue.listen((DatabaseEvent event) {
+      ref.once().then((DatabaseEvent event) {
         final jsonContent = event.snapshot.value;
 
         final List jsons = jsonDecode(jsonEncode(jsonContent)) as List;
-
-        for (int i = 0; i < jsons.length; i++) {
-          if (jsons[i]["uid"] == uid) {
-            jsons.removeAt(i);
-          }
+        final int index = jsons.indexWhere((element) => element['uid'] == uid);
+        if (index != -1) {
+          jsons.removeAt(index);
+          ref.set(jsons);
         }
-        ref.set(jsons);
       });
-
       return const Right(true);
     } catch (e) {
       return const Left("Có lỗi xảy ra");
@@ -77,17 +69,16 @@ class TasksRepo {
           (ctx.read<AuthCubit>().state as Authenticated).user.user?.uid ?? "";
       final ref = db.ref("tasks/$id");
 
-      ref.onValue.listen((DatabaseEvent event) {
+      ref.once().then((DatabaseEvent event) {
         final jsonContent = event.snapshot.value;
 
         final List jsons = jsonDecode(jsonEncode(jsonContent)) as List;
-
-        for (int i = 0; i < jsons.length; i++) {
-          if (jsons[i]["uid"] == task.uid) {
-            jsons[i] = task.toMap();
-          }
+        final int index =
+            jsons.indexWhere((element) => element['uid'] == task.uid);
+        if (index != -1) {
+          jsons[index] = task.toMap();
+          ref.set(jsons);
         }
-        ref.set(jsons);
       });
 
       return const Right(true);

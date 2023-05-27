@@ -155,26 +155,29 @@ class TaskStage {
   bool? isDone;
   final String? description;
   final bool? active;
+  final bool isEditing;
 
   TaskStage({
     this.uid,
     this.isDone,
     this.description,
     this.active,
+    this.isEditing = false,
   });
 
   TaskStage copyWith({
-    String? id,
     String? uid,
     bool? isDone,
     String? description,
     bool? active,
+    bool? isEditing,
   }) {
     return TaskStage(
       uid: uid ?? this.uid,
       isDone: isDone ?? this.isDone,
       description: description ?? this.description,
       active: active ?? this.active,
+      isEditing: isEditing ?? this.isEditing,
     );
   }
 

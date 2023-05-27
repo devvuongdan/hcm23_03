@@ -5,6 +5,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
 import 'package:hcm23_03/features/home/pages/home_page.dart';
+import 'package:uuid/uuid.dart';
 
 import '../../../../shared/shared_ui/dialogs/hcm23_dialog.dart';
 import '../../data/entities/task.dart';
@@ -73,6 +74,56 @@ class TaskDetailsCubit extends Cubit<TaskDetailsState> {
       );
     } else {
       Navigator.of(ctx).popUntil(ModalRoute.withName(HomePage.routeName));
+    }
+  }
+
+  void updateStage(TaskStage stage) {
+    final int index = (state as TaskDetailsLoaded).task.taskStages.indexWhere(
+          (element) => element.uid == stage.uid,
+        );
+    if (index != -1) {
+      List<TaskStage> newStages = [
+        ...(state as TaskDetailsLoaded).task.taskStages
+      ];
+      newStages[index] = stage;
+
+      emit(TaskDetailsLoaded(
+          task: (state as TaskDetailsLoaded)
+              .task
+              .copyWith(taskStages: newStages)));
+    }
+  }
+
+  void addNewBlankStage() {
+    final TaskStage blankStage = TaskStage(
+      uid: const Uuid().v4(),
+      active: true,
+      isDone: false,
+      isEditing: true,
+    );
+    List<TaskStage> newStages = [
+      ...(state as TaskDetailsLoaded).task.taskStages,
+      ...[blankStage]
+    ];
+
+    emit(TaskDetailsLoaded(
+        task:
+            (state as TaskDetailsLoaded).task.copyWith(taskStages: newStages)));
+  }
+
+  void removeTaskStage(TaskStage stage) {
+    final int index = (state as TaskDetailsLoaded).task.taskStages.indexWhere(
+          (element) => element.uid == stage.uid,
+        );
+    if (index != -1) {
+      List<TaskStage> newStages = [
+        ...(state as TaskDetailsLoaded).task.taskStages..removeAt(index),
+      ];
+
+      emit(TaskDetailsLoaded(
+          task: (state as TaskDetailsLoaded)
+              .task
+              .copyWith(taskStages: newStages)));
     }
   }
 }

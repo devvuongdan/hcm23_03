@@ -49,7 +49,8 @@ class DefaultFirebaseOptions {
     messagingSenderId: '561058666320',
     projectId: 'hcm2303',
     authDomain: 'hcm2303.firebaseapp.com',
-    databaseURL: 'https://hcm2303-default-rtdb.asia-southeast1.firebasedatabase.app',
+    databaseURL:
+        'https://hcm2303-default-rtdb.asia-southeast1.firebasedatabase.app',
     storageBucket: 'hcm2303.appspot.com',
     measurementId: 'G-382LGK37ZT',
   );
@@ -59,7 +60,8 @@ class DefaultFirebaseOptions {
     appId: '1:561058666320:android:b6ea77804ce7211d503e55',
     messagingSenderId: '561058666320',
     projectId: 'hcm2303',
-    databaseURL: 'https://hcm2303-default-rtdb.asia-southeast1.firebasedatabase.app',
+    databaseURL:
+        'https://hcm2303-default-rtdb.asia-southeast1.firebasedatabase.app',
     storageBucket: 'hcm2303.appspot.com',
   );
 
@@ -68,9 +70,11 @@ class DefaultFirebaseOptions {
     appId: '1:561058666320:ios:ccb989e4d4d54f8f503e55',
     messagingSenderId: '561058666320',
     projectId: 'hcm2303',
-    databaseURL: 'https://hcm2303-default-rtdb.asia-southeast1.firebasedatabase.app',
+    databaseURL:
+        'https://hcm2303-default-rtdb.asia-southeast1.firebasedatabase.app',
     storageBucket: 'hcm2303.appspot.com',
-    iosClientId: '561058666320-seq1b5adkh0o0ucjhv91end8l3plcbrs.apps.googleusercontent.com',
+    iosClientId:
+        '561058666320-seq1b5adkh0o0ucjhv91end8l3plcbrs.apps.googleusercontent.com',
     iosBundleId: 'com.vuongdan.hcm2303.dev',
   );
 
@@ -79,9 +83,11 @@ class DefaultFirebaseOptions {
     appId: '1:561058666320:ios:26f876564ae0085e503e55',
     messagingSenderId: '561058666320',
     projectId: 'hcm2303',
-    databaseURL: 'https://hcm2303-default-rtdb.asia-southeast1.firebasedatabase.app',
+    databaseURL:
+        'https://hcm2303-default-rtdb.asia-southeast1.firebasedatabase.app',
     storageBucket: 'hcm2303.appspot.com',
-    iosClientId: '561058666320-mm5bc21p08jcn66mmp4ss9vifv8epsng.apps.googleusercontent.com',
+    iosClientId:
+        '561058666320-mm5bc21p08jcn66mmp4ss9vifv8epsng.apps.googleusercontent.com',
     iosBundleId: 'com.example.hcm2303',
   );
 }

@@ -5,11 +5,13 @@ import '../../../shared/shared_ui/btn/btn_default/btn_default.dart';
 import '../../../shared/shared_ui/inputs/input_normal/input_normal.dart';
 
 class TaskStageInput extends StatefulWidget {
-  final void Function() onRightIconTaped;
+  final void Function() onRemove;
+  final void Function() onChecked;
   final void Function(String?) onChanged;
   const TaskStageInput({
     Key? key,
-    required this.onRightIconTaped,
+    required this.onRemove,
+    required this.onChecked,
     required this.onChanged,
   }) : super(key: key);
 
@@ -45,17 +47,33 @@ class _TaskStageInputState extends State<TaskStageInput> {
         BtnDefault(
           type: BtnDefaultType.secondary,
           width: 40,
-          onTap: widget.onRightIconTaped,
+          onTap: widget.onRemove,
           customChild: Icon(
             getTaskStageIcon(controller.text),
             size: 16,
           ),
-        )
+        ),
+        const SizedBox(
+          width: 10,
+        ),
+        BtnDefault(
+          type: BtnDefaultType.secondary,
+          width: 40,
+          onTap: widget.onChecked,
+          customChild: Icon(
+            getTaskCheckedIcon(controller.text),
+            size: 16,
+          ),
+        ),
       ],
     );
   }
 
   IconData getTaskStageIcon(String text) {
     return Icons.remove;
+  }
+
+  IconData getTaskCheckedIcon(String text) {
+    return Icons.check;
   }
 }

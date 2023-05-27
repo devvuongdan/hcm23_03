@@ -8,7 +8,7 @@ void main() async {
   WidgetsFlutterBinding.ensureInitialized();
   final app = await Firebase.initializeApp(
     options: DefaultFirebaseOptions.currentPlatform,
-    name: "Hcm23_03",
+    name: "Hcm23_0333",
   );
 
   runApp(MyApp(

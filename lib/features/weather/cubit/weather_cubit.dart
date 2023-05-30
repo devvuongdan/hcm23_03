@@ -40,8 +40,10 @@ class WeatherCubit extends Cubit<WeatherState> {
     //     responseWeather;
     //   });
     // }
-    emit(
-      (state as WeatherLoaded).copyWith(responseWeather: responseWeather),
-    );
+    if (!isClosed) {
+      emit(
+        (state as WeatherLoaded).copyWith(responseWeather: responseWeather),
+      );
+    }
   }
 }

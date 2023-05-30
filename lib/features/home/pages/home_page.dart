@@ -13,13 +13,9 @@ class HomePage extends StatefulWidget {
 }
 
 class _HomePageState extends State<HomePage> {
-  int? currentIndex = 1;
-
-  void changePage(int? idx) {
-    setState(() {
-      currentIndex = idx;
-    });
-  }
+  int? currentIndex = 0;
+  final PageController pageController = PageController(initialPage: 1);
+  void changePage(int? idx) {}
 
   void createNewTask() async {}
 
@@ -29,6 +25,7 @@ class _HomePageState extends State<HomePage> {
     });
   }
 
+  void viewTask() {}
   late final List<Task> _tasks = [];
 
   @override
@@ -53,7 +50,11 @@ class _HomePageState extends State<HomePage> {
         fabLocation: BubbleBottomBarFabLocation.end,
         opacity: .2,
         currentIndex: currentIndex,
-        onTap: changePage,
+        onTap: (int? index) {
+          setState(() {
+            currentIndex = index;
+          });
+        },
         borderRadius: const BorderRadius.vertical(
           top: Radius.circular(16),
         ),
@@ -64,7 +65,7 @@ class _HomePageState extends State<HomePage> {
         items: const <BubbleBottomBarItem>[
           BubbleBottomBarItem(
             showBadge: true,
-            // badge: Text("1"),
+            //badge: Text("1"),
             badgeColor: Colors.deepPurpleAccent,
             backgroundColor: Colors.red,
             icon: Icon(
@@ -75,7 +76,7 @@ class _HomePageState extends State<HomePage> {
               Icons.dashboard,
               color: Colors.red,
             ),
-            title: Text("All Tasks"),
+            title: Text("All Task"),
           ),
           BubbleBottomBarItem(
               backgroundColor: Colors.deepPurple,
@@ -98,12 +99,25 @@ class _HomePageState extends State<HomePage> {
                 Icons.access_time,
                 color: Colors.deepPurple,
               ),
-              title: Text("")),
+              title: Text("Time")),
         ],
       ),
-      body: TodayTasksPage(
-        tasks: _tasks,
-      ),
+      body: _buildBody(currentIndex ?? 1),
     );
+  }
+
+  Widget _buildBody(int index) {
+    switch (index) {
+      case 1:
+        return TodayTasksPage(
+          tasks: _tasks,
+        );
+      default:
+        return Center(
+          child: Text(
+            "Tinh nang dang trong qua trinh phat trien",
+          ),
+        );
+    }
   }
 }

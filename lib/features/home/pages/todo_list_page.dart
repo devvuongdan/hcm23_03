@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:hcm23_03/features/home/pages/task/data.dart';
 
 class TodoListPage extends StatelessWidget {
   const TodoListPage({super.key});
@@ -12,164 +11,114 @@ class TodoListPage extends StatelessWidget {
           Expanded(
               //todo: Trinh voi Dung
               child: Container(
-            color: Colors.green[100],
+            color: Colors.green,
           )),
-          Expanded(
-            flex: 4,
-            child: Padding(
-              padding: const EdgeInsets.symmetric(horizontal: 16),
-              child: Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                  const Text(
-                    'Task List',
-                    style: TextStyle(
-                      fontSize: 18,
-                      fontWeight: FontWeight.bold,
-                    ),
-                  ),
-                  const SizedBox(height: 8),
-                  // Expanded(
-                  //   child: _buildTaskList(),
-                  // ),
-                ],
-              ),
-            ),
-          ),
+          const Expanded(
+              // todo: Tan, HaGiaMinh, Nhat
+              flex: 4,
+              child: Text(
+                "a",
+                style: TextStyle(
+                    leadingDistribution: TextLeadingDistribution.even),
+              )),
         ],
       ),
     );
   }
+
+  Widget _buildListViewBuilder() {
+    List<List> cal = [
+      ["Tue", "13"],
+      ["Wed", "14"],
+      ["Thu", "15"],
+      ["Fri", "16"],
+      ["Sat", "17"],
+      ["Sun", "18"]
+    ];
+    return ListView.builder(
+        scrollDirection: Axis.horizontal,
+        itemCount: cal.length,
+        itemBuilder: (context, index) {
+          if (cal[index][1] != "15") {
+            return SizedBox(
+              width: 400 / 6,
+              height: 70,
+              child: Column(
+                children: [
+                  Text(
+                    cal[index][0],
+                    textAlign: TextAlign.center,
+                    style: const TextStyle(
+                      fontSize: 20,
+                      fontWeight: FontWeight.w400,
+                      height: 20 / 14,
+                      color: Color(0xFF5D6B98),
+                    ),
+                  ),
+                  Container(
+                    width: 36,
+                    height: 36,
+                    decoration: BoxDecoration(
+                        color: Colors.white,
+                        shape: BoxShape.circle,
+                        border: Border.all(
+                          color: const Color(0xFFEAECF0),
+                          width: 2.0,
+                        )),
+                    child: Center(
+                      child: Text(
+                        cal[index][1],
+                        style: const TextStyle(
+                          leadingDistribution: TextLeadingDistribution.even,
+                          color: Colors.black,
+                          fontSize: 18,
+                          fontWeight: FontWeight.bold,
+                        ),
+                      ),
+                    ),
+                  ),
+                ],
+              ),
+            );
+          } else {
+            return SizedBox(
+              width: 400 / 6,
+              height: 70,
+              child: Column(
+                children: [
+                  Text(
+                    cal[index][0],
+                    textAlign: TextAlign.center,
+                    style: const TextStyle(
+                      fontSize: 20,
+                      fontWeight: FontWeight.w400,
+                      height: 20 / 14,
+                      color: Color(0xFF5D6B98),
+                    ),
+                  ),
+                  Container(
+                    width: 36,
+                    height: 36,
+                    decoration: const BoxDecoration(
+                      color: Color.fromARGB(255, 111, 74, 203),
+                      shape: BoxShape.circle,
+                    ),
+                    child: Center(
+                      child: Text(
+                        cal[index][1],
+                        style: const TextStyle(
+                          leadingDistribution: TextLeadingDistribution.even,
+                          color: Colors.white,
+                          fontSize: 18,
+                          fontWeight: FontWeight.bold,
+                        ),
+                      ),
+                    ),
+                  ),
+                ],
+              ),
+            );
+          }
+        });
+  }
 }
-
-// Widget _buildTaskList() {
-  // List<String> startTime = [
-  //   '''
-  //   8:30
-  //   AM
-  //   ''',
-  //   '''
-  //   9:30
-  //   AM
-  //   ''',
-  //   '''
-  //   10:30
-  //   AM
-  //   ''',
-  // ];
-
-  // List<String> taskTitles = [
-  //   'Meeting with Client',
-  //   'Lunch Break',
-  //   'Daily Stand-up',
-  // ];
-  // List<String> taskDescriptions = [
-  //   'To discuss about the upcoming project & organization of figma files.',
-  //   'To discuss about the upcoming meeting.',
-  //   'A stand-up meeting is a meeting in which attendees typically participate while standing. The discomfort...',
-  // ];
-  // List<String> taskTimes = [
-  //   '08:30 AM - 09:30 AM',
-  //   '9:30 AM - 10:30 AM',
-  //   '10:30 AM - 11:30 AM',
-  // ];
-
-//   return ListView.builder(
-//     itemCount: tasks.length,
-//     itemBuilder: (context, index) {
-//       Task task = tasks[index];
-//       Color containerColor;
-//       if (index % 3 == 0) {
-//         containerColor = const Color.fromRGBO(182, 146, 246, 0.15);
-//       } else if (index % 3 == 1) {
-//         containerColor = const Color.fromRGBO(253, 234, 235, 1);
-//       } else {
-//         containerColor = const Color.fromRGBO(232, 245, 243, 1);
-//       }
-
-//       return Column(
-//         children: [
-//           Row(
-//             mainAxisAlignment: MainAxisAlignment.center,
-//             children: [
-//               Expanded(
-//                 flex: 1,
-//                 child: Text(
-//                   task.starttime,
-//                   textAlign: TextAlign.center,
-//                   style: const TextStyle(
-//                     color: Colors.black87,
-//                     fontSize: 14,
-//                     height: 1.5,
-//                     fontWeight: FontWeight.w500,
-//                   ),
-//                 ),
-//               ),
-//               Expanded(
-//                 flex: 6,
-//                 child: Container(
-//                   margin: const EdgeInsets.only(left: 16),
-//                   decoration: BoxDecoration(
-//                     borderRadius: BorderRadius.circular(16),
-//                     color: containerColor,
-//                   ),
-//                   //height: 126,
-//                   child: Padding(
-//                     padding: const EdgeInsets.symmetric(
-//                       horizontal: 16,
-//                       vertical: 16,
-//                     ),
-//                     child: Column(
-//                       crossAxisAlignment: CrossAxisAlignment.start,
-//                       mainAxisAlignment: MainAxisAlignment.center,
-//                       children: [
-//                         Text(
-//                           task.title,
-//                           style: const TextStyle(
-//                             color: Colors.black87,
-//                             fontSize: 16,
-//                             height: 1.5,
-//                             fontWeight: FontWeight.w700,
-//                           ),
-//                         ),
-//                         const SizedBox(height: 6),
-//                         Text(
-//                           task.description,
-//                           style: const TextStyle(
-//                             color: Colors.black45,
-//                             fontSize: 12,
-//                             height: 1.5,
-//                             fontWeight: FontWeight.w400,
-//                           ),
-//                         ),
-//                         const SizedBox(height: 6),
-//                         Text(
-//                           "${task.starttime} - ${task.duetime}",
-//                           style: const TextStyle(
-//                             color: Colors.black87,
-//                             fontSize: 13,
-//                             height: 1.5,
-//                             fontWeight: FontWeight.w400,
-//                           ),
-//                         ),
-//                       ],
-//                     ),
-//                   ),
-//                 ),
-//               ),
-//             ],
-//           ),
-//           if (index != tasks.length - 1)
-//             const Divider(
-//               color: Colors.black12,
-//               thickness: 1,
-//               height: 48,
-//             ),
-//         ],
-//       );
-//     },
-//   );
-// }
-
-// ignore_for_file: public_member_api_docs, sort_constructors_first, must_be_immutable
-

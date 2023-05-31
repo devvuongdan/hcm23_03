@@ -90,10 +90,10 @@ class _RechangePasswordPageState extends State<RechangePasswordPage> {
 
                 ElevatedButton(
                   onPressed: () {
-                    final String password = _EmailController.text;
+                    final String account = _EmailController.text;
                     ScaffoldMessenger.of(context).showSnackBar(
                       SnackBar(
-                        content: Text("The Account is $password"),
+                        content: Text("The Account is $account"),
                       ),
                     );
                   },

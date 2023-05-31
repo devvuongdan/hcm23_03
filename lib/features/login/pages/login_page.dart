@@ -3,7 +3,6 @@ import 'package:flutter_svg/flutter_svg.dart';
 import 'package:hcm23_03/shared/shared_ui/btn/btn_default/btn_default.dart';
 import 'package:hcm23_03/shared/shared_ui/inputs/input_clear/input_clear.dart';
 
-
 class LoginPage extends StatefulWidget {
   const LoginPage({super.key});
 
@@ -26,12 +25,9 @@ class _LoginPageState extends State<LoginPage> {
 
   @override
   void initState() {
-
     _passwordVisible = false;
     super.initState();
   }
-
- 
 
   @override
   Widget build(BuildContext context) {
@@ -81,13 +77,7 @@ class _LoginPageState extends State<LoginPage> {
                   ),
                 ),
               ),
-
-
-
-
-
               InputClear(
-
                 obscureText: !_passwordVisible,
                 controller: _passwordController,
                 placeholderText: "Mật khẩu",
@@ -117,10 +107,6 @@ class _LoginPageState extends State<LoginPage> {
                   ),
                 ),
               ),
-
-
-
-
               Container(
                 alignment: Alignment.topLeft,
                 child: const Text(
@@ -146,4 +132,3 @@ class _LoginPageState extends State<LoginPage> {
     );
   }
 }
-

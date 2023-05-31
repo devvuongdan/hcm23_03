@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:hcm23_03/features/login/pages/change_password.dart';
+import 'package:hcm23_03/features/change_password/pages/change_password.dart';
 
 class LoginPage extends StatefulWidget {
   const LoginPage({super.key});
@@ -71,6 +71,10 @@ class _LoginPageState extends State<LoginPage> {
               border: OutlineInputBorder(),
               hintText: "Enter your confirm password",
             ),
+          ),
+          SizedBox(
+            height: 50,
+            width: 20,
           ),
           GestureDetector(
             child: Text('Change password'),

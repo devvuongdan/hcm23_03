@@ -68,6 +68,8 @@ flutter:
   assets:
     - assets/icons/
     - assets/images/
+    - assets/icons/ui_kit/bold/
+    - assets/icons/ui_kit/normal/
   #   - images/a_dot_ham.jpeg
 # assets:
 #   - images/a_dot_burr.jpeg

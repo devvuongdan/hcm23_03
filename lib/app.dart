@@ -4,7 +4,7 @@ import 'package:hcm23_03/features/login/pages/login_page.dart';
 import 'package:hcm23_03/features/onboarding/pages/onboarding_page.dart';
 import 'package:hcm23_03/features/tasks/entities/task.dart';
 import 'package:hcm23_03/features/tasks/pages/task_details_page.dart';
-import 'package:hcm23_03/features/login/pages/change_password.dart';
+import 'package:hcm23_03/features/change_password/pages/change_password.dart';
 import 'features/onboarding/pages/onboarding_page.dart';
 
 class MyApp extends StatelessWidget {
@@ -31,7 +31,7 @@ class MyApp extends StatelessWidget {
           if (setting.name == "/ChangePassword") {
             return MaterialPageRoute(
               settings: const RouteSettings(name: "/ChangePassword"),
-              builder: (_) => const ChangPassword(),
+              builder: (_) => const ChangePassword(),
             );
           }
           if (setting.name == "/LoginPage") {

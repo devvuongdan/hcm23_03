@@ -10,7 +10,10 @@ import '../../../shared/shared_ui/inputs/input_clear/input_clear.dart';
 import '../../../shared/shared_ui/inputs/input_normal/input_normal_layout_mixin.dart';
 import '../../../shared/shared_ui/themes/colors.dart';
 import '../../../shared/shared_ui/themes/text_styles.dart';
+import '../../../shared/shared_ui/toast/hcm23_toast.dart';
 import '../cubit/login_cubit.dart';
+
+GlobalKey<NavigatorState> navigatorKey = GlobalKey<NavigatorState>();
 
 class LoginPage extends StatefulWidget {
   static const String routeName = "/LoginPage";
@@ -23,6 +26,8 @@ class LoginPage extends StatefulWidget {
 class _LoginPageState extends State<LoginPage> {
   @override
   void initState() {
+    fToast = FToast();
+    fToast.init(navigatorKey.currentContext!);
     super.initState();
   }
 
@@ -34,6 +39,47 @@ class _LoginPageState extends State<LoginPage> {
   void login() {
     context.read<LoginCubit>().loginWithUsernameAndPw(context);
   }
+
+  late FToast fToast;
+  Widget toast = Container(
+    padding: const EdgeInsets.symmetric(horizontal: 24.0, vertical: 12.0),
+    decoration: BoxDecoration(
+      borderRadius: BorderRadius.circular(25.0),
+      color: Colors.greenAccent,
+    ),
+    child: Row(
+      mainAxisSize: MainAxisSize.min,
+      children: const [
+        Icon(Icons.check),
+        SizedBox(
+          width: 12.0,
+        ),
+        Text("Hello HCM23 03"),
+      ],
+    ),
+  );
+
+  _showToast() {
+    fToast.showToast(
+      child: toast,
+      gravity: ToastGravity.TOP_RIGHT,
+      toastDuration: const Duration(seconds: 2),
+    );
+  }
+
+  // _showBuilderToast() {
+  //   fToast.showToast(
+  //       child: toast,
+  //       gravity: ToastGravity.BOTTOM,
+  //       toastDuration: const Duration(seconds: 2),
+  //       positionedToastBuilder: (context, child) {
+  //         return Positioned(
+  //           top: 16.0,
+  //           left: 16.0,
+  //           child: child,
+  //         );
+  //       });
+  // }
 
   FeedbackType feedbackType = FeedbackType.none;
 
@@ -233,7 +279,9 @@ class _LoginPageState extends State<LoginPage> {
                         ),
                         //face id
                         GestureDetector(
-                          onTap: () {},
+                          onTap: () {
+                            _showToast();
+                          },
                           onTapCancel: () {},
                           child: Ink(
                             height: 48,

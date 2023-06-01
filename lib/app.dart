@@ -3,6 +3,8 @@ import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_easyloading/flutter_easyloading.dart';
+import 'package:hcm23_03/features/change_password/cubit/change_password_cubit.dart';
+import 'package:hcm23_03/features/change_password/pages/change_password_page.dart';
 
 import 'package:hcm23_03/features/home/pages/home_page.dart';
 import 'package:hcm23_03/features/login/pages/login_page.dart';
@@ -125,6 +127,15 @@ class MyApp extends StatelessWidget {
               return MaterialPageRoute(
                 settings: const RouteSettings(name: UserProfilePage.routeName),
                 builder: (_) => const UserProfilePage(),
+              );
+            }
+            if (setting.name == ChangePasswordPage.routeName) {
+              return MaterialPageRoute(
+                settings: const RouteSettings(name: UserProfilePage.routeName),
+                builder: (_) => BlocProvider(
+                  create: (context) => ChangePasswordCubit(),
+                  child: const ChangePasswordPage(),
+                ),
               );
             }
 

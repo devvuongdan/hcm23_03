@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:hcm23_03/features/change_password/pages/change_password_page.dart';
 import 'package:hcm23_03/features/home/cubit/home_cubit.dart';
 import 'package:hcm23_03/features/user/pages/user_profile_pages.dart';
 import 'package:hcm23_03/shared/shared_ui/btn/btn_default/btn_default.dart';
@@ -10,7 +11,7 @@ final List<Map<String, String>> menu = [
     "Thông tin User": UserProfilePage.routeName,
   },
   {
-    "Đổi mật khẩu": "",
+    "Đổi mật khẩu": ChangePasswordPage.routeName,
   }
 ];
 

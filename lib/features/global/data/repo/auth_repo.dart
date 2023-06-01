@@ -44,4 +44,18 @@ class AuthRepo {
       return const Left("");
     }
   }
+
+  static Future<Either<String, bool>> updatePassword({
+    required String newPassword,
+    required UserCredential userCredential,
+  }) async {
+    try {
+      await userCredential.user?.updatePassword(newPassword);
+      return const Right(true);
+    } on FirebaseAuthException catch (err) {
+      return Left(err.message ?? "Đổi mật khẩu không thành công");
+    } catch (e) {
+      return const Left("Đổi mật khẩu không thành công");
+    }
+  }
 }

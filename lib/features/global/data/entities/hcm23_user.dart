@@ -28,6 +28,16 @@ class Hcm23User {
 
   factory Hcm23User.fromJson(String source) =>
       Hcm23User.fromMap(json.decode(source) as Map<String, dynamic>);
+
+  Hcm23User copyWith({
+    String? password,
+    String? email,
+  }) {
+    return Hcm23User(
+      password: password ?? this.password,
+      email: email ?? this.email,
+    );
+  }
 }
 
 class UserX {

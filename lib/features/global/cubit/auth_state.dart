@@ -12,9 +12,11 @@ class UnAuthenticated extends AuthState {
 
 class Authenticated extends AuthState {
   final UserCredential user;
+  final Hcm23User hcm23user;
 
   Authenticated(
     super.db, {
     required this.user,
+    required this.hcm23user,
   });
 }

@@ -91,14 +91,14 @@ class _HomePageState extends State<HomePage> {
                 BubbleBottomBarItem(
                     backgroundColor: Colors.deepPurple,
                     icon: Icon(
-                      Icons.access_time,
+                      Icons.cloud,
                       color: Colors.black,
                     ),
                     activeIcon: Icon(
-                      Icons.access_time,
+                      Icons.cloud,
                       color: Colors.deepPurple,
                     ),
-                    title: Text("")),
+                    title: Text("Weather")),
               ],
             ),
             body: PageView(

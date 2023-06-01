@@ -1,3 +1,4 @@
+import 'package:carousel_slider/carousel_slider.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_svg/svg.dart';
@@ -14,6 +15,12 @@ class AllTasksPage extends StatefulWidget {
 }
 
 class _AllTasksPageState extends State<AllTasksPage> {
+  final List<String> image = [
+    "assets/images/bandel_1.png",
+    "assets/images/bandel_2.png",
+    "assets/images/bandel_3.png",
+  ];
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -119,7 +126,28 @@ class _AllTasksPageState extends State<AllTasksPage> {
               // ),
             ),
           ),
-          const SizedBox(height: 300),
+          Container(
+            child: CarouselSlider(
+              options: CarouselOptions(
+                height: 300,
+                autoPlay: true,
+                autoPlayInterval: const Duration(seconds: 3),
+                autoPlayAnimationDuration: const Duration(milliseconds: 500),
+                autoPlayCurve: Curves.easeInOut,
+              ),
+              items: image.map((image) {
+                return Builder(
+                  builder: (BuildContext context) {
+                    return Container(
+                      width: MediaQuery.of(context).size.width,
+                      margin: const EdgeInsets.symmetric(horizontal: 5.0),
+                      child: Image.asset(image),
+                    );
+                  },
+                );
+              }).toList(),
+            ),
+          ),
           const Expanded(child: AllTasksBody()),
         ],
       ),

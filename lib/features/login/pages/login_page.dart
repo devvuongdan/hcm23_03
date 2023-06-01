@@ -1,8 +1,9 @@
 import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
+import 'package:hcm23_03/features/change_pass/pages/change_pass_pages.dart';
 import 'package:hcm23_03/features/home/pages/home_page.dart';
-import 'package:hcm23_03/features/register/register_pages.dart';
+import 'package:hcm23_03/features/register/pages/register_pages.dart';
 import 'package:hcm23_03/shared/shared_ui/base_screen/base_screen.dart';
 
 import '../../../shared/shared_ui/btn/btn_default/btn_default.dart';
@@ -147,9 +148,13 @@ class _LoginPageState extends State<LoginPage> {
                     Align(
                       alignment: Alignment.centerLeft,
                       child: TextButton(
-                        onPressed: () {},
+                        onPressed: () {
+                           Navigator.of(context)
+                                .pushNamed(ChangePage.routeName);
+                        },
                         child: Text(
                           "Quên mật khẩu?",
+                          
                           style: tStyle
                               .display14()
                               .w500()

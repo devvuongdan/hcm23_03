@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:flutter_easyloading/flutter_easyloading.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:hcm23_03/features/weather/cubit/weather_cubit.dart';
 import 'package:hcm23_03/features/weather/widgets/weather_form.dart';
@@ -34,6 +35,7 @@ class _WeatherPageState extends State<WeatherPage> {
 
   @override
   void initState() {
+    EasyLoading.dismiss();
     _cubit.getLocation(null);
     _cubit.getWeather(null);
     super.initState();

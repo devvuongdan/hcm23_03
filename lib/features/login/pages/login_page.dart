@@ -10,6 +10,7 @@ import '../../../shared/shared_ui/inputs/input_clear/input_clear.dart';
 import '../../../shared/shared_ui/inputs/input_normal/input_normal_layout_mixin.dart';
 import '../../../shared/shared_ui/themes/colors.dart';
 import '../../../shared/shared_ui/themes/text_styles.dart';
+import '../../forgetpassword/pages/forget_password_page.dart';
 import '../cubit/login_cubit.dart';
 
 class LoginPage extends StatefulWidget {
@@ -135,7 +136,10 @@ class _LoginPageState extends State<LoginPage> {
                         Align(
                           alignment: Alignment.centerLeft,
                           child: TextButton(
-                            onPressed: () {},
+                            onPressed: () {
+                              Navigator.of(context)
+                                  .pushNamed(ForgetPasswordPage.routeName);
+                            },
                             child: Text(
                               "Quên mật khẩu?",
                               style: tStyle

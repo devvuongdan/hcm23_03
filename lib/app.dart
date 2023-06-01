@@ -11,8 +11,11 @@ import 'package:hcm23_03/features/login/pages/login_page.dart';
 import 'package:hcm23_03/features/onboarding/pages/onboarding_page.dart';
 import 'package:hcm23_03/features/register/pages/register_page.dart';
 import 'package:hcm23_03/features/splash/pages/splash_page.dart';
+import 'package:hcm23_03/features/task/cubits/new_task/new_task_cubit.dart';
 import 'package:hcm23_03/features/task/cubits/task_details/task_details_cubit.dart';
+import 'package:hcm23_03/features/task/cubits/today_tasks/today_tasks_cubit.dart';
 import 'package:hcm23_03/features/task/data/entities/task_details_page_arg.dart';
+import 'package:hcm23_03/features/task/pages/new_task_page.dart';
 import 'package:hcm23_03/features/user/pages/user_profile_pages.dart';
 
 import 'features/forget_password/cubit/forget_password_cubit.dart';
@@ -120,6 +123,22 @@ class MyApp extends StatelessWidget {
                   child: TaskDetailsPage(
                     arg: arg,
                   ),
+                ),
+              );
+            }
+            if (setting.name == NewTaskPage.routeName) {
+              return MaterialPageRoute(
+                settings: const RouteSettings(name: NewTaskPage.routeName),
+                builder: (_) => MultiBlocProvider(
+                  providers: [
+                    BlocProvider(
+                      create: (context) => TodayTasksCubit(),
+                    ),
+                    BlocProvider(
+                      create: (context) => NewTaskCubit()..initState(),
+                    ),
+                  ],
+                  child: const NewTaskPage(),
                 ),
               );
             }

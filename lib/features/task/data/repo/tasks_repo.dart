@@ -86,4 +86,24 @@ class TasksRepo {
       return const Left("Có lỗi xảy ra");
     }
   }
+
+  static Future<Either<String, bool>> addNewTask(
+      BuildContext ctx, Task newTask) async {
+    try {
+      final FirebaseDatabase db = ctx.read<AuthCubit>().state.db;
+      final String id =
+          (ctx.read<AuthCubit>().state as Authenticated).user.user?.uid ?? "";
+
+      final ref = db.ref("tasks/$id");
+      await ref.once().then((value) {
+        final List jsons = jsonDecode(jsonEncode(value.snapshot.value)) as List;
+
+        jsons.add(newTask.toMap());
+        ref.set(jsons);
+      });
+      return const Right(true);
+    } catch (e) {
+      return const Left("Có lỗi xảy ra");
+    }
+  }
 }

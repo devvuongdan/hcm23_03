@@ -1,8 +1,11 @@
+// ignore_for_file: use_build_context_synchronously
+
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:hcm23_03/features/home/cubit/home_cubit.dart';
 import 'package:hcm23_03/features/home/widgets/home_drawer.dart';
-import 'package:hcm23_03/features/task/pages/app_task_pages.dart';
+import 'package:hcm23_03/features/task/pages/all_task_pages.dart';
+import 'package:hcm23_03/features/task/pages/new_task_page.dart';
 
 import '../../global/presentation/base_screen/base_screen.dart';
 import '../../task/cubits/today_tasks/today_tasks_cubit.dart';
@@ -30,7 +33,11 @@ class _HomePageState extends State<HomePage> {
     super.initState();
   }
 
-  void createNewTask() {}
+  void createNewTask(int index) async {
+    await Navigator.of(context).pushNamed(NewTaskPage.routeName);
+  }
+
+  void searchWeatherByCity() {}
 
   TextEditingController locationController = TextEditingController();
 
@@ -42,9 +49,13 @@ class _HomePageState extends State<HomePage> {
           return Scaffold(
             drawer: const HomeDrawer(),
             floatingActionButton: FloatingActionButton(
-              onPressed: createNewTask,
+              onPressed: () {
+                if (state.currentPage != 2) {
+                  createNewTask(state.currentPage);
+                } else {}
+              },
               backgroundColor: const Color(0xFFB7ABFD),
-              child: const Icon(Icons.add),
+              child: Icon(state.currentPage != 2 ? Icons.add : Icons.search),
             ),
             floatingActionButtonLocation:
                 FloatingActionButtonLocation.endDocked,

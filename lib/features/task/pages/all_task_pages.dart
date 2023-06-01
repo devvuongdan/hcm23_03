@@ -126,27 +126,25 @@ class _AllTasksPageState extends State<AllTasksPage> {
               // ),
             ),
           ),
-          Container(
-            child: CarouselSlider(
-              options: CarouselOptions(
-                height: 300,
-                autoPlay: true,
-                autoPlayInterval: const Duration(seconds: 3),
-                autoPlayAnimationDuration: const Duration(milliseconds: 500),
-                autoPlayCurve: Curves.easeInOut,
-              ),
-              items: image.map((image) {
-                return Builder(
-                  builder: (BuildContext context) {
-                    return Container(
-                      width: MediaQuery.of(context).size.width,
-                      margin: const EdgeInsets.symmetric(horizontal: 5.0),
-                      child: Image.asset(image),
-                    );
-                  },
-                );
-              }).toList(),
+          CarouselSlider(
+            options: CarouselOptions(
+              height: 300,
+              autoPlay: true,
+              autoPlayInterval: const Duration(seconds: 3),
+              autoPlayAnimationDuration: const Duration(milliseconds: 500),
+              autoPlayCurve: Curves.easeInOut,
             ),
+            items: image.map((image) {
+              return Builder(
+                builder: (BuildContext context) {
+                  return Container(
+                    width: MediaQuery.of(context).size.width,
+                    margin: const EdgeInsets.symmetric(horizontal: 5.0),
+                    child: Image.asset(image),
+                  );
+                },
+              );
+            }).toList(),
           ),
           const Expanded(child: AllTasksBody()),
         ],

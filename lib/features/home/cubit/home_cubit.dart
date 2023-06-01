@@ -26,4 +26,12 @@ class HomeCubit extends Cubit<HomeState> {
       emit(state.copyWith(currentPage: idx));
     }
   }
+
+  void reload(int? idx) {
+    if (idx != state.currentPage) {
+      pageController.animateToPage(idx ?? 0,
+          duration: const Duration(milliseconds: 250), curve: Curves.linear);
+      emit(state.copyWith(currentPage: idx));
+    }
+  }
 }

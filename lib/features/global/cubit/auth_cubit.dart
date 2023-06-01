@@ -34,6 +34,16 @@ class AuthCubit extends Cubit<AuthState> {
     );
   }
 
+  void forget_password({required String username}) async {
+    EasyLoading.show();
+    print("test");
+    final Either<String, void> check =
+        await AuthRepo.sendPasswordResetEmail(email: username);
+    if (check is Left<String, void>) {
+      print("test2");
+    }
+  }
+
   void loginWithUsernameAndPw({
     required String username,
     required String password,

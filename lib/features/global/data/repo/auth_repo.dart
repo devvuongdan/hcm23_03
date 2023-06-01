@@ -31,4 +31,17 @@ class AuthRepo {
       return const Left("");
     }
   }
+
+  static Future<Either<String, void>> sendPasswordResetEmail({
+    required String email,
+  }) async {
+    try {
+      await FirebaseAuth.instance.sendPasswordResetEmail(email: email);
+      return const Right(null);
+    } on FirebaseAuthException catch (err) {
+      return Left(err.message ?? "");
+    } catch (e) {
+      return const Left("");
+    }
+  }
 }

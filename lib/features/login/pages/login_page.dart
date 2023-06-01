@@ -10,7 +10,7 @@ import '../../../shared/shared_ui/inputs/input_clear/input_clear.dart';
 import '../../../shared/shared_ui/inputs/input_normal/input_normal_layout_mixin.dart';
 import '../../../shared/shared_ui/themes/colors.dart';
 import '../../../shared/shared_ui/themes/text_styles.dart';
-import '../../../shared/shared_ui/toast/hcm23_toast.dart';
+import '../../forgetpassword/pages/forget_password_page.dart';
 import '../cubit/login_cubit.dart';
 
 GlobalKey<NavigatorState> navigatorKey = GlobalKey<NavigatorState>();
@@ -26,8 +26,6 @@ class LoginPage extends StatefulWidget {
 class _LoginPageState extends State<LoginPage> {
   @override
   void initState() {
-    fToast = FToast();
-    fToast.init(navigatorKey.currentContext!);
     super.initState();
   }
 
@@ -40,7 +38,6 @@ class _LoginPageState extends State<LoginPage> {
     context.read<LoginCubit>().loginWithUsernameAndPw(context);
   }
 
-  late FToast fToast;
   Widget toast = Container(
     padding: const EdgeInsets.symmetric(horizontal: 24.0, vertical: 12.0),
     decoration: BoxDecoration(
@@ -58,14 +55,6 @@ class _LoginPageState extends State<LoginPage> {
       ],
     ),
   );
-
-  _showToast() {
-    fToast.showToast(
-      child: toast,
-      gravity: ToastGravity.TOP_RIGHT,
-      toastDuration: const Duration(seconds: 2),
-    );
-  }
 
   // _showBuilderToast() {
   //   fToast.showToast(
@@ -181,7 +170,10 @@ class _LoginPageState extends State<LoginPage> {
                         Align(
                           alignment: Alignment.centerLeft,
                           child: TextButton(
-                            onPressed: () {},
+                            onPressed: () {
+                              Navigator.of(context)
+                                  .pushNamed(ForgetPasswordPage.routeName);
+                            },
                             child: Text(
                               "Quên mật khẩu?",
                               style: tStyle
@@ -279,9 +271,7 @@ class _LoginPageState extends State<LoginPage> {
                         ),
                         //face id
                         GestureDetector(
-                          onTap: () {
-                            _showToast();
-                          },
+                          onTap: () {},
                           onTapCancel: () {},
                           child: Ink(
                             height: 48,

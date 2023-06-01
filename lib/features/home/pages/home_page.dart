@@ -6,7 +6,9 @@ import 'package:hcm23_03/features/task/pages/app_task_pages.dart';
 
 import '../../global/presentation/base_screen/base_screen.dart';
 import '../../task/cubits/today_tasks/today_tasks_cubit.dart';
-import '../../task/data/entities/task.dart';
+
+import 'package:hcm23_03/features/weather/pages/weather_page.dart';
+
 import '../../task/pages/today_tasks_page.dart';
 import '../widgets/home_bottom_bar.dart';
 
@@ -23,21 +25,14 @@ class _HomePageState extends State<HomePage> {
     context.read<HomeCubit>().changePage(idx);
   }
 
-  void createNewTask() async {
-    // await Navigator.of(context).pushNamed(
-    //   TaskDetailsPage.routeName,
-    //   arguments: TaskDetailsPageArg(homeCubit: context.read<HomeCubit>()),
-    // );
-  }
-
-  void addNewTaskSuccess(Task task) {}
-
-  // late List<Task> _tasks = [];
-
   @override
   void initState() {
     super.initState();
   }
+
+  void createNewTask() {}
+
+  TextEditingController locationController = TextEditingController();
 
   @override
   Widget build(BuildContext context) {
@@ -115,11 +110,81 @@ class _HomePageState extends State<HomePage> {
                   create: (context) => TodayTasksCubit()..getTask(context),
                   child: const TodayTasksPage(),
                 ),
-                Scaffold(
-                  appBar: AppBar(),
-                  body: const Center(
-                    child: Text("Tính năng đang trong quá trình phát triển"),
-                  ),
+                const Scaffold(
+                  // appBar: AppBar(
+                  //   actions: [
+                  //     GestureDetector(
+                  //       child: const Icon(
+                  //         Icons.search,
+                  //         color: Colors.black,
+                  //         size: 32,
+                  //       ),
+                  //       onTap: () {
+                  //         showModalBottomSheet(
+                  //           shape: const RoundedRectangleBorder(
+                  //             borderRadius: BorderRadius.only(
+                  //               topRight: Radius.circular(16.0),
+                  //               topLeft: Radius.circular(16.0),
+                  //             ),
+                  //           ),
+                  //           context: context,
+                  //           builder: (BuildContext context) {
+                  //             return Padding(
+                  //               padding: EdgeInsets.only(
+                  //                   bottom: MediaQuery.of(context)
+                  //                       .viewInsets
+                  //                       .bottom),
+                  //               child: Container(
+                  //                 height: 165,
+                  //                 padding: const EdgeInsets.symmetric(
+                  //                     horizontal: 16, vertical: 8),
+                  //                 decoration: const BoxDecoration(),
+                  //                 child: Column(
+                  //                   mainAxisAlignment:
+                  //                       MainAxisAlignment.spaceEvenly,
+                  //                   children: <Widget>[
+                  //                     Text(
+                  //                       "Nhập nơi cần tìm",
+                  //                       style: tStyle
+                  //                           .paragraph14()
+                  //                           .w700()
+                  //                           .copyWith(
+                  //                               color: Hcm23Colors
+                  //                                   .colorTextTitle),
+                  //                     ),
+                  //                     TextField(
+                  //                       controller: locationController,
+                  //                       decoration: InputDecoration(
+                  //                         border: OutlineInputBorder(
+                  //                           borderRadius:
+                  //                               BorderRadius.circular(4.0),
+                  //                         ),
+                  //                         contentPadding:
+                  //                             const EdgeInsets.symmetric(
+                  //                                 horizontal: 10),
+                  //                       ),
+                  //                       style: tStyle.paragraph14().w400(),
+                  //                     ),
+                  //                     BtnDefault(
+                  //                       title: "Tìm vị trí này",
+                  //                       onTap: (() {
+                  //                         setState(() {
+                  //                           city = locationController.text;
+                  //                         });
+                  //                         Navigator.pop(context);
+                  //                       }),
+                  //                     ),
+                  //                   ],
+                  //                 ),
+                  //               ),
+                  //             );
+                  //           },
+                  //         );
+                  //       },
+                  //     ),
+                  //   ],
+                  // ),
+                  body: WeatherProvider(),
                 ),
               ],
             ),

@@ -11,6 +11,6 @@ class ForgetPasswordCubit extends Cubit<ForgetPasswordState> {
   ForgetPasswordCubit() : super(ForgetPasswordInitial());
 
   void forgetpassword(BuildContext ctx) async {
-    ctx.read<AuthCubit>().forget_password(username: usernameController.text);
+    ctx.read<AuthCubit>().forgetPassword(username: usernameController.text);
   }
 }

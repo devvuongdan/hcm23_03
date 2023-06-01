@@ -10,7 +10,7 @@ import '../../../shared/shared_ui/inputs/input_clear/input_clear.dart';
 import '../../../shared/shared_ui/inputs/input_normal/input_normal_layout_mixin.dart';
 import '../../../shared/shared_ui/themes/colors.dart';
 import '../../../shared/shared_ui/themes/text_styles.dart';
-import '../../forgetpassword/pages/forget_password_page.dart';
+import '../../forget_password/pages/forget_password_page.dart';
 import '../cubit/login_cubit.dart';
 
 GlobalKey<NavigatorState> navigatorKey = GlobalKey<NavigatorState>();

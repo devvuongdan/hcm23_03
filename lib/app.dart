@@ -13,8 +13,8 @@ import 'package:hcm23_03/features/task/cubits/task_details/task_details_cubit.da
 import 'package:hcm23_03/features/task/data/entities/task_details_page_arg.dart';
 import 'package:hcm23_03/features/user/pages/user_profile_pages.dart';
 
-import 'features/forgetpassword/cubit/forget_password_cubit.dart';
-import 'features/forgetpassword/pages/forget_password_page.dart';
+import 'features/forget_password/cubit/forget_password_cubit.dart';
+import 'features/forget_password/pages/forget_password_page.dart';
 import 'features/global/cubit/auth_cubit.dart';
 import 'features/home/cubit/home_cubit.dart';
 import 'features/login/cubit/login_cubit.dart';

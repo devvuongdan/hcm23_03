@@ -1,29 +1,29 @@
-import 'package:flutter/foundation.dart';
+import 'package:hcm23_03/features/authentication/data/resource/sqlite_helper.dart';
 
-class Hcm23User {
-  final String uid;
+class Hcm23User extends DBModel {
   final String username;
   final String password;
 
-  const Hcm23User({
-  required this.uid,
-  required this.username,
-  required this.password
+  Hcm23User({
+    required super.uid,
+    required this.username,
+    required this.password,
   });
-  Map<String ,dynamic>toMap(){
-    return<String, dynamic>{
-    'uid':uid,
-    'username':username,
-    'password':password,
-  };
-}
-factory Hcm23User.fromMap(Map<String, dynamic> map){
-  return Hcm23User(
-    uid:map['uid']as String,
-    username:map['username']as String,
-    password:map['password']as String,
 
-  );
-}
+  @override
+  Map<String, dynamic> toMap() {
+    return <String, dynamic>{
+      'uid': uid,
+      'username': username,
+      'password': password,
+    };
+  }
 
+  factory Hcm23User.fromMap(Map<String, dynamic> map) {
+    return Hcm23User(
+      uid: map['uid'] as String,
+      username: map['username'] as String,
+      password: map['password'] as String,
+    );
+  }
 }

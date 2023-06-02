@@ -1,4 +1,4 @@
-// ignore_for_file: public_member_api_docs, sort_constructors_first
+// ignore_for_file: public_member_api_docs, sort_constructors_first, empty_catches
 import 'package:sqflite/sqflite.dart';
 
 abstract class DBModel {
@@ -9,7 +9,7 @@ abstract class DBModel {
   Map<String, dynamic> toMap();
 }
 
-class Hcm23DBHelper {
+abstract class Hcm23DBHelper {
   static Database? _db;
 
   static int get _version => 1;

@@ -6,6 +6,5 @@ import 'app.dart';
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
   await Hcm23DBHelper.init();
-
   runApp(const MyApp());
 }

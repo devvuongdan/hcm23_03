@@ -1,7 +1,9 @@
 import 'package:flutter/material.dart';
+import 'package:hcm23_03/features/forgot_password/pages/forgot_password_page.dart';
 import 'package:hcm23_03/features/home/pages/home_page.dart';
 import 'package:hcm23_03/features/login/pages/login_page.dart';
 import 'package:hcm23_03/features/onboarding/pages/onboarding_page.dart';
+import 'package:hcm23_03/features/register/pages/register_pages.dart';
 import 'package:hcm23_03/features/tasks/entities/task.dart';
 import 'package:hcm23_03/features/tasks/pages/task_details_page.dart';
 import 'package:hcm23_03/features/change_password/pages/change_password_page.dart';
@@ -16,6 +18,7 @@ class MyApp extends StatelessWidget {
         title: 'Flutter Demo',
         theme: ThemeData(
           appBarTheme: const AppBarTheme(
+              elevation: 0,
               iconTheme: IconThemeData(color: Colors.grey),
               backgroundColor: Colors.white,
               titleTextStyle: TextStyle(
@@ -59,6 +62,19 @@ class MyApp extends StatelessWidget {
             return MaterialPageRoute(
               settings: const RouteSettings(name: "/OnboardingPage"),
               builder: (_) => const OnboardingPage(),
+            );
+          }
+
+          if (setting.name == "/ForgotPasswordPage") {
+            return MaterialPageRoute(
+              settings: const RouteSettings(name: "/ForgotPasswordPage"),
+              builder: (_) => const ForgotPasswordPage(),
+            );
+          }
+          if (setting.name == "/RegisterPage") {
+            return MaterialPageRoute(
+              settings: const RouteSettings(name: "/RegisterPage"),
+              builder: (_) => const RegisterPage(),
             );
           }
           if (setting.name == "/TaskDetailsPage") {

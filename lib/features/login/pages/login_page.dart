@@ -1,5 +1,13 @@
+import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
-import 'package:hcm23_03/features/change_password/pages/change_password_page.dart';
+import 'package:flutter_svg/svg.dart';
+import 'package:hcm23_03/features/forgot_password/pages/forgot_password_page.dart';
+
+import '../../../shared/shared_ui/base_screen/base_screen.dart';
+import '../../../shared/shared_ui/btn/btn_default/btn_default.dart';
+import '../../../shared/shared_ui/inputs/input_clear/input_clear.dart';
+import '../../../shared/shared_ui/themes/colors.dart';
+import '../../../shared/shared_ui/themes/text_styles.dart';
 
 class LoginPage extends StatefulWidget {
   const LoginPage({super.key});
@@ -9,100 +17,253 @@ class LoginPage extends StatefulWidget {
 }
 
 class _LoginPageState extends State<LoginPage> {
-  final GlobalKey<FormState> _formKey = GlobalKey<FormState>();
-  final TextEditingController _passWordController = TextEditingController();
-  final TextEditingController _confirmPassWordController =
-      TextEditingController();
-  bool? _isRemember = false;
+  final TextEditingController _usernameController = TextEditingController();
+  final TextEditingController _passwordController = TextEditingController();
+
   @override
-  void dispose() {
-    _passWordController.dispose();
-    _confirmPassWordController.dispose();
-    super.dispose();
+  void initState() {
+    super.initState();
+  }
+
+  bool hidePw = false;
+
+  bool remember = false;
+
+  void _toggleHidePw() {
+    setState(() {
+      hidePw = !hidePw;
+    });
+  }
+
+  void _toggleRememberAccount(bool? value) {
+    setState(() {
+      remember = value == true;
+    });
   }
 
   @override
+  void dispose() {
+    super.dispose();
+  }
+
+  Color getColor(Set<MaterialState> states) {
+    const Set<MaterialState> interactiveStates = <MaterialState>{
+      MaterialState.pressed,
+      MaterialState.hovered,
+      MaterialState.focused,
+    };
+    if (states.any(interactiveStates.contains)) {
+      return Colors.blue;
+    }
+    return Colors.red;
+  }
+
+  String? feedbackMessage;
+
+  @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      appBar: AppBar(
-        title: const Text("LoginPage"),
-      ),
-      body: Center(
-          child: Form(
-        key: _formKey,
-        child: Column(mainAxisAlignment: MainAxisAlignment.center, children: [
-          TextFormField(
-            controller: _passWordController,
-            autovalidateMode: AutovalidateMode.onUserInteraction,
-            validator: (value) {
-              if (value == null || value.isEmpty) {
-                return "This field can not be Empty";
-              }
-              if (value.length < 6) {
-                return "Password too weak";
-              }
-              return null;
-            },
-            // mật khẩu ẩn đi
-            decoration: const InputDecoration(
-              border: OutlineInputBorder(),
-              hintText: "Enter your password",
-              prefixIcon: Icon(Icons.abc),
-              suffixIcon: Icon(Icons.delete),
+    return BaseScreen(builder: (context) {
+      return Scaffold(
+        appBar: AppBar(
+          //make appbar transparent and hide shadow
+          backgroundColor: Colors.transparent,
+          elevation: 0,
+        ),
+        body: SingleChildScrollView(
+          child: Container(
+            padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 16),
+            child: Column(
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: [
+                //image and title
+                Image.asset("assets/images/image_login.png"),
+                Text(
+                  "Xin chào",
+                  style: tStyle.paragraph18().w500().copyWith(
+                        color: Hcm23Colors.colorTextTitle,
+                      ),
+                ),
+                Text(
+                  "Vui lòng đăng nhập để sử dụng ứng dụng",
+                  style: tStyle
+                      .paragraph14()
+                      .w400()
+                      .copyWith(color: Hcm23Colors.colorTextPhude),
+                ),
+                const SizedBox(
+                  height: 20,
+                ),
+                //input username
+                InputClear(
+                  controller: _usernameController,
+                  placeholderText: "Tài khoản",
+                  clearButton: SvgPicture.asset(
+                    "assets/icons/ui_kit/bold/close_square.svg",
+                    fit: BoxFit.scaleDown,
+                  ),
+                  decoration: InputDecoration(
+                    prefixIcon: SvgPicture.asset(
+                      "assets/icons/ui_kit/normal/user.svg",
+                      color: const Color(0XFFA2AEBD),
+                      fit: BoxFit.scaleDown,
+                    ),
+                  ),
+                ),
+
+                InputClear(
+                  controller: _passwordController,
+                  placeholderText: "Mật khẩu",
+                  obscureText: hidePw,
+                  decoration: InputDecoration(
+                    prefixIcon: SvgPicture.asset(
+                      "assets/icons/ui_kit/bold/lock.svg",
+                      fit: BoxFit.scaleDown,
+                    ),
+                    suffixIcon: InkWell(
+                      onTap: _toggleHidePw,
+                      child: SvgPicture.asset(
+                        (hidePw)
+                            ? "assets/icons/ui_kit/bold/hide.svg"
+                            : "assets/icons/ui_kit/bold/show.svg",
+                        fit: BoxFit.scaleDown,
+                      ),
+                    ),
+                  ),
+                  clearButton: SvgPicture.asset(
+                    "assets/icons/ui_kit/bold/close_square.svg",
+                    fit: BoxFit.scaleDown,
+                  ),
+                  feedbackMessage: feedbackMessage,
+                ),
+                Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceAround,
+                  children: [
+                    Align(
+                      alignment: Alignment.centerLeft,
+                      child: TextButton(
+                        onPressed: () {
+                          Navigator.of(context)
+                              .pushNamed(ForgotPasswordPage.routeName);
+                        },
+                        child: Text(
+                          "Quên mật khẩu?",
+                          style: tStyle
+                              .display14()
+                              .w500()
+                              .copyWith(color: Hcm23Colors.color2),
+                        ),
+                      ),
+                    ),
+                    Row(
+                      mainAxisAlignment: MainAxisAlignment.end,
+                      children: [
+                        Checkbox(
+                          checkColor: Colors.white,
+                          fillColor:
+                              MaterialStateProperty.resolveWith(getColor),
+                          value: remember,
+                          onChanged: _toggleRememberAccount,
+                        ),
+                        Text(
+                          "Ghi nhớ tài khoản.",
+                          style: tStyle
+                              .display14()
+                              .w500()
+                              .copyWith(color: Hcm23Colors.color2),
+                        ),
+                      ],
+                    ),
+                  ],
+                ),
+
+                const SizedBox(
+                  height: 10,
+                ),
+                BtnDefault(
+                  onTap: () {},
+                  title: "Đăng nhập",
+                ),
+
+                const SizedBox(
+                  height: 10,
+                ),
+
+                RichText(
+                    text: TextSpan(
+                  text: "Chưa có tài khoản? ",
+                  style: tStyle
+                      .paragraph14()
+                      .w400()
+                      .copyWith(color: Hcm23Colors.colorTextPhude),
+                  children: [
+                    TextSpan(
+                        text: "Đăng ký",
+                        style: tStyle
+                            .display14()
+                            .w500()
+                            .copyWith(color: Hcm23Colors.color2),
+                        recognizer: TapGestureRecognizer()
+                          ..onTap = () {
+                            Navigator.of(context).pushNamed("");
+                          }),
+                  ],
+                )),
+
+                const SizedBox(
+                  height: 32,
+                ),
+                Row(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  children: [
+                    GestureDetector(
+                      onTap: () {},
+                      onTapCancel: () {},
+                      child: Ink(
+                        height: 48,
+                        width: 48,
+                        decoration: BoxDecoration(
+                          borderRadius: const BorderRadius.all(
+                            Radius.circular(12.0),
+                          ),
+                          color: Hcm23Colors.color3.withOpacity(0.1),
+                        ),
+                        child: SvgPicture.asset(
+                          "assets/icons/fingerprint.svg",
+                          fit: BoxFit.scaleDown,
+                          color: Hcm23Colors.color3,
+                        ),
+                      ),
+                    ),
+                    const SizedBox(
+                      width: 20,
+                    ),
+                    //face id
+                    GestureDetector(
+                      onTap: () {},
+                      onTapCancel: () {},
+                      child: Ink(
+                        height: 48,
+                        width: 48,
+                        decoration: BoxDecoration(
+                          borderRadius: const BorderRadius.all(
+                            Radius.circular(12.0),
+                          ),
+                          color: Hcm23Colors.color3.withOpacity(0.1),
+                        ),
+                        child: SvgPicture.asset(
+                          "assets/icons/face_id.svg",
+                          fit: BoxFit.scaleDown,
+                          color: Hcm23Colors.color3,
+                        ),
+                      ),
+                    ),
+                  ],
+                )
+              ],
             ),
           ),
-          const SizedBox(height: 40),
-          TextFormField(
-            controller: _confirmPassWordController,
-            autovalidateMode: AutovalidateMode.onUserInteraction,
-            validator: (value) {
-              if (value == null || value.isEmpty) {
-                return "This field can not be Empty";
-              }
-              if (value.length < 6) {
-                return "Password too weak";
-              }
-              if (value != _passWordController) {
-                return ("Password don't match");
-              }
-              return null;
-            },
-            decoration: const InputDecoration(
-              border: OutlineInputBorder(),
-              hintText: "Enter your confirm password",
-            ),
-          ),
-          const SizedBox(
-            height: 50,
-            width: 20,
-          ),
-          GestureDetector(
-            child: const Text('Change password'),
-            onTap: () {
-              Navigator.of(context).pushNamed(
-                ChangePasswordPage.routeName,
-              );
-            },
-          ),
-          const SizedBox(height: 40),
-          CheckboxListTile(
-              value: _isRemember,
-              title: const Text("Remember account"),
-              onChanged: ((value) {
-                setState(() {
-                  _isRemember = value;
-                });
-              })),
-          ElevatedButton(
-            onPressed: () {
-              final String passWord = _passWordController.text;
-              ScaffoldMessenger.of(context).showSnackBar(
-                  SnackBar(content: Text("The valid is $passWord")));
-            },
-            child: const Text('SUBMIT'),
-          ),
-        ]),
-      )),
-    );
+        ),
+      );
+    });
   }
 }

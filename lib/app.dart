@@ -4,8 +4,7 @@ import 'package:hcm23_03/features/login/pages/login_page.dart';
 import 'package:hcm23_03/features/onboarding/pages/onboarding_page.dart';
 import 'package:hcm23_03/features/tasks/entities/task.dart';
 import 'package:hcm23_03/features/tasks/pages/task_details_page.dart';
-import 'package:hcm23_03/features/change_password/pages/change_password.dart';
-import 'features/onboarding/pages/onboarding_page.dart';
+import 'package:hcm23_03/features/change_password/pages/change_password_page.dart';
 
 class MyApp extends StatelessWidget {
   const MyApp({super.key});
@@ -16,6 +15,15 @@ class MyApp extends StatelessWidget {
       return MaterialApp(
         title: 'Flutter Demo',
         theme: ThemeData(
+          appBarTheme: const AppBarTheme(
+              iconTheme: IconThemeData(color: Colors.grey),
+              backgroundColor: Colors.white,
+              titleTextStyle: TextStyle(
+                color: Colors.black,
+                fontWeight: FontWeight.w500,
+                fontSize: 18,
+                height: 22 / 18,
+              )),
           primarySwatch: Colors.blue,
         ),
         navigatorObservers: [
@@ -28,10 +36,10 @@ class MyApp extends StatelessWidget {
               builder: (_) => const HomePage(),
             );
           }
-          if (setting.name == "/ChangePassword") {
+          if (setting.name == ChangePasswordPage.routeName) {
             return MaterialPageRoute(
-              settings: const RouteSettings(name: "/ChangePassword"),
-              builder: (_) => const ChangePassword(),
+              settings: const RouteSettings(name: ChangePasswordPage.routeName),
+              builder: (_) => const ChangePasswordPage(),
             );
           }
           if (setting.name == "/LoginPage") {

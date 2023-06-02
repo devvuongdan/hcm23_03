@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:hcm23_03/features/change_password/pages/change_password.dart';
+import 'package:hcm23_03/features/change_password/pages/change_password_page.dart';
 
 class LoginPage extends StatefulWidget {
   const LoginPage({super.key});
@@ -16,9 +16,9 @@ class _LoginPageState extends State<LoginPage> {
   bool? _isRemember = false;
   @override
   void dispose() {
-    // TODO: implement dispose
     _passWordController.dispose();
     _confirmPassWordController.dispose();
+    super.dispose();
   }
 
   @override
@@ -44,14 +44,14 @@ class _LoginPageState extends State<LoginPage> {
               return null;
             },
             // mật khẩu ẩn đi
-            decoration: InputDecoration(
+            decoration: const InputDecoration(
               border: OutlineInputBorder(),
               hintText: "Enter your password",
               prefixIcon: Icon(Icons.abc),
               suffixIcon: Icon(Icons.delete),
             ),
           ),
-          SizedBox(height: 40),
+          const SizedBox(height: 40),
           TextFormField(
             controller: _confirmPassWordController,
             autovalidateMode: AutovalidateMode.onUserInteraction,
@@ -67,25 +67,27 @@ class _LoginPageState extends State<LoginPage> {
               }
               return null;
             },
-            decoration: InputDecoration(
+            decoration: const InputDecoration(
               border: OutlineInputBorder(),
               hintText: "Enter your confirm password",
             ),
           ),
-          SizedBox(
+          const SizedBox(
             height: 50,
             width: 20,
           ),
           GestureDetector(
-            child: Text('Change password'),
+            child: const Text('Change password'),
             onTap: () {
-              Navigator.pushNamed(context, "/ChangePassword");
+              Navigator.of(context).pushNamed(
+                ChangePasswordPage.routeName,
+              );
             },
           ),
-          SizedBox(height: 40),
+          const SizedBox(height: 40),
           CheckboxListTile(
               value: _isRemember,
-              title: Text("Remember account"),
+              title: const Text("Remember account"),
               onChanged: ((value) {
                 setState(() {
                   _isRemember = value;
@@ -97,7 +99,7 @@ class _LoginPageState extends State<LoginPage> {
               ScaffoldMessenger.of(context).showSnackBar(
                   SnackBar(content: Text("The valid is $passWord")));
             },
-            child: Text('SUBMIT'),
+            child: const Text('SUBMIT'),
           ),
         ]),
       )),

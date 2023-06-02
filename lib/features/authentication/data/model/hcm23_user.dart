@@ -1,14 +1,16 @@
-class Hcm23User {
-  final String uid;
+import 'package:hcm23_03/features/authentication/data/resource/sqlite_helper.dart';
+
+class Hcm23User extends DBModel {
   final String username;
   final String password;
 
   Hcm23User({
-    required this.uid,
+    required super.uid,
     required this.username,
     required this.password,
   });
 
+  @override
   Map<String, dynamic> toMap() {
     return <String, dynamic>{
       'uid': uid,

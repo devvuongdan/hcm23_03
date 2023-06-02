@@ -61,7 +61,7 @@ class _LoginPageState extends State<LoginPage> {
                   obscureText: true,               
                   decoration: const InputDecoration(
                     border: OutlineInputBorder(),
-                    hintText: "Enter your confirm password",
+                    hintText: "Enter your password",
                     prefixIcon: Icon(Icons.abc),
                     suffixIcon: Icon(Icons.delete),
                   ),
@@ -86,8 +86,9 @@ class _LoginPageState extends State<LoginPage> {
                   obscureText: true,
                   decoration: const InputDecoration(
                     border: OutlineInputBorder(),
-                    hintText: "Enter your password",
-                    prefixIcon: Icon(Icons.remove_red_eye),
+                    hintText: "Enter your confirm password",
+                    prefixIcon: Icon(Icons.abc),
+                    suffixIcon: Icon(Icons.remove_red_eye),
                   ),
                 ),
 

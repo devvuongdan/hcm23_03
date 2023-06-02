@@ -25,7 +25,7 @@ class _RechangePasswordPageState extends State<RechangePasswordPage> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: const Text("Rechange-PasswordPage"),
+        title: const Text("RechangePasswordPage"),
       ),
       body: Center(
         child: Padding(

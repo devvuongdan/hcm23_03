@@ -10,14 +10,6 @@ abstract class DBModel {
 }
 
 class Hcm23DBHelper {
-  Hcm23DBHelper._internal();
-  static Hcm23DBHelper? _instance;
-
-  static Hcm23DBHelper get instance {
-    _instance ??= Hcm23DBHelper._internal();
-    return _instance!;
-  }
-
   static Database? _db;
 
   static int get _version => 1;

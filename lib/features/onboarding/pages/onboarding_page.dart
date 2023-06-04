@@ -33,7 +33,7 @@ class _OnboardingPageState extends State<OnboardingPage> {
                     curve: Curves.easeIn);
               } else {
                 Navigator.of(context)
-                    .pushNamedAndRemoveUntil("/LoginPage", (route) => false);
+                    .pushNamedAndRemoveUntil("/HomePage", (route) => false);
               }
             });
           },

@@ -1,4 +1,5 @@
 // ignore_for_file: public_member_api_docs, sort_constructors_first
+import 'package:hcm23_03/features/authentication/data/model/hcm23_user.dart';
 import 'package:sqflite/sqflite.dart';
 
 abstract class DBModel {
@@ -40,4 +41,10 @@ class Hcm23DBHelper {
 
   static Future<int> delete<T extends DBModel>(String table, T model) async =>
       await _db!.delete(table, where: 'uid = ?', whereArgs: [model.uid]);
+
+  Future<Hcm23User> saveData(Hcm23User user) async {
+    var dbClient = await _db;
+    Hcm23DBHelper.insert<Hcm23User>("users", user);
+    return user;
+  }
 }

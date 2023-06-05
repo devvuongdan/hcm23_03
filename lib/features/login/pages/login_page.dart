@@ -2,16 +2,19 @@ import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:hcm23_03/features/forgot_password/pages/forgot_password_page.dart';
-
+import 'package:hcm23_03/features/home/pages/home_page.dart';
+import 'package:hcm23_03/features/register/pages/register_pages.dart';
+import 'package:motion_toast/motion_toast.dart';
 import '../../../shared/shared_ui/base_screen/base_screen.dart';
 import '../../../shared/shared_ui/btn/btn_default/btn_default.dart';
 import '../../../shared/shared_ui/inputs/input_clear/input_clear.dart';
 import '../../../shared/shared_ui/themes/colors.dart';
 import '../../../shared/shared_ui/themes/text_styles.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
 class LoginPage extends StatefulWidget {
   const LoginPage({super.key});
-
+  static const String routeName = "/LoginPage";
   @override
   State<LoginPage> createState() => _LoginPageState();
 }
@@ -19,6 +22,23 @@ class LoginPage extends StatefulWidget {
 class _LoginPageState extends State<LoginPage> {
   final TextEditingController _usernameController = TextEditingController();
   final TextEditingController _passwordController = TextEditingController();
+
+  login() {
+    if (_usernameController.text.isEmpty || _passwordController.text.isEmpty) {
+      MotionToast.error(
+              title: Text("Đăng nhập thất bại!"),
+              description: Text("Yêu cầu nhập lại tài khoản hoặc mật khẩu"))
+          .show(context);
+    } else {
+      
+      // savaData();
+      Navigator.of(context).pushNamed(HomePage.routeName);
+      MotionToast.success(
+              title: Text("Đăng nhập thành công!"),
+              description: Text("Chúc mừng bạn đã đăng nhập thành công"))
+          .show(context);
+    }
+  }
 
   @override
   void initState() {
@@ -180,7 +200,9 @@ class _LoginPageState extends State<LoginPage> {
                   height: 10,
                 ),
                 BtnDefault(
-                  onTap: () {},
+                  onTap: () {
+                    login();
+                  },
                   title: "Đăng nhập",
                 ),
 
@@ -204,7 +226,8 @@ class _LoginPageState extends State<LoginPage> {
                             .copyWith(color: Hcm23Colors.color2),
                         recognizer: TapGestureRecognizer()
                           ..onTap = () {
-                            Navigator.of(context).pushNamed("");
+                            Navigator.of(context)
+                                .pushNamed(RegisterPage.routeName);
                           }),
                   ],
                 )),

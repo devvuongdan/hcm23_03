@@ -113,7 +113,7 @@ class _HomePageState extends State<HomePage> {
           tasks: _tasks,
         );
       default:
-        return Center(
+        return const Center(
           child: Text(
             "Tinh nang dang trong qua trinh phat trien",
           ),

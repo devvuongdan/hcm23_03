@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
-
-import '../entities/task.dart';
+import '../entities/task_model.dart';
 
 class TaskDetailsPage extends StatelessWidget {
   final Task task;
@@ -13,7 +12,7 @@ class TaskDetailsPage extends StatelessWidget {
           title: const Text("Task Details"),
         ),
         body: Center(
-          child: Text("${task.description}"),
+          child: Text(task.description),
         ));
   }
 }

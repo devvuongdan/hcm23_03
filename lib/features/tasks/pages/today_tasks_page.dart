@@ -2,8 +2,8 @@
 import 'dart:math' as math;
 
 import 'package:flutter/material.dart';
+import 'package:hcm23_03/features/tasks/entities/task_model.dart';
 
-import '../entities/task.dart';
 import '../widgets/task_card.dart';
 
 class TodayTasksPage extends StatefulWidget {
@@ -19,52 +19,7 @@ class TodayTasksPage extends StatefulWidget {
 }
 
 class _TodayRecordsPageState extends State<TodayTasksPage> {
-  final List<Task> _hcm23Task = [
-    Task(
-        id: "1",
-        title: "R2s",
-        description: "Hoc Flutter 22/5",
-        startTime: DateTime.now(),
-        dueTime: DateTime.now().add(
-          const Duration(hours: 3),
-        ),
-        teamMembers: const [],
-        taskStages: [
-          TaskStage(id: '1', isDone: false, description: 'Stage 1'),
-          TaskStage(id: '2', isDone: true, description: 'Stage 2'),
-          TaskStage(id: '3', isDone: false, description: 'Stage 3'),
-        ]),
-    Task(
-        id: "2",
-        title: "R2s2",
-        description:
-            "To discuss about the upcoming project & organization of figma files.",
-        startTime: DateTime.now(),
-        dueTime: DateTime.now().add(
-          const Duration(hours: 3),
-        ),
-        teamMembers: const [],
-        taskStages: [
-          TaskStage(id: '1', isDone: false, description: 'Stage 1'),
-          TaskStage(id: '2', isDone: true, description: 'Stage 2'),
-          TaskStage(id: '3', isDone: false, description: 'Stage 3'),
-        ]),
-    Task(
-        id: "3",
-        title: "R2s3",
-        description:
-            "To discuss about the upcoming project & organization of figma files. 22/5",
-        startTime: DateTime.now(),
-        dueTime: DateTime.now().add(
-          const Duration(hours: 3),
-        ),
-        teamMembers: const [],
-        taskStages: [
-          TaskStage(id: '1', isDone: false, description: 'Stage 1'),
-          TaskStage(id: '2', isDone: true, description: 'Stage 2'),
-          TaskStage(id: '3', isDone: false, description: 'Stage 3'),
-        ]),
-  ];
+  final List<Task> _hcm23Task = [];
   @override
   Widget build(BuildContext context) {
     return Scaffold(

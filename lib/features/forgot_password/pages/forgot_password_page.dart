@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
-import 'package:hcm23_03/shared/shared_ui/btn/btn_default/btn_default.dart';
+import '../../../shared/shared_ui/btn/btn_default/btn_default.dart';
 
 import '../../../shared/shared_ui/inputs/input_clear/input_clear.dart';
 import '../../../shared/shared_ui/themes/colors.dart';

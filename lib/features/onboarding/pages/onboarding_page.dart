@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:hcm23_03/features/login/pages/login_page.dart';
-import 'package:hcm23_03/features/onboarding/widgets/onboarding_floatting_action_button.dart';
+import '../../login/pages/login_page.dart';
+import '../widgets/onboarding_floatting_action_button.dart';
 
 class OnboardingPage extends StatefulWidget {
   const OnboardingPage({super.key});

@@ -1,8 +1,9 @@
 import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
-import 'package:hcm23_03/features/forgot_password/pages/forgot_password_page.dart';
-import 'package:hcm23_03/features/register/pages/register_pages.dart';
+import '../../authentication/data/model/hcm23_user.dart';
+import '../../forgot_password/pages/forgot_password_page.dart';
+import '../../register/pages/register_pages.dart';
 
 import '../../../shared/shared_ui/base_screen/base_screen.dart';
 import '../../../shared/shared_ui/btn/btn_default/btn_default.dart';
@@ -55,7 +56,8 @@ class _LoginPageState extends State<LoginPage> {
     final String username = _usernameController.text;
     final String password = _passwordController.text;
 
-    final List<Map<String, dynamic>> users = await Hcm23DBHelper.query('users');
+    final List<Map<String, dynamic>> users =
+        await Hcm23DBHelper.query(Hcm23User.dbTable);
 
     final user = users.firstWhere((user) => user['username'] == username);
 

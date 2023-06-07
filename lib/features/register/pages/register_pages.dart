@@ -137,6 +137,7 @@ class _RegisterPageState extends State<RegisterPage> {
                       password: _passwordController.text);
                   print(user.toMap());
                   Hcm23DBHelper.insert<Hcm23User>("users", user);
+
                   signup();
                 },
               ),

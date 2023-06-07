@@ -11,6 +11,9 @@ import '../../../shared/shared_ui/inputs/input_clear/input_clear.dart';
 import '../../../shared/shared_ui/themes/colors.dart';
 import '../../../shared/shared_ui/themes/text_styles.dart';
 import 'package:shared_preferences/shared_preferences.dart';
+import 'package:hcm23_03/features/authentication/data/model/hcm23_user.dart';
+import 'package:hcm23_03/features/authentication/data/resource/sqlite_helper.dart';
+import 'package:uuid/uuid.dart';
 
 class LoginPage extends StatefulWidget {
   const LoginPage({super.key});
@@ -20,23 +23,38 @@ class LoginPage extends StatefulWidget {
 }
 
 class _LoginPageState extends State<LoginPage> {
+  // final formKey = GlobalKey<FormState>();
   final TextEditingController _usernameController = TextEditingController();
   final TextEditingController _passwordController = TextEditingController();
+  // static Hcm23User user = Hcm23User(
+  //     uid: const Uuid().v4(),
+  //     username: _usernameController.text,
+  //     password: _passwordController.text);
 
   login() {
-    if (_usernameController.text.isEmpty || _passwordController.text.isEmpty) {
-      MotionToast.error(
-              title: Text("Đăng nhập thất bại!"),
-              description: Text("Yêu cầu nhập lại tài khoản hoặc mật khẩu"))
-          .show(context);
-    } else {
+    if ((_usernameController.text.isNotEmpty &&
+        _passwordController.text.isNotEmpty)) {
+      final Hcm23User user = Hcm23User(
+          uid: const Uuid().v4(),
+          username: _usernameController.text,
+          password: _passwordController.text);
       
-      // savaData();
-      Navigator.of(context).pushNamed(HomePage.routeName);
-      MotionToast.success(
-              title: Text("Đăng nhập thành công!"),
-              description: Text("Chúc mừng bạn đã đăng nhập thành công"))
-          .show(context);
+
+      if (user != null && user.password == _passwordController.text) {
+        // Hcm23DBHelper.query("user");
+        _usernameController.clear();
+        _passwordController.clear();
+        Navigator.of(context).pushNamed(HomePage.routeName);
+        MotionToast.success(
+                title: Text("Đăng nhập thành công!"),
+                description: Text("Chúc mừng bạn đã đăng nhập thành công"))
+            .show(context);
+      } else {
+        MotionToast.error(
+                title: Text("Đăng nhập thất bại!"),
+                description: Text("Yêu cầu nhập lại tài khoản hoặc mật khẩu"))
+            .show(context);
+      }
     }
   }
 

@@ -5,7 +5,6 @@ import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
 
 import '../entities/task.dart';
-import '../pages/task_details_page.dart';
 
 class TaskCard extends StatefulWidget {
   final Task task;

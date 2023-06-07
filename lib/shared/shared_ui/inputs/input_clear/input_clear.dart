@@ -224,7 +224,6 @@ class _InputClearState extends State<InputClear> with InputNormalLayoutMixin {
 
   @override
   void didUpdateWidget(covariant InputClear oldWidget) {
-    // TODO: implement didUpdateWidget
     widget.controller?.addListener(() {
       setState(() {});
     });

@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
+import 'package:hcm23_03/features/home/pages/home_page.dart';
 import 'package:hcm23_03/features/login/pages/login_page.dart';
 import 'package:uuid/uuid.dart';
 
@@ -32,7 +33,6 @@ class _RegisterPageState extends State<RegisterPage> {
   FeedbackType passwordFeedbackType = FeedbackType.none;
   String? feedbackMessage;
 
-
   void _registerUser() async {
     final username = _usernameController.text;
     final password = _passwordController.text;
@@ -46,8 +46,24 @@ class _RegisterPageState extends State<RegisterPage> {
 
     // Insert user data into the database
     await Hcm23DBHelper.insert('users', user);
-    print(user.toMap());
+    _login();
+  }
 
+  void _login() async {
+    final String username = _usernameController.text;
+    final String password = _passwordController.text;
+    final List<Map<String, dynamic>> users = await Hcm23DBHelper.query('users');
+    final user = users.firstWhere((user) => user['username'] == username);
+
+    if (user['password'].toString() == password) {
+      _navigateToHomePage();
+      return;
+    }
+  }
+
+  void _navigateToHomePage() {
+    Navigator.of(context)
+        .pushNamedAndRemoveUntil(HomePage.routeName, (route) => false);
   }
 
   @override
@@ -151,7 +167,8 @@ class _RegisterPageState extends State<RegisterPage> {
                 type: BtnDefaultType.secondary,
                 title: "Đăng nhập",
                 onTap: () {
-                  Navigator.of(context).pushReplacementNamed(LoginPage.routeName);
+                  Navigator.of(context)
+                      .pushReplacementNamed(LoginPage.routeName);
                 },
               ),
             ],

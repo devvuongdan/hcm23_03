@@ -9,7 +9,6 @@ import '../../../shared/shared_ui/btn/btn_default/btn_default.dart';
 import '../../../shared/shared_ui/inputs/input_clear/input_clear.dart';
 import '../../../shared/shared_ui/themes/colors.dart';
 import '../../../shared/shared_ui/themes/text_styles.dart';
-import '../../authentication/data/model/hcm23_user.dart';
 import '../../authentication/data/resource/sqlite_helper.dart';
 import '../../home/pages/home_page.dart';
 
@@ -59,15 +58,11 @@ class _LoginPageState extends State<LoginPage> {
     final List<Map<String, dynamic>> users = await Hcm23DBHelper.query('users');
 
     final user = users.firstWhere((user) => user['username'] == username);
-    print(user['password']);
-    //_navigateToHomePage();
 
     if (user['password'].toString() == password) {
       _navigateToHomePage();
       return;
     }
-
-    print("Tên đăng nhập hoặc mật khẩu không đúng!");
   }
 
   @override

@@ -10,7 +10,7 @@ class TaskDetailsPage extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
         appBar: AppBar(
-          title: Text("Task Details"),
+          title: const Text("Task Details"),
         ),
         body: Center(
           child: Text("${task.description}"),

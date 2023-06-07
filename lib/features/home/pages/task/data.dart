@@ -1,4 +1,3 @@
-import 'package:equatable/equatable.dart';
 
 // class Task extends Equatable {
 //   final String id;

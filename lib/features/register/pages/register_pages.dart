@@ -10,6 +10,8 @@ import '../../../shared/shared_ui/themes/colors.dart';
 import '../../../shared/shared_ui/themes/text_styles.dart';
 import '../../authentication/data/model/hcm23_user.dart';
 import '../../authentication/data/resource/sqlite_helper.dart';
+import '../../home/pages/home_page.dart';
+
 
 class RegisterPage extends StatefulWidget {
   static const String routeName = '/RegisterPage';
@@ -46,8 +48,28 @@ class _RegisterPageState extends State<RegisterPage> {
 
     // Insert user data into the database
     await Hcm23DBHelper.insert('users', user);
-    print(user.toMap());
+    _login();
 
+  }
+
+
+  void _navigateToHomePage() {
+    Navigator.of(context)
+        .pushNamedAndRemoveUntil(HomePage.routeName, (route) => false);
+  }
+
+  void _login() async {
+    final String username = _usernameController.text;
+    final String password = _passwordController.text;
+
+    final List<Map<String, dynamic>> users = await Hcm23DBHelper.query('users');
+
+    final user = users.firstWhere((user) => user['username'] == username);
+
+    if (user['password'].toString() == password) {
+      _navigateToHomePage();
+      return;
+    }
   }
 
   @override

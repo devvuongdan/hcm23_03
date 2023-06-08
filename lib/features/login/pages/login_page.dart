@@ -1,21 +1,20 @@
 import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
-import 'package:hcm23_03/features/forgot_password/pages/forgot_password_page.dart';
-import 'package:hcm23_03/features/home/pages/home_page.dart';
-import 'package:hcm23_03/features/register/pages/register_pages.dart';
-import 'package:motion_toast/motion_toast.dart';
+import '../../authentication/data/model/hcm23_user.dart';
+import '../../forgot_password/pages/forgot_password_page.dart';
+import '../../register/pages/register_pages.dart';
+
 import '../../../shared/shared_ui/base_screen/base_screen.dart';
 import '../../../shared/shared_ui/btn/btn_default/btn_default.dart';
 import '../../../shared/shared_ui/inputs/input_clear/input_clear.dart';
 import '../../../shared/shared_ui/themes/colors.dart';
 import '../../../shared/shared_ui/themes/text_styles.dart';
-import 'package:shared_preferences/shared_preferences.dart';
-import 'package:hcm23_03/features/authentication/data/model/hcm23_user.dart';
-import 'package:hcm23_03/features/authentication/data/resource/sqlite_helper.dart';
-import 'package:uuid/uuid.dart';
+import '../../authentication/data/resource/sqlite_helper.dart';
+import '../../home/pages/home_page.dart';
 
 class LoginPage extends StatefulWidget {
+  
   const LoginPage({super.key});
   static const String routeName = "/LoginPage";
   @override
@@ -26,37 +25,7 @@ class _LoginPageState extends State<LoginPage> {
   // final formKey = GlobalKey<FormState>();
   final TextEditingController _usernameController = TextEditingController();
   final TextEditingController _passwordController = TextEditingController();
-  // static Hcm23User user = Hcm23User(
-  //     uid: const Uuid().v4(),
-  //     username: _usernameController.text,
-  //     password: _passwordController.text);
-
-  login() {
-    if ((_usernameController.text.isNotEmpty &&
-        _passwordController.text.isNotEmpty)) {
-      final Hcm23User user = Hcm23User(
-          uid: const Uuid().v4(),
-          username: _usernameController.text,
-          password: _passwordController.text);
-      
-
-      if (user != null && user.password == _passwordController.text) {
-        // Hcm23DBHelper.query("user");
-        _usernameController.clear();
-        _passwordController.clear();
-        Navigator.of(context).pushNamed(HomePage.routeName);
-        MotionToast.success(
-                title: Text("Đăng nhập thành công!"),
-                description: Text("Chúc mừng bạn đã đăng nhập thành công"))
-            .show(context);
-      } else {
-        MotionToast.error(
-                title: Text("Đăng nhập thất bại!"),
-                description: Text("Yêu cầu nhập lại tài khoản hoặc mật khẩu"))
-            .show(context);
-      }
-    }
-  }
+  String? feedbackMessage;
 
   @override
   void initState() {
@@ -79,6 +48,26 @@ class _LoginPageState extends State<LoginPage> {
     });
   }
 
+  void _navigateToHomePage() {
+    Navigator.of(context)
+        .pushNamedAndRemoveUntil(HomePage.routeName, (route) => false);
+  }
+
+  void _login() async {
+    final String username = _usernameController.text;
+    final String password = _passwordController.text;
+
+    final List<Map<String, dynamic>> users =
+        await Hcm23DBHelper.query(Hcm23User.dbTable);
+
+    final user = users.firstWhere((user) => user['username'] == username);
+
+    if (user['password'].toString() == password) {
+      _navigateToHomePage();
+      return;
+    }
+  }
+
   @override
   void dispose() {
     super.dispose();
@@ -95,8 +84,6 @@ class _LoginPageState extends State<LoginPage> {
     }
     return Colors.red;
   }
-
-  String? feedbackMessage;
 
   @override
   Widget build(BuildContext context) {
@@ -217,10 +204,9 @@ class _LoginPageState extends State<LoginPage> {
                 const SizedBox(
                   height: 10,
                 ),
+
                 BtnDefault(
-                  onTap: () {
-                    login();
-                  },
+                  onTap: _login,
                   title: "Đăng nhập",
                 ),
 

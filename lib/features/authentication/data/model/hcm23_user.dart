@@ -1,6 +1,7 @@
-import 'package:hcm23_03/features/authentication/data/resource/sqlite_helper.dart';
+import '../resource/sqlite_helper.dart';
 
 class Hcm23User extends DBModel {
+  static const dbTable = "Hcm23User";
   final String username;
   final String password;
 

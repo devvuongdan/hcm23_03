@@ -1,5 +1,5 @@
 // ignore_for_file: public_member_api_docs, sort_constructors_first
-import 'task.dart';
+import 'package:hcm23_03/features/tasks/entities/task_model.dart';
 
 class TaskDetailsPageArgument {
   final Task? currentTask;

@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
+import 'package:hcm23_03/features/tasks/entities/task_details_page_argument.dart';
+import 'package:hcm23_03/features/tasks/pages/new_task_page.dart';
 
-import '../../tasks/entities/task.dart';
+import '../../tasks/entities/task_model.dart';
 import '../../tasks/pages/today_tasks_page.dart';
 import '../widgets/bubble_bottom_bar.dart';
 
@@ -17,7 +19,12 @@ class _HomePageState extends State<HomePage> {
   final PageController pageController = PageController(initialPage: 1);
   void changePage(int? idx) {}
 
-  void createNewTask() async {}
+  void createNewTask() async {
+   await Navigator.of(context).pushNamed(
+      NewTaskPage.routeName,
+      arguments: TaskDetailsPageArgument(addNewTask: addNewTaskSuccess),
+    );
+  }
 
   void addNewTaskSuccess(Task task) {
     setState(() {
@@ -34,7 +41,9 @@ class _HomePageState extends State<HomePage> {
     super.initState();
   }
 
-  void getTask() async {}
+  void getTask() async {
+    
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -113,7 +122,7 @@ class _HomePageState extends State<HomePage> {
           tasks: _tasks,
         );
       default:
-        return Center(
+        return const Center(
           child: Text(
             "Tinh nang dang trong qua trinh phat trien",
           ),

@@ -1,5 +1,6 @@
 import 'dart:math';
 
+import 'package:hcm23_03/shared/shared_ui/btn/btn_default/btn_default.dart';
 import 'package:intl/intl.dart';
 import 'package:date_time_picker/date_time_picker.dart';
 
@@ -8,7 +9,8 @@ import 'package:flutter/material.dart';
 
 String formatDueTime(String duetime) {
   DateTime dueDateTime = DateTime.parse(duetime);
-  String formattedDueTime = DateFormat('hh:mm a, dd MMM yyyy').format(dueDateTime);
+  String formattedDueTime =
+      DateFormat('hh:mm a, dd MMM yyyy').format(dueDateTime);
   return formattedDueTime;
 }
 
@@ -55,9 +57,48 @@ class _CheckListRowState extends State<CheckListRow> {
   }
 }
 
-class TaskDetailsPage extends StatelessWidget {
+class TaskDetailsPage extends StatefulWidget {
   final Task task;
-  const TaskDetailsPage({super.key, required this.task});
+  const TaskDetailsPage({Key? key, required this.task}) : super(key: key);
+
+  @override
+  _TaskDetailsPageState createState() => _TaskDetailsPageState();
+}
+
+class _TaskDetailsPageState extends State<TaskDetailsPage> {
+  bool isEditing = false;
+  late TextEditingController titleController;
+  late TextEditingController descriptionController;
+
+  @override
+  void initState() {
+    super.initState();
+    titleController = TextEditingController(text: widget.task.title);
+    descriptionController =
+        TextEditingController(text: widget.task.description);
+  }
+
+  @override
+  void dispose() {
+    titleController.dispose();
+    descriptionController.dispose();
+    super.dispose();
+  }
+
+  void toggleEditMode() {
+    setState(() {
+      isEditing = !isEditing;
+    });
+  }
+
+  void saveChanges() {
+    setState(() {
+      widget.task.title = titleController.text;
+      widget.task.description = descriptionController.text;
+      
+      isEditing = false;
+    });
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -71,9 +112,7 @@ class TaskDetailsPage extends StatelessWidget {
               const Spacer(),
               IconButton(
                 icon: const Icon(Icons.edit),
-                onPressed: () {
-                  Navigator.of(context).pushNamed("/HomePage");
-                },
+                onPressed: toggleEditMode,
               ),
             ]),
       ),
@@ -93,15 +132,25 @@ class TaskDetailsPage extends StatelessWidget {
                 ),
               ),
               const SizedBox(height: 4),
-              Text(
-                task.title,
-                style: const TextStyle(
-                  fontSize: 20,
-                  fontWeight: FontWeight.bold,
-                  color: Colors.black,
-                  height: 28 / 20,
-                ),
-              ),
+              isEditing
+                ? TextField(
+                    controller: titleController,
+                    style: const TextStyle(
+                      fontSize: 20,
+                      fontWeight: FontWeight.bold,
+                      color: Colors.black,
+                      height: 28 / 20,
+                    ),
+                  )
+                : Text(
+                    widget.task.title,
+                    style: const TextStyle(
+                      fontSize: 20,
+                      fontWeight: FontWeight.bold,
+                      color: Colors.black,
+                      height: 28 / 20,
+                    ),
+                  ),
               const SizedBox(height: 16),
               const Text(
                 'Due Date',
@@ -123,8 +172,7 @@ class TaskDetailsPage extends StatelessWidget {
                       color: Colors.grey,
                     ),
                     const SizedBox(width: 8),
-                    Text(
-                      formatDueTime(task.duetime),
+                    Text(formatDueTime(widget.task.duetime),
                         style: const TextStyle(
                           fontSize: 16,
                         )),
@@ -156,53 +204,62 @@ class TaskDetailsPage extends StatelessWidget {
                 ),
               ),
               const SizedBox(height: 4),
-              Text(
-                task.description,
-                style: const TextStyle(
-                  fontSize: 16,
-                  fontWeight: FontWeight.w500,
-                  height: 20 / 14,
-                ),
-              ),
+              isEditing
+                ? TextField(
+                    controller: descriptionController,
+                    style: const TextStyle(
+                      fontSize: 16,
+                      fontWeight: FontWeight.w500,
+                      height: 20 / 14,
+                    ),
+                  )
+                : Text(
+                    widget.task.description,
+                    style: const TextStyle(
+                      fontSize: 16,
+                      fontWeight: FontWeight.w500,
+                      height: 20 / 14,
+                    ),
+                  ),
               const SizedBox(height: 8),
-              
               Row(
-                  mainAxisAlignment: MainAxisAlignment.start,
-                  children: [
-                    for (var i = 0; i < min(task.teamMembers.length, 3); i++)
-                      Align(
-                        widthFactor: 0.64,
-                        child: CircleAvatar(
-                          backgroundColor: Colors.white,
-                          radius: 18,
-                          child: Container(
-                            clipBehavior: Clip.antiAlias,
-                            decoration: BoxDecoration(
-                              border: Border.all(color: Colors.white, width: 2),
-                              borderRadius: BorderRadius.circular(50),
-                            ),
-                            padding: const EdgeInsets.all(5.0),
-                            child: Image.network(
-                              "https://github.com/identicons/guest.png",
-                            ),
+                mainAxisAlignment: MainAxisAlignment.start,
+                children: [
+                  for (var i = 0;
+                      i < min(widget.task.teamMembers.length, 3);
+                      i++)
+                    Align(
+                      widthFactor: 0.64,
+                      child: CircleAvatar(
+                        backgroundColor: Colors.white,
+                        radius: 18,
+                        child: Container(
+                          clipBehavior: Clip.antiAlias,
+                          decoration: BoxDecoration(
+                            border: Border.all(color: Colors.white, width: 2),
+                            borderRadius: BorderRadius.circular(50),
+                          ),
+                          padding: const EdgeInsets.all(5.0),
+                          child: Image.network(
+                            "https://github.com/identicons/guest.png",
                           ),
                         ),
                       ),
-                    if (task.teamMembers.length > 3)
-                      Flexible(
-                        child: Padding(
-                          padding: const EdgeInsets.only(left: 12.0),
-                          child: Text(
-                            "+${task.teamMembers.length - 3}",
-                            style: TextStyle(
-                              color: Colors.black,
-                            ),
+                    ),
+                  if (widget.task.teamMembers.length > 3)
+                    Flexible(
+                      child: Padding(
+                        padding: const EdgeInsets.only(left: 12.0),
+                        child: Text(
+                          "+${widget.task.teamMembers.length - 3}",
+                          style: const TextStyle(
+                            color: Colors.black,
                           ),
                         ),
                       ),
-                  ],
-                ),
-              
+                    ),
+                ],
+              ),
               const SizedBox(height: 16),
               const Text('Stages of Task',
                   style: TextStyle(
@@ -212,10 +269,21 @@ class TaskDetailsPage extends StatelessWidget {
                   )),
               Column(
                 children: [
-                  for (var i = 0; i < task.stages.length; i++)
-                    CheckListRow(content: task.stages[i].stageName),
+                  for (var i = 0; i < widget.task.stages.length; i++)
+                    CheckListRow(content: widget.task.stages[i].stageName),
                 ],
-              )
+              ),
+              const Spacer(),
+              Align(
+                alignment: Alignment.bottomCenter,
+                child: isEditing
+                    ? BtnDefault(
+                        onTap: saveChanges,
+                        title: 'Save Changes',
+                      )
+                    : const SizedBox.shrink(),
+              ),
+              const SizedBox(height: 24),
             ]),
       ),
     );

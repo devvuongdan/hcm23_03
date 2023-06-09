@@ -2,11 +2,12 @@ import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
 
 import 'package:hcm23_03/shared/shared_ui/inputs/input_normal/input_normal.dart';
-
+import 'package:uuid/uuid.dart';
 import '../../../shared/shared_ui/btn/btn_default/btn_default.dart';
 import 'package:hcm23_03/shared/shared_ui/base_screen/base_screen.dart';
 import '../widgets/task_stage_input.dart';
 import 'package:hcm23_03/features/tasks/entities/task.dart';
+import 'package:hcm23_03/features/tasks/entities/task_model.dart';
 
 class NewTaskPage extends StatelessWidget {
   static TextEditingController titleController =
@@ -16,23 +17,14 @@ class NewTaskPage extends StatelessWidget {
   static const String routeName = "/NewTaskPage";
 
   const NewTaskPage({super.key});
+
   
-  //    class a{
+         
     
-  //    Task newTask = Task(
-  //     super();
-  //   uid: const Uuid().v4(),
-  //   title: "",
-  //   description: "",
-  //   createdAt: null,
-  //   modifiedAt: null,
-  //   startTime: null,
-  //   dueTime: null,
-  //   teamMembers: [],
-  //   taskStages: [],
-  //   active: true,
-  // );
-  // }
+  
+  
+    
+ 
 
   @override
   Widget build(BuildContext context) {
@@ -174,7 +166,7 @@ class NewTaskPage extends StatelessWidget {
                         Expanded(
                             child: InputNormal(
                           placeholderText: "Enter task's description",
-                          controller: titleController,
+                          controller: desController,
                           minLines: 3,
                           maxLines: 5,
                           valueTextStyle: const TextStyle(
@@ -190,11 +182,21 @@ class NewTaskPage extends StatelessWidget {
                     const SizedBox(
                       height: 12,
                     ),
+                    
                   ],
                 ),
                 const SizedBox(
                   height: 28,
                 ),
+                ListView.separated(
+                  physics: const NeverScrollableScrollPhysics(),
+                  shrinkWrap: true,
+                  padding: const EdgeInsets.symmetric(),
+                  
+                  itemBuilder:((context ,index){
+                    return ();
+
+                  };
                 Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [

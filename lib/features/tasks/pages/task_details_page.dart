@@ -1,27 +1,16 @@
-// import 'package:flutter/material.dart';
+import 'dart:math';
 
-// import '../entities/task.dart';
+import 'package:intl/intl.dart';
+import 'package:date_time_picker/date_time_picker.dart';
 
-// class TaskDetailsPage extends StatelessWidget {
-//   final Task task;
-//   const TaskDetailsPage({super.key, required this.task});
-
-//   @override
-//   Widget build(BuildContext context) {
-//     return Scaffold(
-//         appBar: AppBar(
-//           title: const Text("Task Details"),
-//         ),
-//         body: Center(
-//           child: Text("${task.description}"),
-//         ));
-//   }
-// }
+import '../entities/task_model.dart';
 import 'package:flutter/material.dart';
-import 'package:hcm23_03/features/home/pages/task/data.dart';
-import 'package:hcm23_03/features/tasks/entities/task.dart';
-import '../pages/today_tasks_page.dart';
-import '../widgets/task_card.dart';
+
+String formatDueTime(String duetime) {
+  DateTime dueDateTime = DateTime.parse(duetime);
+  String formattedDueTime = DateFormat('hh:mm a, dd MMM yyyy').format(dueDateTime);
+  return formattedDueTime;
+}
 
 class CheckListRow extends StatefulWidget {
   final String content;
@@ -38,24 +27,20 @@ class _CheckListRowState extends State<CheckListRow> {
   @override
   Widget build(BuildContext context) {
     return Padding(
-      padding: const EdgeInsets.all(16.0),
+      padding: const EdgeInsets.only(top: 12),
       child: Row(
         children: [
-          Transform.scale(
-            scale: 1,
-            child: Checkbox(
-              
-              shape: const CircleBorder(),
-              checkColor: Colors.white,
-              value: isChecked,
-              onChanged: (value) {
-                setState(() {
-                  isChecked = value ?? false;
-                });
-              },
-            ),
+          Checkbox(
+            shape: const CircleBorder(),
+            checkColor: Colors.white,
+            value: isChecked,
+            onChanged: (value) {
+              setState(() {
+                isChecked = value ?? false;
+              });
+            },
           ),
-          SizedBox(width: 8),
+          const SizedBox(width: 8),
           Text(
             widget.content,
             style: const TextStyle(
@@ -92,21 +77,6 @@ class TaskDetailsPage extends StatelessWidget {
               ),
             ]),
       ),
-      // body: Center(
-      //   child: Column(
-      //     mainAxisAlignment: MainAxisAlignment.center,
-      //     children: [
-      //       const Text('Task Details'),
-      //       const SizedBox(height: 16),
-      //       ElevatedButton(
-      //         onPressed: () {
-      //           Navigator.pop(context); // Pop back to the previous screen
-      //         },
-      //         child: const Text('Go Back'),
-      //       ),
-      //     ],
-      //   ),
-      // ),
       body: Padding(
         padding: const EdgeInsets.all(16.0),
         child: Column(
@@ -124,7 +94,7 @@ class TaskDetailsPage extends StatelessWidget {
               ),
               const SizedBox(height: 4),
               Text(
-                task.title ?? 'No Title',
+                task.title,
                 style: const TextStyle(
                   fontSize: 20,
                   fontWeight: FontWeight.bold,
@@ -154,7 +124,7 @@ class TaskDetailsPage extends StatelessWidget {
                     ),
                     const SizedBox(width: 8),
                     Text(
-                        "${task.dueTime!.hour}:${task.dueTime!.minute} ${task.dueTime!.hour > 12 ? 'PM' : 'AM'} ${task.dueTime!.day} ${task.dueTime!.month} ${task.dueTime!.year}",
+                      formatDueTime(task.duetime),
                         style: const TextStyle(
                           fontSize: 16,
                         )),
@@ -187,7 +157,7 @@ class TaskDetailsPage extends StatelessWidget {
               ),
               const SizedBox(height: 4),
               Text(
-                task.description ?? 'No Description',
+                task.description,
                 style: const TextStyle(
                   fontSize: 16,
                   fontWeight: FontWeight.w500,
@@ -195,23 +165,22 @@ class TaskDetailsPage extends StatelessWidget {
                 ),
               ),
               const SizedBox(height: 8),
-              SizedBox(
-                height: 40,
-                child: Stack(
+              
+              Row(
+                  mainAxisAlignment: MainAxisAlignment.start,
                   children: [
-                    for (var i = 0; i < [1, 2, 3, 4].length; i++)
-                      Positioned(
-                        left: (i * (1 - .4) * 40).toDouble(),
-                        top: 0,
+                    for (var i = 0; i < min(task.teamMembers.length, 3); i++)
+                      Align(
+                        widthFactor: 0.64,
                         child: CircleAvatar(
                           backgroundColor: Colors.white,
                           radius: 18,
                           child: Container(
                             clipBehavior: Clip.antiAlias,
                             decoration: BoxDecoration(
-                                border:
-                                    Border.all(color: Colors.white, width: 2),
-                                borderRadius: BorderRadius.circular(50)),
+                              border: Border.all(color: Colors.white, width: 2),
+                              borderRadius: BorderRadius.circular(50),
+                            ),
                             padding: const EdgeInsets.all(5.0),
                             child: Image.network(
                               "https://github.com/identicons/guest.png",
@@ -219,9 +188,21 @@ class TaskDetailsPage extends StatelessWidget {
                           ),
                         ),
                       ),
+                    if (task.teamMembers.length > 3)
+                      Flexible(
+                        child: Padding(
+                          padding: const EdgeInsets.only(left: 12.0),
+                          child: Text(
+                            "+${task.teamMembers.length - 3}",
+                            style: TextStyle(
+                              color: Colors.black,
+                            ),
+                          ),
+                        ),
+                      ),
                   ],
                 ),
-              ),
+              
               const SizedBox(height: 16),
               const Text('Stages of Task',
                   style: TextStyle(
@@ -231,8 +212,8 @@ class TaskDetailsPage extends StatelessWidget {
                   )),
               Column(
                 children: [
-                  for (var i = 0; i < task.taskStages.length; i++)
-                    CheckListRow(content: "${task.taskStages[i].description}"),
+                  for (var i = 0; i < task.stages.length; i++)
+                    CheckListRow(content: task.stages[i].stageName),
                 ],
               )
             ]),

@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 
-import '../../tasks/entities/task.dart';
+import '../../tasks/entities/task_model.dart';
 import '../../tasks/pages/today_tasks_page.dart';
 import '../widgets/bubble_bottom_bar.dart';
 

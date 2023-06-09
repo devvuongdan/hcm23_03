@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:hcm23_03/features/login/pages/login_page.dart';
-import 'package:hcm23_03/features/onboarding/widgets/onboarding_floatting_action_button.dart';
+import '../../login/pages/login_page.dart';
+import '../widgets/onboarding_floatting_action_button.dart';
 
 class OnboardingPage extends StatefulWidget {
   const OnboardingPage({super.key});
@@ -33,8 +33,8 @@ class _OnboardingPageState extends State<OnboardingPage> {
                     duration: const Duration(milliseconds: 500),
                     curve: Curves.easeIn);
               } else {
-                Navigator.of(context)
-                    .pushNamedAndRemoveUntil(LoginPage.routeName, (route) => false);
+                Navigator.of(context).pushNamedAndRemoveUntil(
+                    LoginPage.routeName, (route) => false);
               }
             });
           },
@@ -124,88 +124,88 @@ class _OnboardingPageState extends State<OnboardingPage> {
     required Color bgColor,
   }) {
     return Container(
-      color: bgColor,
-      height: double.infinity,
-      width: double.infinity,
-      child: Padding(
-        padding: const EdgeInsets.all(16),
-        child: Column(
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: [
-            const SizedBox(
-              height: 100,
-            ),
-            Text(
-              title,
-              textAlign: TextAlign.left,
-              style: const TextStyle(
-                  fontSize: 24,
-                  height: 32 / 24,
-                  fontWeight: FontWeight.w700,
-                  color: Colors.white),
-            ),
-            const SizedBox(
-              height: 12,
-            ),
-            Text(
-              content,
-              textAlign: TextAlign.left,
-              style: const TextStyle(
-                  fontSize: 18,
-                  height: 24 / 18,
-                  fontWeight: FontWeight.w400,
-                  color: Colors.white),
-            ),
-            Expanded(
-              child: Image.asset(imageUrl),
-            ),
-          ],
-        ),
-        // body: Padding(
-        //   padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 0),
-        //   child: Column(
-        //     crossAxisAlignment: CrossAxisAlignment.start,
-        //     children: [
-        //       const SizedBox(
-        //         height: 100,
-        //       ),
-        //       Text('A Community Was Build Just For You',
-        //           //   style: TextStyle(
-        //           //     fontSize: 24,
-        //           //     fontWeight: FontWeight.w700,
-        //           //     height: 1.5,
-        //           //     color: Colors.white,
+        color: bgColor,
+        height: double.infinity,
+        width: double.infinity,
+        child: Padding(
+          padding: const EdgeInsets.all(16),
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              const SizedBox(
+                height: 100,
+              ),
+              Text(
+                title,
+                textAlign: TextAlign.left,
+                style: const TextStyle(
+                    fontSize: 24,
+                    height: 32 / 24,
+                    fontWeight: FontWeight.w700,
+                    color: Colors.white),
+              ),
+              const SizedBox(
+                height: 12,
+              ),
+              Text(
+                content,
+                textAlign: TextAlign.left,
+                style: const TextStyle(
+                    fontSize: 18,
+                    height: 24 / 18,
+                    fontWeight: FontWeight.w400,
+                    color: Colors.white),
+              ),
+              Expanded(
+                child: Image.asset(imageUrl),
+              ),
+            ],
+          ),
+          // body: Padding(
+          //   padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 0),
+          //   child: Column(
+          //     crossAxisAlignment: CrossAxisAlignment.start,
+          //     children: [
+          //       const SizedBox(
+          //         height: 100,
+          //       ),
+          //       Text('A Community Was Build Just For You',
+          //           //   style: TextStyle(
+          //           //     fontSize: 24,
+          //           //     fontWeight: FontWeight.w700,
+          //           //     height: 1.5,
+          //           //     color: Colors.white,
 
-        //           // ),
-        //           style: GoogleFonts.poppins(
-        //             fontSize: 24,
-        //             fontWeight: FontWeight.w700,
-        //             height: 1.2,
-        //             color: Colors.white,
-        //           )),
-        //       Text(
-        //         'A community was build for you to share your thought, your concerns and improve yourself with other people',
-        //         //   style: TextStyle(
-        //         //     fontSize: 18,
-        //         //     fontWeight: FontWeight.w400,
-        //         //     height: 1.5,
-        //         //     color: Colors.white,
-        //         // ),
-        //         style: GoogleFonts.lora(
-        //           fontSize: 18,
-        //           fontWeight: FontWeight.w400,
-        //           height: 1.5,
-        //           color: Colors.white,
-        //         ),
-        //       ),
-        //       Expanded(
-        //         child: Center(
-        //           child: SvgPicture.asset("assets/images/onboarding_img_1.svg"),
-        //         ),
-        //       ),
-        //     ],
-        //   ),
-        // )
+          //           // ),
+          //           style: GoogleFonts.poppins(
+          //             fontSize: 24,
+          //             fontWeight: FontWeight.w700,
+          //             height: 1.2,
+          //             color: Colors.white,
+          //           )),
+          //       Text(
+          //         'A community was build for you to share your thought, your concerns and improve yourself with other people',
+          //         //   style: TextStyle(
+          //         //     fontSize: 18,
+          //         //     fontWeight: FontWeight.w400,
+          //         //     height: 1.5,
+          //         //     color: Colors.white,
+          //         // ),
+          //         style: GoogleFonts.lora(
+          //           fontSize: 18,
+          //           fontWeight: FontWeight.w400,
+          //           height: 1.5,
+          //           color: Colors.white,
+          //         ),
+          //       ),
+          //       Expanded(
+          //         child: Center(
+          //           child: SvgPicture.asset("assets/images/onboarding_img_1.svg"),
+          //         ),
+          //       ),
+          //     ],
+          //   ),
+          // )
         ));
   }
 }

@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:hcm23_03/features/tasks/pages/new_task_page.dart';
 
 import '../../tasks/entities/task_model.dart';
 import '../../tasks/pages/today_tasks_page.dart';
@@ -17,7 +18,9 @@ class _HomePageState extends State<HomePage> {
   final PageController pageController = PageController(initialPage: 1);
   void changePage(int? idx) {}
 
-  void createNewTask() async {}
+  void createNewTask() async {
+    Navigator.of(context).pushNamed(NewTaskPage.routeName);
+  }
 
   void addNewTaskSuccess(Task task) {
     setState(() {

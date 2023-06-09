@@ -13,6 +13,7 @@ import '../../../shared/shared_ui/themes/text_styles.dart';
 import '../../authentication/data/model/hcm23_user.dart';
 import '../../authentication/data/resource/sqlite_helper.dart';
 
+
 class RegisterPage extends StatefulWidget {
   static const String routeName = '/RegisterPage';
   const RegisterPage({super.key});
@@ -129,6 +130,7 @@ class _RegisterPageState extends State<RegisterPage> {
     Navigator.of(context)
         .pushNamedAndRemoveUntil(HomePage.routeName, (route) => false);
   }
+
 
   @override
   Widget build(BuildContext context) {

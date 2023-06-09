@@ -64,7 +64,7 @@ class _TaskCardState extends State<TaskCard> {
                   Align(
                     alignment: Alignment.centerLeft,
                     child: Text(
-                      widget.task.title ?? "",
+                      widget.task.title,
                       style: const TextStyle(
                         fontSize: 16,
                         fontWeight: FontWeight.w700,
@@ -77,7 +77,7 @@ class _TaskCardState extends State<TaskCard> {
                   Align(
                     alignment: Alignment.centerLeft,
                     child: Text(
-                      widget.task.description ?? "",
+                      widget.task.description,
                       style: const TextStyle(
                         fontSize: 12,
                         fontWeight: FontWeight.w400,

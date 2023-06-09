@@ -2,7 +2,7 @@ import 'dart:math';
 
 import 'package:hcm23_03/shared/shared_ui/btn/btn_default/btn_default.dart';
 import 'package:intl/intl.dart';
-import 'package:date_time_picker/date_time_picker.dart';
+// import 'package:date_time_picker/date_time_picker.dart';
 
 import '../entities/task_model.dart';
 import 'package:flutter/material.dart';
@@ -95,7 +95,7 @@ class _TaskDetailsPageState extends State<TaskDetailsPage> {
     setState(() {
       widget.task.title = titleController.text;
       widget.task.description = descriptionController.text;
-      
+
       isEditing = false;
     });
   }
@@ -104,17 +104,13 @@ class _TaskDetailsPageState extends State<TaskDetailsPage> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Row(
-            mainAxisAlignment: MainAxisAlignment.center,
-            mainAxisSize: MainAxisSize.min,
-            children: [
-              const Text("Task Details"),
-              const Spacer(),
-              IconButton(
-                icon: const Icon(Icons.edit),
-                onPressed: toggleEditMode,
-              ),
-            ]),
+        title: const Text("Task Details"),
+        actions: [
+          IconButton(
+            icon: const Icon(Icons.edit),
+            onPressed: toggleEditMode,
+          ),
+        ],
       ),
       body: Padding(
         padding: const EdgeInsets.all(16.0),
@@ -133,24 +129,24 @@ class _TaskDetailsPageState extends State<TaskDetailsPage> {
               ),
               const SizedBox(height: 4),
               isEditing
-                ? TextField(
-                    controller: titleController,
-                    style: const TextStyle(
-                      fontSize: 20,
-                      fontWeight: FontWeight.bold,
-                      color: Colors.black,
-                      height: 28 / 20,
+                  ? TextField(
+                      controller: titleController,
+                      style: const TextStyle(
+                        fontSize: 20,
+                        fontWeight: FontWeight.bold,
+                        color: Colors.black,
+                        height: 28 / 20,
+                      ),
+                    )
+                  : Text(
+                      widget.task.title,
+                      style: const TextStyle(
+                        fontSize: 20,
+                        fontWeight: FontWeight.bold,
+                        color: Colors.black,
+                        height: 28 / 20,
+                      ),
                     ),
-                  )
-                : Text(
-                    widget.task.title,
-                    style: const TextStyle(
-                      fontSize: 20,
-                      fontWeight: FontWeight.bold,
-                      color: Colors.black,
-                      height: 28 / 20,
-                    ),
-                  ),
               const SizedBox(height: 16),
               const Text(
                 'Due Date',
@@ -205,22 +201,22 @@ class _TaskDetailsPageState extends State<TaskDetailsPage> {
               ),
               const SizedBox(height: 4),
               isEditing
-                ? TextField(
-                    controller: descriptionController,
-                    style: const TextStyle(
-                      fontSize: 16,
-                      fontWeight: FontWeight.w500,
-                      height: 20 / 14,
+                  ? TextField(
+                      controller: descriptionController,
+                      style: const TextStyle(
+                        fontSize: 16,
+                        fontWeight: FontWeight.w500,
+                        height: 20 / 14,
+                      ),
+                    )
+                  : Text(
+                      widget.task.description,
+                      style: const TextStyle(
+                        fontSize: 16,
+                        fontWeight: FontWeight.w500,
+                        height: 20 / 14,
+                      ),
                     ),
-                  )
-                : Text(
-                    widget.task.description,
-                    style: const TextStyle(
-                      fontSize: 16,
-                      fontWeight: FontWeight.w500,
-                      height: 20 / 14,
-                    ),
-                  ),
               const SizedBox(height: 8),
               Row(
                 mainAxisAlignment: MainAxisAlignment.start,
@@ -273,7 +269,7 @@ class _TaskDetailsPageState extends State<TaskDetailsPage> {
                     CheckListRow(content: widget.task.stages[i].stageName),
                 ],
               ),
-              const Spacer(),
+              // const Spacer(),
               Align(
                 alignment: Alignment.bottomCenter,
                 child: isEditing

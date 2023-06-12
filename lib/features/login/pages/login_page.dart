@@ -4,7 +4,7 @@ import 'package:flutter_svg/svg.dart';
 import '../../authentication/data/model/hcm23_user.dart';
 import '../../forgot_password/pages/forgot_password_page.dart';
 import '../../register/pages/register_pages.dart';
-
+import 'package:hcm23_03/features/tasks/entities/task_model.dart';
 import '../../../shared/shared_ui/base_screen/base_screen.dart';
 import '../../../shared/shared_ui/btn/btn_default/btn_default.dart';
 import '../../../shared/shared_ui/inputs/input_clear/input_clear.dart';
@@ -12,9 +12,10 @@ import '../../../shared/shared_ui/themes/colors.dart';
 import '../../../shared/shared_ui/themes/text_styles.dart';
 import '../../authentication/data/resource/sqlite_helper.dart';
 import '../../home/pages/home_page.dart';
+import 'package:hcm23_03/features/tasks/pages/new_task_page.dart';
+import 'package:uuid/uuid.dart';
 
 class LoginPage extends StatefulWidget {
-  
   const LoginPage({super.key});
   static const String routeName = "/LoginPage";
   @override
@@ -23,6 +24,7 @@ class LoginPage extends StatefulWidget {
 
 class _LoginPageState extends State<LoginPage> {
   // final formKey = GlobalKey<FormState>();
+  // late Task newTask;
   final TextEditingController _usernameController = TextEditingController();
   final TextEditingController _passwordController = TextEditingController();
   String? feedbackMessage;
@@ -35,6 +37,47 @@ class _LoginPageState extends State<LoginPage> {
   bool hidePw = false;
 
   bool remember = false;
+  final String taskUid = const Uuid().v4();
+  // newTask = Task(
+  //     uid: taskUid,
+  //     userId: "123",
+  //     title: "title",
+  //     description: "description",
+  //     starttime: DateTime.now().toString(),
+  //     duetime: DateTime.now().toString(),
+  //     teamMembers: [
+  //       TeamMember(
+  //           taskUid: taskUid, uid: const Uuid().v4(), avatarUrl: "avatarUrl"),
+  //       TeamMember(
+  //           taskUid: taskUid, uid: const Uuid().v4(), avatarUrl: "avatarUrl"),
+  //       TeamMember(
+  //           taskUid: taskUid, uid: const Uuid().v4(), avatarUrl: "avatarUrl"),
+  //       TeamMember(
+  //           taskUid: taskUid, uid: const Uuid().v4(), avatarUrl: "avatarUrl"),
+  //       TeamMember(
+  //           taskUid: taskUid, uid: const Uuid().v4(), avatarUrl: "avatarUrl"),
+  //     ],
+  //     stages: [
+  //       TaskStage(
+  //         uid: const Uuid().v4(),
+  //         taskUid: taskUid,
+  //         isDone: true,
+  //         stageName: "stageName",
+  //       ),
+  //       TaskStage(
+  //         uid: const Uuid().v4(),
+  //         taskUid: taskUid,
+  //         isDone: true,
+  //         stageName: "stageName",
+  //       ),
+  //       TaskStage(
+  //         uid: const Uuid().v4(),
+  //         taskUid: taskUid,
+  //         isDone: true,
+  //         stageName: "stageName",
+  //       ),
+  //     ],
+  //   );
 
   void _toggleHidePw() {
     setState(() {
@@ -63,6 +106,8 @@ class _LoginPageState extends State<LoginPage> {
     final user = users.firstWhere((user) => user['username'] == username);
 
     if (user['password'].toString() == password) {
+      print("user da dang nhap");
+      print(user);
       _navigateToHomePage();
       return;
     }

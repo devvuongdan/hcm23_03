@@ -4,6 +4,7 @@ import 'package:hcm23_03/features/home/pages/home_page.dart';
 import 'package:hcm23_03/features/login/pages/login_page.dart';
 import 'package:hcm23_03/features/onboarding/pages/onboarding_page.dart';
 import 'package:hcm23_03/features/register/pages/register_pages.dart';
+import 'package:hcm23_03/features/splash/pages/splash_page.dart';
 import 'package:hcm23_03/features/tasks/pages/new_task_page.dart';
 import 'package:hcm23_03/features/tasks/pages/task_details_page.dart';
 import 'package:hcm23_03/features/change_password/pages/change_password_page.dart';
@@ -34,7 +35,7 @@ class MyApp extends StatelessWidget {
         navigatorObservers: [
           NavigatorObserver(),
         ],
-        home: const OnboardingPage(),
+        home: const SplashPage(),
         onGenerateRoute: (setting) {
           if (setting.name == HomePage.routeName) {
             return MaterialPageRoute(
@@ -57,8 +58,8 @@ class MyApp extends StatelessWidget {
 
           if (setting.name == "/") {
             return MaterialPageRoute(
-              settings: const RouteSettings(name: "/OnboardingPage"),
-              builder: (_) => const OnboardingPage(),
+              settings: const RouteSettings(name: SplashPage.routeName),
+              builder: (_) => const SplashPage(),
             );
           }
           if (setting.name == "/OnboardingPage") {

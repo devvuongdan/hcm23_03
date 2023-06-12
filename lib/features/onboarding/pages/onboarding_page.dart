@@ -3,6 +3,7 @@ import '../../login/pages/login_page.dart';
 import '../widgets/onboarding_floatting_action_button.dart';
 
 class OnboardingPage extends StatefulWidget {
+  static const String routeName = "/OnboardingPage";
   const OnboardingPage({super.key});
 
   @override

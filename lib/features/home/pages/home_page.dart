@@ -1,6 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:hcm23_03/features/tasks/pages/new_task_page.dart';
+import 'package:hcm23_03/shared/shared_ui/btn/btn_default/btn_default.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
+import '../../login/pages/login_page.dart';
 import '../../tasks/entities/task_model.dart';
 import '../../tasks/pages/today_tasks_page.dart';
 import '../widgets/bubble_bottom_bar.dart';
@@ -38,6 +41,16 @@ class _HomePageState extends State<HomePage> {
   }
 
   void getTask() async {}
+
+  Future<void> _signOut() async {
+    final preferences = await SharedPreferences.getInstance();
+    await preferences.remove('remember');
+    await preferences.remove('username');
+    await preferences.remove('password');
+
+    // Navigate back to the LoginPage
+    Navigator.of(context).pushNamedAndRemoveUntil(LoginPage.routeName, (route) => false);
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -116,10 +129,13 @@ class _HomePageState extends State<HomePage> {
           tasks: _tasks,
         );
       default:
-        return const Center(
-          child: Text(
-            "Tinh nang dang trong qua trinh phat trien",
-          ),
+        return Center(
+          child: BtnDefault(
+            onTap: _signOut,
+            title: "Đăng Xuất",
+            height: 64,
+            width: 128,
+          )
         );
     }
   }

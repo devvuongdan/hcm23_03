@@ -1,15 +1,20 @@
 import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
-import 'package:hcm23_03/features/forgot_password/pages/forgot_password_page.dart';
+import '../../authentication/data/model/hcm23_user.dart';
+import '../../forgot_password/pages/forgot_password_page.dart';
+import '../../register/pages/register_pages.dart';
 
 import '../../../shared/shared_ui/base_screen/base_screen.dart';
 import '../../../shared/shared_ui/btn/btn_default/btn_default.dart';
 import '../../../shared/shared_ui/inputs/input_clear/input_clear.dart';
 import '../../../shared/shared_ui/themes/colors.dart';
 import '../../../shared/shared_ui/themes/text_styles.dart';
+import '../../authentication/data/resource/sqlite_helper.dart';
+import '../../home/pages/home_page.dart';
 
 class LoginPage extends StatefulWidget {
+  static const String routeName = "/LoginPage";
   const LoginPage({super.key});
 
   @override
@@ -19,6 +24,7 @@ class LoginPage extends StatefulWidget {
 class _LoginPageState extends State<LoginPage> {
   final TextEditingController _usernameController = TextEditingController();
   final TextEditingController _passwordController = TextEditingController();
+  String? feedbackMessage;
 
   @override
   void initState() {
@@ -41,6 +47,26 @@ class _LoginPageState extends State<LoginPage> {
     });
   }
 
+  void _navigateToHomePage() {
+    Navigator.of(context)
+        .pushNamedAndRemoveUntil(HomePage.routeName, (route) => false);
+  }
+
+  void _login() async {
+    final String username = _usernameController.text;
+    final String password = _passwordController.text;
+
+    final List<Map<String, dynamic>> users =
+        await Hcm23DBHelper.query(Hcm23User.dbTable);
+
+    final user = users.firstWhere((user) => user['username'] == username);
+
+    if (user['password'].toString() == password) {
+      _navigateToHomePage();
+      return;
+    }
+  }
+
   @override
   void dispose() {
     super.dispose();
@@ -57,8 +83,6 @@ class _LoginPageState extends State<LoginPage> {
     }
     return Colors.red;
   }
-
-  String? feedbackMessage;
 
   @override
   Widget build(BuildContext context) {
@@ -179,8 +203,9 @@ class _LoginPageState extends State<LoginPage> {
                 const SizedBox(
                   height: 10,
                 ),
+
                 BtnDefault(
-                  onTap: () {},
+                  onTap: _login,
                   title: "Đăng nhập",
                 ),
 
@@ -204,7 +229,8 @@ class _LoginPageState extends State<LoginPage> {
                             .copyWith(color: Hcm23Colors.color2),
                         recognizer: TapGestureRecognizer()
                           ..onTap = () {
-                            Navigator.of(context).pushNamed("");
+                            Navigator.of(context)
+                                .pushNamed(RegisterPage.routeName);
                           }),
                   ],
                 )),

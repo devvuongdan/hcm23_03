@@ -214,10 +214,20 @@ class InputClear extends StatefulWidget {
 class _InputClearState extends State<InputClear> with InputNormalLayoutMixin {
   @override
   void initState() {
+    WidgetsBinding.instance.addPostFrameCallback((timeStamp) {
+      widget.controller?.addListener(() {
+        setState(() {});
+      });
+    });
+    super.initState();
+  }
+
+  @override
+  void didUpdateWidget(covariant InputClear oldWidget) {
     widget.controller?.addListener(() {
       setState(() {});
     });
-    super.initState();
+    super.didUpdateWidget(oldWidget);
   }
 
   @override

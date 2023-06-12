@@ -4,9 +4,11 @@ import 'package:hcm23_03/features/home/pages/home_page.dart';
 import 'package:hcm23_03/features/login/pages/login_page.dart';
 import 'package:hcm23_03/features/onboarding/pages/onboarding_page.dart';
 import 'package:hcm23_03/features/register/pages/register_pages.dart';
-import 'package:hcm23_03/features/tasks/entities/task.dart';
+import 'package:hcm23_03/features/tasks/pages/new_task_page.dart';
 import 'package:hcm23_03/features/tasks/pages/task_details_page.dart';
 import 'package:hcm23_03/features/change_password/pages/change_password_page.dart';
+
+import 'features/tasks/entities/task_model.dart';
 
 class MyApp extends StatelessWidget {
   const MyApp({super.key});
@@ -32,10 +34,11 @@ class MyApp extends StatelessWidget {
         navigatorObservers: [
           NavigatorObserver(),
         ],
+        home: const OnboardingPage(),
         onGenerateRoute: (setting) {
-          if (setting.name == "/HomePage") {
+          if (setting.name == HomePage.routeName) {
             return MaterialPageRoute(
-              settings: const RouteSettings(name: "/HomePage"),
+              settings: const RouteSettings(name: HomePage.routeName),
               builder: (_) => const HomePage(),
             );
           }
@@ -45,9 +48,9 @@ class MyApp extends StatelessWidget {
               builder: (_) => const ChangePasswordPage(),
             );
           }
-          if (setting.name == "/LoginPage") {
+          if (setting.name == LoginPage.routeName) {
             return MaterialPageRoute(
-              settings: const RouteSettings(name: "/LoginPage"),
+              settings: const RouteSettings(name: LoginPage.routeName),
               builder: (_) => const LoginPage(),
             );
           }
@@ -71,9 +74,9 @@ class MyApp extends StatelessWidget {
               builder: (_) => const ForgotPasswordPage(),
             );
           }
-          if (setting.name == "/RegisterPage") {
+          if (setting.name == RegisterPage.routeName) {
             return MaterialPageRoute(
-              settings: const RouteSettings(name: "/RegisterPage"),
+              settings: const RouteSettings(name: RegisterPage.routeName),
               builder: (_) => const RegisterPage(),
             );
           }
@@ -82,6 +85,12 @@ class MyApp extends StatelessWidget {
             return MaterialPageRoute(
               settings: const RouteSettings(name: "/TaskDetailsPage"),
               builder: (_) => TaskDetailsPage(task: task),
+            );
+          }
+          if (setting.name == NewTaskPage.routeName) {
+            return MaterialPageRoute(
+              settings: const RouteSettings(name: NewTaskPage.routeName),
+              builder: (_) => const NewTaskPage(),
             );
           }
           return null;

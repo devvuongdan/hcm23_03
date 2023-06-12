@@ -1,8 +1,10 @@
 // ignore_for_file: public_member_api_docs, sort_constructors_first
+import 'dart:async';
+
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
 
-import '../entities/task.dart';
+import '../entities/task_model.dart';
 
 class TaskCard extends StatefulWidget {
   final Task task;
@@ -24,7 +26,16 @@ class TaskCard extends StatefulWidget {
 class _TaskCardState extends State<TaskCard> {
   bool isSelecting = false;
 
-  void openMenu() async {}
+  void openMenu() async {
+    setState(() {
+      isSelecting = true;
+      Future.delayed(const Duration(seconds: 3), () {
+        setState(() {
+          isSelecting = false;
+        });
+      });
+    });
+  }
 
   void viewTask() {
     Navigator.of(context).pushNamed("/TaskDetailsPage", arguments: widget.task);
@@ -53,7 +64,7 @@ class _TaskCardState extends State<TaskCard> {
                   Align(
                     alignment: Alignment.centerLeft,
                     child: Text(
-                      widget.task.title ?? "",
+                      widget.task.title,
                       style: const TextStyle(
                         fontSize: 16,
                         fontWeight: FontWeight.w700,
@@ -66,7 +77,7 @@ class _TaskCardState extends State<TaskCard> {
                   Align(
                     alignment: Alignment.centerLeft,
                     child: Text(
-                      widget.task.description ?? "",
+                      widget.task.description,
                       style: const TextStyle(
                         fontSize: 12,
                         fontWeight: FontWeight.w400,
@@ -79,7 +90,7 @@ class _TaskCardState extends State<TaskCard> {
                   Align(
                     alignment: Alignment.centerLeft,
                     child: Text(
-                      "${DateFormat("hh:mm a").format(widget.task.startTime ?? DateTime.now())} - ${DateFormat("hh:mm a").format(widget.task.dueTime ?? DateTime.now())}",
+                      "${DateFormat("hh:mm a").format(DateTime.tryParse(widget.task.starttime) ?? DateTime.now())} - ${DateFormat("hh:mm a").format(DateTime.tryParse(widget.task.duetime) ?? DateTime.now())}",
                       style: const TextStyle(
                         fontSize: 14,
                         fontWeight: FontWeight.w500,
@@ -117,7 +128,8 @@ class _TaskCardState extends State<TaskCard> {
       width: 80,
       padding: const EdgeInsets.symmetric(horizontal: 16),
       child: Text(
-        DateFormat("hh:mm a").format(widget.task.startTime ?? DateTime.now()),
+        DateFormat("hh:mm a")
+            .format(DateTime.tryParse(widget.task.duetime) ?? DateTime.now()),
         textAlign: TextAlign.center,
         style: const TextStyle(
           fontSize: 14,

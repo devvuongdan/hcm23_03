@@ -1,6 +1,7 @@
 import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 import '../../authentication/data/model/hcm23_user.dart';
 import '../../forgot_password/pages/forgot_password_page.dart';
 import '../../register/pages/register_pages.dart';
@@ -25,6 +26,8 @@ class _LoginPageState extends State<LoginPage> {
   final TextEditingController _usernameController = TextEditingController();
   final TextEditingController _passwordController = TextEditingController();
   String? feedbackMessage;
+  SharedPreferences? preferences;
+  
 
   @override
   void initState() {
@@ -41,10 +44,15 @@ class _LoginPageState extends State<LoginPage> {
     });
   }
 
-  void _toggleRememberAccount(bool? value) {
+  Future<void> _toggleRememberAccount(bool? value) async {
     setState(() {
       remember = value == true;
     });
+    if(remember) {
+      await preferences?.setBool('remember', true);
+    } else {
+      await preferences?.remove('remember');
+    }
   }
 
   void _navigateToHomePage() {
@@ -62,8 +70,22 @@ class _LoginPageState extends State<LoginPage> {
     final user = users.firstWhere((user) => user['username'] == username);
 
     if (user['password'].toString() == password) {
+      if(remember) {
+        final shared = await SharedPreferences.getInstance();
+        shared.setString("username", username);
+        shared.setString("password", password);
+      }
       _navigateToHomePage();
       return;
+    }
+  }
+
+  void _rememberLogin() {
+    final bool remember = preferences?.getBool('remember') ?? false;
+
+    if(remember) {
+      final String username = _usernameController.text;
+      final String password = _passwordController.text;
     }
   }
 

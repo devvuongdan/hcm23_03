@@ -13,7 +13,6 @@ import '../../../shared/shared_ui/themes/text_styles.dart';
 import '../../authentication/data/model/hcm23_user.dart';
 import '../../authentication/data/resource/sqlite_helper.dart';
 
-
 class RegisterPage extends StatefulWidget {
   static const String routeName = '/RegisterPage';
   const RegisterPage({super.key});
@@ -77,7 +76,9 @@ class _RegisterPageState extends State<RegisterPage> {
 
     if (user['password'].toString() == password) {
       _getTasks();
-      _navigateToHomePage();
+      _navigateToHomePage(
+        userId: user['uid'],
+      );
 
       return;
     }
@@ -132,20 +133,19 @@ class _RegisterPageState extends State<RegisterPage> {
   _getTasks() async {
     final List<Map<String, dynamic>> tasks =
         await Hcm23DBHelper.query(Task.dbTable);
-    print(tasks.first);
+    print(tasks.length);
     final List<Map<String, dynamic>> taskStages =
         await Hcm23DBHelper.query(TaskStage.dbTable);
-    print(taskStages.first);
+    print(taskStages.length);
     final List<Map<String, dynamic>> teamMembers =
         await Hcm23DBHelper.query(TeamMember.dbTable);
-    print(teamMembers.first);
+    print(teamMembers.length);
   }
 
-  void _navigateToHomePage() {
-    Navigator.of(context)
-        .pushNamedAndRemoveUntil(HomePage.routeName, (route) => false);
+  void _navigateToHomePage({required String userId}) {
+    Navigator.of(context).pushNamedAndRemoveUntil(
+        HomePage.routeName, arguments: userId, (route) => false);
   }
-
 
   @override
   Widget build(BuildContext context) {

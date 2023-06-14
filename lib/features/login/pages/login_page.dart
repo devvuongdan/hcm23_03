@@ -4,7 +4,6 @@ import 'package:flutter_svg/svg.dart';
 import '../../authentication/data/model/hcm23_user.dart';
 import '../../forgot_password/pages/forgot_password_page.dart';
 import '../../register/pages/register_pages.dart';
-import 'package:hcm23_03/features/tasks/entities/task_model.dart';
 import '../../../shared/shared_ui/base_screen/base_screen.dart';
 import '../../../shared/shared_ui/btn/btn_default/btn_default.dart';
 import '../../../shared/shared_ui/inputs/input_clear/input_clear.dart';
@@ -12,7 +11,6 @@ import '../../../shared/shared_ui/themes/colors.dart';
 import '../../../shared/shared_ui/themes/text_styles.dart';
 import '../../authentication/data/resource/sqlite_helper.dart';
 import '../../home/pages/home_page.dart';
-import 'package:hcm23_03/features/tasks/pages/new_task_page.dart';
 import 'package:uuid/uuid.dart';
 
 class LoginPage extends StatefulWidget {
@@ -91,9 +89,9 @@ class _LoginPageState extends State<LoginPage> {
     });
   }
 
-  void _navigateToHomePage() {
-    Navigator.of(context)
-        .pushNamedAndRemoveUntil(HomePage.routeName, (route) => false);
+  void _navigateToHomePage(String userId) {
+    Navigator.of(context).pushNamedAndRemoveUntil(
+        HomePage.routeName, arguments: userId, (route) => false);
   }
 
   void _login() async {
@@ -108,7 +106,7 @@ class _LoginPageState extends State<LoginPage> {
     if (user['password'].toString() == password) {
       print("user da dang nhap");
       print(user);
-      _navigateToHomePage();
+      _navigateToHomePage(user['uid']);
       return;
     }
   }

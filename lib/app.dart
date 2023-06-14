@@ -37,9 +37,12 @@ class MyApp extends StatelessWidget {
         home: const OnboardingPage(),
         onGenerateRoute: (setting) {
           if (setting.name == HomePage.routeName) {
+            final String userId = setting.arguments as String;
             return MaterialPageRoute(
               settings: const RouteSettings(name: HomePage.routeName),
-              builder: (_) => const HomePage(),
+              builder: (_) => HomePage(
+                userId: userId,
+              ),
             );
           }
           if (setting.name == ChangePasswordPage.routeName) {

@@ -1,4 +1,6 @@
+// ignore_for_file: public_member_api_docs, sort_constructors_first
 import 'package:flutter/material.dart';
+
 import 'package:hcm23_03/features/tasks/pages/new_task_page.dart';
 
 import '../../tasks/entities/task_model.dart';
@@ -7,7 +9,11 @@ import '../widgets/bubble_bottom_bar.dart';
 
 class HomePage extends StatefulWidget {
   static const String routeName = "/HomePage";
-  const HomePage({super.key});
+  final String userId;
+  const HomePage({
+    Key? key,
+    required this.userId,
+  }) : super(key: key);
 
   @override
   State<HomePage> createState() => _HomePageState();
@@ -37,9 +43,7 @@ class _HomePageState extends State<HomePage> {
     super.initState();
   }
 
-  void getTask() async {
-    
-  }
+  void getTask() async {}
 
   @override
   Widget build(BuildContext context) {
@@ -115,6 +119,7 @@ class _HomePageState extends State<HomePage> {
     switch (index) {
       case 1:
         return TodayTasksPage(
+          userId: widget.userId,
           // tasks: _tasks,
         );
       default:

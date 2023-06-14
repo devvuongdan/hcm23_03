@@ -1,22 +1,21 @@
 // ignore_for_file: public_member_api_docs, sort_constructors_first
 import 'dart:math' as math;
 
-import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
-import 'package:hcm23_03/features/tasks/entities/task_model.dart';
 import 'package:uuid/uuid.dart';
 
+import 'package:hcm23_03/features/tasks/entities/task_model.dart';
 import 'package:hcm23_03/features/tasks/widgets/task_card.dart';
 
-import '../../authentication/data/model/hcm23_user.dart';
 import '../../authentication/data/resource/sqlite_helper.dart';
 
 class TodayTasksPage extends StatefulWidget {
   // final List<Task> tasks;
+  final String userId;
 
   const TodayTasksPage({
     Key? key,
-    // required this.tasks,
+    required this.userId,
   }) : super(key: key);
 
   @override
@@ -26,73 +25,90 @@ class TodayTasksPage extends StatefulWidget {
 final String taskUid = const Uuid().v4();
 
 class _TodayRecordsPageState extends State<TodayTasksPage> {
-  void queryTask() async {
-    print("queryTask");
+  Future<void> queryTask({required String userId}) async {
     final List<Map<String, dynamic>> tasks =
         await Hcm23DBHelper.query(Task.dbTable);
-    print(tasks);
-    print("queryStage");
-    // final task = users.firstWhere((task) => user['username'] == username);
-    // print(task);
+    final List<Map<String, dynamic>> taskOfUser = tasks.where((element) {
+      return element['userId'] == widget.userId;
+    }).toList();
+    final List<Task> taskModels =
+        taskOfUser.map((e) => Task.fromMap(e)).toList();
+    for (int i = 0; i < taskOfUser.length; i++) {
+      final List<TaskStage> taskStage =
+          await queryStage(taskId: taskModels[i].uid);
+      taskModels[i].stages = taskStage;
+      setState(() {
+        _hcm23Task.add(taskModels[i]);
+      });
+    }
   }
 
-  void queryStage() async {
-    
+  Future<List<TaskStage>> queryStage({
+    required String taskId,
+  }) async {
     final List<Map<String, dynamic>> stages =
         await Hcm23DBHelper.query(TaskStage.dbTable);
-    print(stages);
-    
+    final List<Map<String, dynamic>> stageOfTask = stages.where((element) {
+      return element['taskUid'] == taskId;
+    }).toList();
+    final List<TaskStage> stageModels =
+        stageOfTask.map((e) => TaskStage.fromMap(e)).toList();
+
+    return stageModels;
+  }
+
+  void getTasks({required String userId}) async {
+    await queryTask(userId: userId);
   }
 
   @override
   void initState() {
-    // TODO: implement initState
     super.initState();
-    queryTask();
-    queryStage();
+
+    getTasks(userId: widget.userId);
   }
 
   final List<Task> _hcm23Task = [
-    Task(
-      uid: taskUid,
-      userId: "123",
-      title: "title",
-      description: "description",
-      starttime: DateTime.now().toString(),
-      duetime: DateTime.now().toString(),
-      teamMembers: [
-        TeamMember(
-            taskUid: taskUid, uid: const Uuid().v4(), avatarUrl: "avatarUrl"),
-        TeamMember(
-            taskUid: taskUid, uid: const Uuid().v4(), avatarUrl: "avatarUrl"),
-        TeamMember(
-            taskUid: taskUid, uid: const Uuid().v4(), avatarUrl: "avatarUrl"),
-        TeamMember(
-            taskUid: taskUid, uid: const Uuid().v4(), avatarUrl: "avatarUrl"),
-        TeamMember(
-            taskUid: taskUid, uid: const Uuid().v4(), avatarUrl: "avatarUrl"),
-      ],
-      stages: [
-        TaskStage(
-          uid: const Uuid().v4(),
-          taskUid: taskUid,
-          isDone: true,
-          stageName: "stageName",
-        ),
-        TaskStage(
-          uid: const Uuid().v4(),
-          taskUid: taskUid,
-          isDone: true,
-          stageName: "stageName",
-        ),
-        TaskStage(
-          uid: const Uuid().v4(),
-          taskUid: taskUid,
-          isDone: true,
-          stageName: "stageName",
-        ),
-      ],
-    ),
+    // Task(
+    //   uid: taskUid,
+    //   userId: "123",
+    //   title: "title",
+    //   description: "description",
+    //   starttime: DateTime.now().toString(),
+    //   duetime: DateTime.now().toString(),
+    //   teamMembers: [
+    //     TeamMember(
+    //         taskUid: taskUid, uid: const Uuid().v4(), avatarUrl: "avatarUrl"),
+    //     TeamMember(
+    //         taskUid: taskUid, uid: const Uuid().v4(), avatarUrl: "avatarUrl"),
+    //     TeamMember(
+    //         taskUid: taskUid, uid: const Uuid().v4(), avatarUrl: "avatarUrl"),
+    //     TeamMember(
+    //         taskUid: taskUid, uid: const Uuid().v4(), avatarUrl: "avatarUrl"),
+    //     TeamMember(
+    //         taskUid: taskUid, uid: const Uuid().v4(), avatarUrl: "avatarUrl"),
+    //   ],
+    //   stages: [
+    //     TaskStage(
+    //       uid: const Uuid().v4(),
+    //       taskUid: taskUid,
+    //       isDone: true,
+    //       stageName: "stageName",
+    //     ),
+    //     TaskStage(
+    //       uid: const Uuid().v4(),
+    //       taskUid: taskUid,
+    //       isDone: true,
+    //       stageName: "stageName",
+    //     ),
+    //     TaskStage(
+    //       uid: const Uuid().v4(),
+    //       taskUid: taskUid,
+    //       isDone: true,
+    //       stageName: "stageName",
+    //     ),
+    //   ],
+    // ),
   ];
   @override
   Widget build(BuildContext context) {

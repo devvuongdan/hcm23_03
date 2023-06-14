@@ -12,6 +12,7 @@ import '../../../shared/shared_ui/themes/text_styles.dart';
 import '../../authentication/data/resource/sqlite_helper.dart';
 import '../../home/pages/home_page.dart';
 import 'package:uuid/uuid.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
 class LoginPage extends StatefulWidget {
   const LoginPage({super.key});
@@ -24,7 +25,11 @@ class _LoginPageState extends State<LoginPage> {
   // final formKey = GlobalKey<FormState>();
   // late Task newTask;
   final TextEditingController _usernameController = TextEditingController();
+
   final TextEditingController _passwordController = TextEditingController();
+  bool hidePw = false;
+
+  bool remember = false;
   String? feedbackMessage;
 
   @override
@@ -32,9 +37,6 @@ class _LoginPageState extends State<LoginPage> {
     super.initState();
   }
 
-  bool hidePw = false;
-
-  bool remember = false;
   final String taskUid = const Uuid().v4();
   // newTask = Task(
   //     uid: taskUid,
@@ -83,7 +85,7 @@ class _LoginPageState extends State<LoginPage> {
     });
   }
 
-  void _toggleRememberAccount(bool? value) {
+  Future<void> _toggleRememberAccount(bool? value) async {
     setState(() {
       remember = value == true;
     });
@@ -107,6 +109,12 @@ class _LoginPageState extends State<LoginPage> {
       // print("user da dang nhap");
       // print(user);
       _navigateToHomePage(user['uid']);
+      if (remember) {
+        final shared = await SharedPreferences.getInstance();
+        shared.setString("username", username);
+        shared.setString("password", password);
+      }
+      _navigateToHomePage(user['uid']);
       return;
     }
   }
@@ -114,6 +122,8 @@ class _LoginPageState extends State<LoginPage> {
   @override
   void dispose() {
     super.dispose();
+    _usernameController.dispose();
+    _passwordController.dispose();
   }
 
   Color getColor(Set<MaterialState> states) {
@@ -127,6 +137,11 @@ class _LoginPageState extends State<LoginPage> {
     }
     return Colors.red;
   }
+
+  // void _navigateToHomePage({required String userId}) {
+  //   Navigator.of(context)
+  //       .pushNamedAndRemoveUntil(HomePage.routeName, (route) => false);
+  // }
 
   @override
   Widget build(BuildContext context) {

@@ -104,8 +104,8 @@ class _LoginPageState extends State<LoginPage> {
     final user = users.firstWhere((user) => user['username'] == username);
 
     if (user['password'].toString() == password) {
-      print("user da dang nhap");
-      print(user);
+      // print("user da dang nhap");
+      // print(user);
       _navigateToHomePage(user['uid']);
       return;
     }

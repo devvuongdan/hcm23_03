@@ -1,3 +1,5 @@
+// ignore_for_file: unused_local_variable
+
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:hcm23_03/features/tasks/entities/task_model.dart';
@@ -71,7 +73,7 @@ class _RegisterPageState extends State<RegisterPage> {
     final String password = _passwordController.text;
     final List<Map<String, dynamic>> users =
         await Hcm23DBHelper.query(Hcm23User.dbTable);
-    print(users);
+    // print(users);
     final user = users.firstWhere((user) => user['username'] == username);
 
     if (user['password'].toString() == password) {
@@ -133,13 +135,13 @@ class _RegisterPageState extends State<RegisterPage> {
   _getTasks() async {
     final List<Map<String, dynamic>> tasks =
         await Hcm23DBHelper.query(Task.dbTable);
-    print(tasks.length);
+    // print(tasks.length);
     final List<Map<String, dynamic>> taskStages =
         await Hcm23DBHelper.query(TaskStage.dbTable);
-    print(taskStages.length);
+    // print(taskStages.length);
     final List<Map<String, dynamic>> teamMembers =
         await Hcm23DBHelper.query(TeamMember.dbTable);
-    print(teamMembers.length);
+    // print(teamMembers.length);
   }
 
   void _navigateToHomePage({required String userId}) {

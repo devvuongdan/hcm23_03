@@ -1,3 +1,5 @@
+// ignore_for_file: library_private_types_in_public_api
+
 import 'dart:math';
 import 'package:hcm23_03/features/tasks/entities/task_model.dart';
 import 'package:hcm23_03/features/tasks/pages/today_tasks_page.dart';

@@ -48,11 +48,12 @@ class _HomePageState extends State<HomePage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      floatingActionButton: FloatingActionButton(
-        onPressed: createNewTask,
-        backgroundColor: const Color(0xFFB7ABFD),
-        child: const Icon(Icons.add),
-      ),
+      // floatingActionButton: FloatingActionButton(
+
+      //   onPressed: createNewTask,
+      //   backgroundColor: const Color(0xFFB7ABFD),
+      //   child: const Icon(Icons.add),
+      // ),
       floatingActionButtonLocation: FloatingActionButtonLocation.endDocked,
       bottomNavigationBar: BubbleBottomBar(
         hasNotch: true,

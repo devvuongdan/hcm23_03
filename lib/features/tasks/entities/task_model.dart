@@ -5,8 +5,8 @@ import 'package:hcm23_03/features/authentication/data/resource/sqlite_helper.dar
 class Task extends DBModel {
   static const dbTable = "Task";
   final String userId;
-  late final String title;
-  late final String description;
+  String title;
+  String description;
   final String starttime;
   final String duetime;
   final List<TeamMember> teamMembers;

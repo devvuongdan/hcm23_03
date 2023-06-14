@@ -1,9 +1,8 @@
 import 'dart:math';
-
 import 'package:hcm23_03/features/tasks/entities/task_model.dart';
+import 'package:hcm23_03/features/tasks/pages/today_tasks_page.dart';
 import 'package:hcm23_03/shared/shared_ui/btn/btn_default/btn_default.dart';
 // import 'package:date_time_picker/date_time_picker.dart';
-
 import 'package:flutter/material.dart';
 import 'package:uuid/uuid.dart';
 
@@ -11,8 +10,10 @@ import 'task_details_page.dart';
 
 class NewTaskPage extends StatefulWidget {
   static const String routeName = "/NewTaskPage";
+  final void Function(Task newTask) addNewTask;
   const NewTaskPage({
     Key? key,
+    required this.addNewTask,
   }) : super(key: key);
 
   @override
@@ -20,14 +21,12 @@ class NewTaskPage extends StatefulWidget {
 }
 
 class _NewTaskPageState extends State<NewTaskPage> {
-  bool isEditing = false;
   final TextEditingController titleController = TextEditingController();
   final TextEditingController descriptionController = TextEditingController();
   late Task newTask;
   @override
   void initState() {
     super.initState();
-    final String taskUid = const Uuid().v4();
     newTask = Task(
       uid: taskUid,
       userId: "123",
@@ -37,15 +36,25 @@ class _NewTaskPageState extends State<NewTaskPage> {
       duetime: DateTime.now().toString(),
       teamMembers: [
         TeamMember(
-            taskUid: taskUid, uid: const Uuid().v4(), avatarUrl: "avatarUrl"),
+            taskUid: taskUid,
+            uid: const Uuid().v4(),
+            avatarUrl: "assets/images/Avatar2.png"),
         TeamMember(
-            taskUid: taskUid, uid: const Uuid().v4(), avatarUrl: "avatarUrl"),
+            taskUid: taskUid,
+            uid: const Uuid().v4(),
+            avatarUrl: "assets/images/Avatar2.png"),
         TeamMember(
-            taskUid: taskUid, uid: const Uuid().v4(), avatarUrl: "avatarUrl"),
+            taskUid: taskUid,
+            uid: const Uuid().v4(),
+            avatarUrl: "assets/images/Avatar2.png"),
         TeamMember(
-            taskUid: taskUid, uid: const Uuid().v4(), avatarUrl: "avatarUrl"),
+            taskUid: taskUid,
+            uid: const Uuid().v4(),
+            avatarUrl: "assets/images/Avatar2.png"),
         TeamMember(
-            taskUid: taskUid, uid: const Uuid().v4(), avatarUrl: "avatarUrl"),
+            taskUid: taskUid,
+            uid: const Uuid().v4(),
+            avatarUrl: "assets/images/Avatar2.png"),
       ],
       stages: [
         TaskStage(
@@ -77,36 +86,22 @@ class _NewTaskPageState extends State<NewTaskPage> {
     super.dispose();
   }
 
-  void toggleEditMode() {
-    setState(() {
-      isEditing = !isEditing;
-    });
-  }
-
-  void saveChanges() {
-    setState(() {
-      newTask.title = titleController.text;
-      newTask.description = descriptionController.text;
-
-      isEditing = false;
-    });
+  void createNewTask(BuildContext context) {
+    newTask.title = titleController.text;
+    newTask.description = descriptionController.text;
+    Navigator.pop(context, newTask);
   }
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: const Text("Task Details"),
-        actions: [
-          IconButton(
-            icon: const Icon(Icons.edit),
-            onPressed: toggleEditMode,
-          ),
-        ],
+        title: const Text("New Task"),
       ),
-      body: Padding(
-        padding: const EdgeInsets.all(16.0),
-        child: Column(
+      body: SingleChildScrollView(
+        child: Padding(
+          padding: const EdgeInsets.all(16.0),
+          child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             mainAxisAlignment: MainAxisAlignment.start,
             children: [
@@ -114,42 +109,39 @@ class _NewTaskPageState extends State<NewTaskPage> {
                 'Task Title',
                 style: TextStyle(
                   fontSize: 14,
-                  fontWeight: FontWeight.bold,
-                  color: Colors.black54,
+                  fontWeight: FontWeight.w500,
+                  color: Color(0xFF5D6B98),
                   height: 20 / 14,
                 ),
               ),
-              const SizedBox(height: 4),
-              isEditing
-                  ? TextField(
-                      controller: titleController,
-                      style: const TextStyle(
-                        fontSize: 20,
-                        fontWeight: FontWeight.bold,
-                        color: Colors.black,
-                        height: 28 / 20,
-                      ),
-                    )
-                  : Text(
-                      newTask.title,
-                      style: const TextStyle(
-                        fontSize: 20,
-                        fontWeight: FontWeight.bold,
-                        color: Colors.black,
-                        height: 28 / 20,
-                      ),
-                    ),
-              const SizedBox(height: 16),
+              const SizedBox(height: 12),
+              TextField(
+                controller: titleController,
+                decoration: const InputDecoration(
+                    hintText: "Enter title...",
+                    hintStyle: TextStyle(
+                      color: Colors.grey,
+                      fontSize: 16,
+                      fontWeight: FontWeight.w400,
+                    )),
+                style: const TextStyle(
+                  fontSize: 20,
+                  fontWeight: FontWeight.w600,
+                  color: Color(0xFF1D2939),
+                  height: 30 / 20,
+                ),
+              ),
+              const SizedBox(height: 21),
               const Text(
                 'Due Date',
                 style: TextStyle(
                   fontSize: 14,
-                  fontWeight: FontWeight.bold,
-                  color: Colors.black54,
+                  fontWeight: FontWeight.w500,
+                  color: Color(0xFF5D6B98),
                   height: 20 / 14,
                 ),
               ),
-              const SizedBox(height: 4),
+              const SizedBox(height: 20),
               Row(
                   mainAxisSize: MainAxisSize.min,
                   mainAxisAlignment: MainAxisAlignment.start,
@@ -162,80 +154,98 @@ class _NewTaskPageState extends State<NewTaskPage> {
                     const SizedBox(width: 8),
                     Text(formatDueTime(newTask.duetime),
                         style: const TextStyle(
-                          fontSize: 16,
+                          fontSize: 14,
+                          fontWeight: FontWeight.w500,
+                          height: 18 / 14,
+                          color: Color(0xFF111322),
                         )),
                     const Spacer(),
                     Container(
+                        height: 34,
+                        width: 95,
                         padding: const EdgeInsets.symmetric(
                             horizontal: 12, vertical: 6),
                         decoration: BoxDecoration(
-                          color: Colors.green[50],
+                          color: const Color.fromRGBO(3, 152, 85, 0.1),
                           borderRadius: BorderRadius.circular(16),
                         ),
                         child: const Text(
                           'On Progress',
+                          textAlign: TextAlign.center,
                           style: TextStyle(
-                            fontSize: 14,
-                            color: Color.fromARGB(255, 18, 67, 21),
-                            fontWeight: FontWeight.normal,
+                            fontSize: 12,
+                            color: Color(0xFF039855),
+                            fontWeight: FontWeight.w500,
+                            height: 18 / 12,
                           ),
                         )),
                   ]),
-              const SizedBox(height: 16),
+              const SizedBox(height: 27),
               const Text(
                 'Description',
                 style: TextStyle(
                   fontSize: 14,
-                  fontWeight: FontWeight.bold,
-                  color: Colors.black54,
+                  fontWeight: FontWeight.w500,
+                  color: Color(0xFF5D6B98),
                   height: 20 / 14,
                 ),
               ),
-              const SizedBox(height: 4),
-              isEditing
-                  ? TextField(
-                      controller: descriptionController,
-                      style: const TextStyle(
-                        fontSize: 16,
-                        fontWeight: FontWeight.w500,
-                        height: 20 / 14,
-                      ),
-                    )
-                  : Text(
-                      newTask.description,
-                      style: const TextStyle(
-                        fontSize: 16,
-                        fontWeight: FontWeight.w500,
-                        height: 20 / 14,
-                      ),
-                    ),
-              const SizedBox(height: 8),
+              const SizedBox(height: 12),
+              TextField(
+                controller: descriptionController,
+                decoration: const InputDecoration(
+                    hintText: "Enter description...",
+                    hintStyle: TextStyle(
+                      color: Colors.grey,
+                      fontSize: 16,
+                      fontWeight: FontWeight.w400,
+                    )),
+                style: const TextStyle(
+                  fontSize: 16,
+                  fontWeight: FontWeight.w500,
+                  height: 20 / 14,
+                ),
+              ),
+              const SizedBox(height: 15),
               Row(
                 mainAxisAlignment: MainAxisAlignment.start,
+                crossAxisAlignment: CrossAxisAlignment.center,
                 children: [
-                  for (var i = 0; i < min(newTask.teamMembers.length, 3); i++)
-                    Align(
-                      widthFactor: 0.64,
-                      child: CircleAvatar(
-                        backgroundColor: Colors.white,
-                        radius: 18,
-                        child: Container(
-                          clipBehavior: Clip.antiAlias,
-                          decoration: BoxDecoration(
-                            border: Border.all(color: Colors.white, width: 2),
-                            borderRadius: BorderRadius.circular(50),
+                  SizedBox(
+                    height: 40,
+                    width: 80,
+                    child: Stack(
+                      alignment: Alignment.centerLeft,
+                      children: [
+                        for (var i = 0;
+                            i < min(newTask.teamMembers.length, 3);
+                            i++)
+                          Positioned(
+                            left: (i * 22),
+                            top: 0,
+                            child: CircleAvatar(
+                              backgroundColor: Colors.white,
+                              radius: 16,
+                              child: Container(
+                                clipBehavior: Clip.antiAlias,
+                                decoration: BoxDecoration(
+                                  border:
+                                      Border.all(color: Colors.white, width: 2),
+                                  borderRadius: BorderRadius.circular(50),
+                                ),
+                                child: Image.asset(
+                                  newTask.teamMembers[i].avatarUrl,
+                                ),
+                              ),
+                            ),
                           ),
-                          padding: const EdgeInsets.all(5.0),
-                          child: Image.network(
-                            "https://github.com/identicons/guest.png",
-                          ),
-                        ),
-                      ),
+                      ],
                     ),
+                  ),
                   if (newTask.teamMembers.length > 3)
                     Flexible(
                       child: Padding(
-                        padding: const EdgeInsets.only(left: 12.0),
+                        padding: const EdgeInsets.only(bottom: 6),
                         child: Text(
                           "+${newTask.teamMembers.length - 3}",
                           style: const TextStyle(
@@ -246,31 +256,36 @@ class _NewTaskPageState extends State<NewTaskPage> {
                     ),
                 ],
               ),
-              const SizedBox(height: 16),
+              const SizedBox(height: 28),
               const Text('Stages of Task',
                   style: TextStyle(
                     fontSize: 16,
                     fontWeight: FontWeight.w500,
                     color: Colors.black54,
                   )),
+              const SizedBox(
+                height: 12,
+              ),
               Column(
                 children: [
                   for (var i = 0; i < newTask.stages.length; i++)
                     CheckListRow(content: newTask.stages[i].stageName),
                 ],
               ),
-              // const Spacer(),
-              Align(
-                alignment: Alignment.bottomCenter,
-                child: isEditing
-                    ? BtnDefault(
-                        onTap: saveChanges,
-                        title: 'Save Changes',
-                      )
-                    : const SizedBox.shrink(),
+              const SizedBox(
+                height: 20,
               ),
-              const SizedBox(height: 24),
-            ]),
+              BtnDefault(
+                onTap: (() {
+                  // createNewTask(context);
+                  widget.addNewTask.call(newTask);
+                  Navigator.of(context).pop();
+                }),
+                title: 'Create Task',
+              )
+            ],
+          ),
+        ),
       ),
     );
   }

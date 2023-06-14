@@ -2,9 +2,10 @@
 import 'dart:math' as math;
 
 import 'package:flutter/material.dart';
+import 'package:hcm23_03/features/tasks/entities/task_model.dart';
+import 'package:hcm23_03/features/tasks/pages/new_task_page.dart';
 import 'package:uuid/uuid.dart';
 
-import 'package:hcm23_03/features/tasks/entities/task_model.dart';
 import 'package:hcm23_03/features/tasks/widgets/task_card.dart';
 
 import '../../authentication/data/resource/sqlite_helper.dart';
@@ -110,9 +111,36 @@ class _TodayRecordsPageState extends State<TodayTasksPage> {
     //   ],
     // ),
   ];
+  // void addNewTask(BuildContext context) async {
+  //   final result = await Navigator.push<Task?>(
+  //       context, MaterialPageRoute(builder: (context) => const NewTaskPage()));
+  //   setState(() {
+  //     if (result != null) {
+  //       _hcm23Task.add(result);
+  //     }
+  //   });
+  // }
+
+  void addNewTaskWithoutPop(Task newTask) {
+    setState(() {
+      _hcm23Task.add(newTask);
+    });
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      floatingActionButton: FloatingActionButton(
+        onPressed: (() {
+          // addNewTask(context);
+          Navigator.of(context).pushNamed(
+            NewTaskPage.routeName,
+            arguments: addNewTaskWithoutPop,
+          );
+        }),
+        backgroundColor: const Color(0xFFB7ABFD),
+        child: const Icon(Icons.add),
+      ),
       appBar: AppBar(
         title: const Text(
           "Today Task",
@@ -148,4 +176,106 @@ class _TodayRecordsPageState extends State<TodayTasksPage> {
           )),
     );
   }
+
+  // List<List> taskCard = [
+  //   [
+  //     "8:30 AM",
+  //     "Meeting with Client",
+  //     "To discuss about the upcoming project & organization of figma files.",
+  //     "08:30 AM - 09:30 AM"
+  //   ],
+  //   [
+  //     "9:30 AM",
+  //     "Lunch Break",
+  //     "To discuss about the upcoming meeting.",
+  //     "09:30 AM - 10:30 AM"
+  //   ],
+  //   [
+  //     "10:30 AM",
+  //     "Dailly Stand-Up",
+  //     "A stand-up meeting is a meeting in which attendees typically participate while standing. The discomfort..",
+  //     "10:30 AM - 11:30 AM"
+  //   ]
+  // ];
+
+  // Widget _builTaskCard() {
+  //   return ListView.separated(
+  //     itemCount: taskCard.length,
+  //     separatorBuilder: (context, index) {
+  //       return Container(
+  //         margin: const EdgeInsets.symmetric(vertical: 10),
+  //         height: 0.5,
+  //         width: double.infinity,
+  //         color: Colors.black.withOpacity(0.5),
+  //       );
+  //     },
+  //     itemBuilder: (context, index) {
+  //       return Row(
+  //         children: [
+  //           Container(
+  //             padding: EdgeInsets.symmetric(horizontal: 16),
+  //             width: 80,
+  //             child: Text(
+  //               taskCard[index][0],
+  //               textAlign: TextAlign.center,
+  //               style: TextStyle(
+  //                 fontSize: 14,
+  //                 fontWeight: FontWeight.w500,
+  //               ),
+  //             ),
+  //           ),
+  //           Expanded(
+  //             child: Container(
+  //               decoration: BoxDecoration(
+  //                 borderRadius: BorderRadius.circular(20),
+  //                 color: Color.fromRGBO(182, 146, 246, 0.15),
+  //               ),
+  //               padding: const EdgeInsets.all(16),
+  //               child: Column(
+  //                 children: [
+  //                   Align(
+  //                     alignment: Alignment.centerLeft,
+  //                     child: Text(
+  //                       taskCard[index][1],
+  //                       style: TextStyle(
+  //                           fontWeight: FontWeight.w700,
+  //                           fontSize: 16,
+  //                           height: 20 / 16),
+  //                     ),
+  //                   ),
+  //                   const SizedBox(
+  //                     height: 8,
+  //                   ),
+  //                   Align(
+  //                     alignment: Alignment.centerLeft,
+  //                     child: Text(
+  //                       taskCard[index][2],
+  //                       style: TextStyle(
+  //                           fontWeight: FontWeight.w400,
+  //                           fontSize: 12,
+  //                           height: 20 / 12),
+  //                     ),
+  //                   ),
+  //                   const SizedBox(
+  //                     height: 8,
+  //                   ),
+  //                   Align(
+  //                     alignment: Alignment.centerLeft,
+  //                     child: Text(
+  //                       taskCard[index][3],
+  //                       style: TextStyle(
+  //                           fontWeight: FontWeight.w500,
+  //                           fontSize: 13,
+  //                           height: 20 / 13),
+  //                     ),
+  //                   ),
+  //                 ],
+  //               ),
+  //             ),
+  //           ),
+  //         ],
+  //       );
+  //     },
+  //   );
+  // }
 }

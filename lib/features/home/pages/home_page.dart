@@ -127,6 +127,7 @@ class _HomePageState extends State<HomePage> {
       ),
       body: _buildBody(currentIndex ?? 1),
     );
+  
   }
 
   Widget _buildBody(int index) {

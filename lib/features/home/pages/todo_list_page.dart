@@ -1,3 +1,5 @@
+
+
 import 'package:flutter/material.dart';
 
 class TodoListPage extends StatelessWidget {
@@ -13,13 +15,11 @@ class TodoListPage extends StatelessWidget {
               child: Container(
             color: Colors.green,
           )),
-          const Expanded(
+          Expanded(
               // todo: Tan, HaGiaMinh, Nhat
               flex: 4,
-              child: Text(
-                "a",
-                style: TextStyle(
-                    leadingDistribution: TextLeadingDistribution.even),
+              child: Container(
+              color: Colors.blue,
               )),
         ],
       ),

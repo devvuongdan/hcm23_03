@@ -10,8 +10,10 @@ import 'task_details_page.dart';
 
 class NewTaskPage extends StatefulWidget {
   static const String routeName = "/NewTaskPage";
+  final void Function(Task newTask) addNewTask;
   const NewTaskPage({
     Key? key,
+    required this.addNewTask,
   }) : super(key: key);
 
   @override
@@ -95,12 +97,6 @@ class _NewTaskPageState extends State<NewTaskPage> {
     return Scaffold(
       appBar: AppBar(
         title: const Text("New Task"),
-        // actions: [
-        //   IconButton(
-        //     icon: const Icon(Icons.edit),
-        //     onPressed: toggleEditMode,
-        //   ),
-        // ],
       ),
       body: SingleChildScrollView(
         child: Padding(
@@ -121,7 +117,7 @@ class _NewTaskPageState extends State<NewTaskPage> {
               const SizedBox(height: 12),
               TextField(
                 controller: titleController,
-                decoration: InputDecoration(
+                decoration: const InputDecoration(
                     hintText: "Enter title...",
                     hintStyle: TextStyle(
                       color: Colors.grey,
@@ -170,7 +166,7 @@ class _NewTaskPageState extends State<NewTaskPage> {
                         padding: const EdgeInsets.symmetric(
                             horizontal: 12, vertical: 6),
                         decoration: BoxDecoration(
-                          color: Color.fromRGBO(3, 152, 85, 0.1),
+                          color: const Color.fromRGBO(3, 152, 85, 0.1),
                           borderRadius: BorderRadius.circular(16),
                         ),
                         child: const Text(
@@ -197,7 +193,7 @@ class _NewTaskPageState extends State<NewTaskPage> {
               const SizedBox(height: 12),
               TextField(
                 controller: descriptionController,
-                decoration: InputDecoration(
+                decoration: const InputDecoration(
                     hintText: "Enter description...",
                     hintStyle: TextStyle(
                       color: Colors.grey,
@@ -267,7 +263,7 @@ class _NewTaskPageState extends State<NewTaskPage> {
                     fontWeight: FontWeight.w500,
                     color: Colors.black54,
                   )),
-              SizedBox(
+              const SizedBox(
                 height: 12,
               ),
               Column(
@@ -276,12 +272,14 @@ class _NewTaskPageState extends State<NewTaskPage> {
                     CheckListRow(content: newTask.stages[i].stageName),
                 ],
               ),
-              SizedBox(
+              const SizedBox(
                 height: 20,
               ),
               BtnDefault(
                 onTap: (() {
-                  createNewTask(context);
+                  // createNewTask(context);
+                  widget.addNewTask.call(newTask);
+                  Navigator.of(context).pop();
                 }),
                 title: 'Create Task',
               )

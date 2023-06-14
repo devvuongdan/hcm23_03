@@ -4,7 +4,6 @@ import 'dart:math' as math;
 import 'package:flutter/material.dart';
 import 'package:hcm23_03/features/tasks/entities/task_model.dart';
 import 'package:hcm23_03/features/tasks/pages/new_task_page.dart';
-import 'package:provider/provider.dart';
 import 'package:uuid/uuid.dart';
 
 import '../widgets/task_card.dart';
@@ -75,12 +74,18 @@ class _TodayRecordsPageState extends State<TodayTasksPage> {
       ],
     ),
   ];
-  void addNewTask(BuildContext context) async {
-    Task newTask = _hcm23Task[0];
-    final result = await Navigator.push(
-        context, MaterialPageRoute(builder: (context) => const NewTaskPage()));
+  // void addNewTask(BuildContext context) async {
+  //   final result = await Navigator.push<Task?>(
+  //       context, MaterialPageRoute(builder: (context) => const NewTaskPage()));
+  //   setState(() {
+  //     if (result != null) {
+  //       _hcm23Task.add(result);
+  //     }
+  //   });
+  // }
+
+  void addNewTaskWithoutPop(Task newTask) {
     setState(() {
-      newTask = result;
       _hcm23Task.add(newTask);
     });
   }
@@ -90,7 +95,11 @@ class _TodayRecordsPageState extends State<TodayTasksPage> {
     return Scaffold(
       floatingActionButton: FloatingActionButton(
         onPressed: (() {
-          addNewTask(context);
+          // addNewTask(context);
+          Navigator.of(context).pushNamed(
+            NewTaskPage.routeName,
+            arguments: addNewTaskWithoutPop,
+          );
         }),
         backgroundColor: const Color(0xFFB7ABFD),
         child: const Icon(Icons.add),

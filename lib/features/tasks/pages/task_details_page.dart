@@ -1,9 +1,7 @@
 import 'dart:math';
 
-import 'package:hcm23_03/shared/shared_ui/btn/btn_default/btn_default.dart';
 import 'package:intl/intl.dart';
 // import 'package:date_time_picker/date_time_picker.dart';
-import 'today_tasks_page.dart';
 import '../entities/task_model.dart';
 import 'package:flutter/material.dart';
 
@@ -34,12 +32,12 @@ class _CheckListRowState extends State<CheckListRow> {
         width: double.infinity,
         height: 70,
         decoration: BoxDecoration(
-          color: Color.fromARGB(255, 235, 235, 241),
+          color: const Color.fromARGB(255, 235, 235, 241),
           borderRadius: BorderRadius.circular(16),
         ),
         child: Row(
           children: [
-            SizedBox(
+            const SizedBox(
               width: 10,
             ),
             Checkbox(
@@ -188,7 +186,7 @@ class _TaskDetailsPageState extends State<TaskDetailsPage> {
                           padding: const EdgeInsets.symmetric(
                               horizontal: 12, vertical: 6),
                           decoration: BoxDecoration(
-                            color: Color.fromRGBO(3, 152, 85, 0.1),
+                            color: const Color.fromRGBO(3, 152, 85, 0.1),
                             borderRadius: BorderRadius.circular(16),
                           ),
                           child: const Text(
@@ -288,7 +286,7 @@ class _TaskDetailsPageState extends State<TaskDetailsPage> {
                       fontWeight: FontWeight.w500,
                       color: Colors.black54,
                     )),
-                SizedBox(
+                const SizedBox(
                   height: 12,
                 ),
                 Column(

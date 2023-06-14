@@ -7,7 +7,6 @@ import 'package:hcm23_03/features/register/pages/register_pages.dart';
 import 'package:hcm23_03/features/tasks/pages/new_task_page.dart';
 import 'package:hcm23_03/features/tasks/pages/task_details_page.dart';
 import 'package:hcm23_03/features/change_password/pages/change_password_page.dart';
-import 'package:hcm23_03/features/tasks/pages/today_tasks_page.dart';
 
 import 'features/tasks/entities/task_model.dart';
 
@@ -90,10 +89,14 @@ class MyApp extends StatelessWidget {
           }
 
           if (setting.name == NewTaskPage.routeName) {
-            final Task task = setting.arguments as Task;
+            // final Task task = setting.arguments as Task;
+            final void Function(Task newTask) addNewTask =
+                setting.arguments as void Function(Task newTask);
             return MaterialPageRoute(
               settings: const RouteSettings(name: NewTaskPage.routeName),
-              builder: (_) => const NewTaskPage(),
+              builder: (_) => NewTaskPage(
+                addNewTask: addNewTask,
+              ),
             );
           }
           return null;

@@ -3,7 +3,6 @@ import 'package:hcm23_03/features/tasks/entities/task_model.dart';
 import 'package:hcm23_03/features/tasks/pages/today_tasks_page.dart';
 import 'package:hcm23_03/shared/shared_ui/btn/btn_default/btn_default.dart';
 // import 'package:date_time_picker/date_time_picker.dart';
-import 'package:provider/provider.dart';
 import 'package:flutter/material.dart';
 import 'package:uuid/uuid.dart';
 
@@ -19,18 +18,10 @@ class NewTaskPage extends StatefulWidget {
   _NewTaskPageState createState() => _NewTaskPageState();
 }
 
-class DataProvider extends ChangeNotifier {
-  late Task newTask;
-  void setData(Task task) {
-    newTask = task;
-    notifyListeners();
-  }
-}
-
 class _NewTaskPageState extends State<NewTaskPage> {
   final TextEditingController titleController = TextEditingController();
   final TextEditingController descriptionController = TextEditingController();
-  static late Task newTask;
+  late Task newTask;
   @override
   void initState() {
     super.initState();
@@ -93,11 +84,10 @@ class _NewTaskPageState extends State<NewTaskPage> {
     super.dispose();
   }
 
-  void createTask() {
-    setState(() {
-      newTask.title = titleController.text;
-      newTask.description = descriptionController.text;
-    });
+  void createNewTask(BuildContext context) {
+    newTask.title = titleController.text;
+    newTask.description = descriptionController.text;
+    Navigator.pop(context, newTask);
   }
 
   @override
@@ -290,7 +280,9 @@ class _NewTaskPageState extends State<NewTaskPage> {
                 height: 20,
               ),
               BtnDefault(
-                onTap: createTask,
+                onTap: (() {
+                  createNewTask(context);
+                }),
                 title: 'Create Task',
               )
             ],

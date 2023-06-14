@@ -9,9 +9,6 @@ void main() async {
   WidgetsFlutterBinding.ensureInitialized();
   await Hcm23DBHelper.init();
   runApp(
-    ChangeNotifierProvider(
-      create: (context) => DataProvider(),
-      child: const MyApp(),
-    ),
+    const MyApp(),
   );
 }

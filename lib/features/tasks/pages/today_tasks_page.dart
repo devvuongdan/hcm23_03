@@ -23,62 +23,6 @@ class TodayTasksPage extends StatefulWidget {
 final String taskUid = const Uuid().v4();
 
 class _TodayRecordsPageState extends State<TodayTasksPage> {
-  late Task newTask;
-  @override
-  void initState() {
-    super.initState();
-    newTask = Task(
-      uid: taskUid,
-      userId: "123",
-      title: "title",
-      description: "description",
-      starttime: DateTime.now().toString(),
-      duetime: DateTime.now().toString(),
-      teamMembers: [
-        TeamMember(
-            taskUid: taskUid,
-            uid: const Uuid().v4(),
-            avatarUrl: "assets/images/Avatar2.png"),
-        TeamMember(
-            taskUid: taskUid,
-            uid: const Uuid().v4(),
-            avatarUrl: "assets/images/Avatar2.png"),
-        TeamMember(
-            taskUid: taskUid,
-            uid: const Uuid().v4(),
-            avatarUrl: "assets/images/Avatar2.png"),
-        TeamMember(
-            taskUid: taskUid,
-            uid: const Uuid().v4(),
-            avatarUrl: "assets/images/Avatar2.png"),
-        TeamMember(
-            taskUid: taskUid,
-            uid: const Uuid().v4(),
-            avatarUrl: "assets/images/Avatar2.png"),
-      ],
-      stages: [
-        TaskStage(
-          uid: const Uuid().v4(),
-          taskUid: taskUid,
-          isDone: true,
-          stageName: "stageName",
-        ),
-        TaskStage(
-          uid: const Uuid().v4(),
-          taskUid: taskUid,
-          isDone: true,
-          stageName: "stageName",
-        ),
-        TaskStage(
-          uid: const Uuid().v4(),
-          taskUid: taskUid,
-          isDone: true,
-          stageName: "stageName",
-        ),
-      ],
-    );
-  }
-
   final List<Task> _hcm23Task = [
     Task(
       uid: taskUid,
@@ -131,9 +75,13 @@ class _TodayRecordsPageState extends State<TodayTasksPage> {
       ],
     ),
   ];
-  void addTask(Task task) {
+  void addNewTask(BuildContext context) async {
+    Task newTask = _hcm23Task[0];
+    final result = await Navigator.push(
+        context, MaterialPageRoute(builder: (context) => const NewTaskPage()));
     setState(() {
-      _hcm23Task.add(task);
+      newTask = result;
+      _hcm23Task.add(newTask);
     });
   }
 
@@ -141,9 +89,9 @@ class _TodayRecordsPageState extends State<TodayTasksPage> {
   Widget build(BuildContext context) {
     return Scaffold(
       floatingActionButton: FloatingActionButton(
-        onPressed: () {
-          addTask(newTask);
-        },
+        onPressed: (() {
+          addNewTask(context);
+        }),
         backgroundColor: const Color(0xFFB7ABFD),
         child: const Icon(Icons.add),
       ),

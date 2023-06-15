@@ -9,7 +9,7 @@ class Task extends DBModel {
   String description;
   final String starttime;
   final String duetime;
-  final List<TeamMember> teamMembers;
+  List<TeamMember> teamMembers;
   List<TaskStage> stages;
   Task({
     required super.uid,

@@ -121,9 +121,9 @@ class _LoginPageState extends State<LoginPage> {
 
   @override
   void dispose() {
+    // _usernameController.dispose();
+    // _passwordController.dispose();
     super.dispose();
-    _usernameController.dispose();
-    _passwordController.dispose();
   }
 
   Color getColor(Set<MaterialState> states) {

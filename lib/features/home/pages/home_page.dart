@@ -1,5 +1,7 @@
 // ignore_for_file: public_member_api_docs, sort_constructors_first
 import 'package:flutter/material.dart';
+import 'package:flutter_svg/flutter_svg.dart';
+import 'package:hcm23_03/features/change_password/pages/change_password_page.dart';
 
 import 'package:hcm23_03/features/tasks/pages/new_task_page.dart';
 import 'package:hcm23_03/shared/shared_ui/btn/btn_default/btn_default.dart';
@@ -55,12 +57,141 @@ class _HomePageState extends State<HomePage> {
     await preferences.remove('password');
 
     // Navigate back to the LoginPage
-    Navigator.of(context).pushNamedAndRemoveUntil(LoginPage.routeName, (route) => false);
+    Navigator.of(context)
+        .pushNamedAndRemoveUntil(LoginPage.routeName, (route) => false);
+  }
+
+  void _navigateToChangePasswordPage() {
+    Navigator.of(context).pushNamedAndRemoveUntil(
+        ChangePasswordPage.routeName, (route) => false);
   }
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      appBar: AppBar(),
+      drawer: Drawer(
+        child: Container(
+          color: Colors.white,
+          height: MediaQuery.of(context).size.height,
+          width: MediaQuery.of(context).size.width * 0.75,
+          child: Column(children: [
+            Stack(
+              alignment: Alignment.bottomCenter,
+              children: [
+                Column(
+                  children: [
+                    DrawerHeader(
+                      decoration: const BoxDecoration(
+                        color: Color(0xFFB7ABFD),
+                      ),
+                      child: SizedBox(
+                        width: MediaQuery.of(context).size.width * 0.75,
+                      ),
+                    ),
+                    const SizedBox(
+                      height: 40,
+                    )
+                  ],
+                ),
+                const CircleAvatar(
+                  radius: 60,
+                  backgroundColor: Colors.green,
+                  child: CircleAvatar(
+                    radius: 58,
+                    backgroundImage: AssetImage('assets/images/Avatar1.png'),
+                  ),
+                )
+              ],
+            ),
+            const SizedBox(
+              height: 12,
+            ),
+            Row(
+              mainAxisAlignment: MainAxisAlignment.center,
+              crossAxisAlignment: CrossAxisAlignment.center,
+              children: [
+                const Text("Wang Yin",
+                    style: TextStyle(
+                      fontSize: 18,
+                      fontWeight: FontWeight.bold,
+                    )),
+                const SizedBox(
+                  width: 6,
+                ),
+                Image.asset("assets/images/tick_square.png"),
+              ],
+            ),
+            const SizedBox(
+              height: 24,
+            ),
+            Column(
+              children: [
+                TextButton(
+                  onPressed: () {},
+                  child: Row(
+                    mainAxisSize: MainAxisSize.min,
+                    children: [
+                      const Text(
+                        'Thông tin người dùng',
+                        style: TextStyle(
+                          fontSize: 16,
+                        ),
+                      ),
+                      const Spacer(),
+                      SvgPicture.asset(
+                        "assets/icons/angle_right_solid.svg",
+                        fit: BoxFit.contain,
+                        height: 20,
+                        width: 20,
+                      ),
+                    ],
+                  ),
+                ),
+                const Divider(
+                  indent: 12,
+                  endIndent: 12,
+                  thickness: 1,
+                  height: 16,
+                ),
+                TextButton(
+                  onPressed: () {
+                    _navigateToChangePasswordPage();
+                  },
+                  child: Row(
+                    mainAxisSize: MainAxisSize.min,
+                    children: [
+                      const Text(
+                        'Đổi mật khẩu',
+                        style: TextStyle(
+                          fontSize: 16,
+                        ),
+                      ),
+                      const Spacer(),
+                      SvgPicture.asset(
+                        "assets/icons/angle_right_solid.svg",
+                        fit: BoxFit.contain,
+                        height: 20,
+                        width: 20,
+                      ),
+                    ],
+                  ),
+                ),
+              ],
+            ),
+            const Spacer(),
+            Padding(
+                padding: const EdgeInsets.all(20),
+                child: BtnDefault(
+                  onTap: _signOut,
+                  title: "Đăng Xuất",
+                  height: 64,
+                  width: 128,
+                  type: BtnDefaultType.secondary,
+                ))
+          ]),
+        ),
+      ),
       // floatingActionButton: FloatingActionButton(
 
       //   onPressed: createNewTask,
@@ -138,14 +269,14 @@ class _HomePageState extends State<HomePage> {
         );
       default:
         return Center(
-          child: BtnDefault(
-            onTap: _signOut,
-            title: "Đăng Xuất",
-            height: 64,
-            width: 128,
-          )
-        );
+            child: BtnDefault(
+          onTap: _signOut,
+          title: "Đăng Xuất",
+          height: 64,
+          width: 128,
+        ));
     }
   }
 }
+
 // I/flutter (18313): [{uid: 3bab90ba-cb8f-4ab4-98d3-12cc4ab20cff, username: 123, password: 123}, {uid: 928d62cd-5b28-47c0-b5cc-5e90514aef3c, username: 123, password: 123}, {uid: 35c03ed1-57aa-495e-974b-f9adfdd9e235, username: 123, password: 123}, {uid: 41291b19-7abf-454c-9e83-1a3c6b9582f3, username: 123, password: 123}, {uid: 1ca70e39-7922-4ec6-9666-2d48de008f97, username: 123, password: 123}, {uid: 30297697-bad8-4962-bf96-74ad2aa661ce, username: 123, password: 123}, {uid: 25e854e2-1107-402d-bf14-6a1d1fd5015d, username: qwe, password: 23}, {uid: 5c2f34a5-f3a7-489f-9b97-82c034dc1a15, username: qwer, password: 1}, {uid: ac613923-e05b-46df-bb4b-6091b38c980b, username: dung, password: 123}, {uid: 3a8d5519-8649-4b2d-b40d-dc1e2f09c5b1, username: , password: }, {uid: db0f2300-70c5-4279-938d-3020e112bbd7, username: , password: }, {uid: c3dbc0e6-356b-496a-aa05-d7aa840b89c0, username: rt, password: e4}, {uid: a00a3ddc-62f3-4a77-9187-c5a4b6722ff4, username: dung, password: 123}, {uid: eb1c5224-7279-403d-805f-a1924b4a43f9, username: dung, p

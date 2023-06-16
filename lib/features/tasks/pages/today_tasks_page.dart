@@ -111,10 +111,27 @@ class _TodayRecordsPageState extends State<TodayTasksPage> {
     );
   }
 
-  void addNewTaskSuccess(Task task) {
-    print(task.title);
+  // void addNewTaskSuccess(Task task) {
+  //   print(task.title);
+
+  //   setState(() {
+  //     _tasks.add(task);
+  //   });
+  // }
+
+  void addNewTaskSuccess(Task task)async{
+     
+   
+    await Hcm23DBHelper.insert<Task>(Task.dbTable, task);
+    for (TeamMember element in task.teamMembers) {
+      await Hcm23DBHelper.insert<TeamMember>(TeamMember.dbTable, element);
+    }
+    for (TaskStage stage in task.stages) {
+      await Hcm23DBHelper.insert<TaskStage>(TaskStage.dbTable, stage);
+    }
     setState(() {
       _tasks.add(task);
+      print(task);
     });
   }
 

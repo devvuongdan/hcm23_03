@@ -25,22 +25,14 @@ class Task extends DBModel {
   @override
   factory Task.fromMap(Map<String, dynamic> map) {
     return Task(
-      uid: map['uid'] as String,
-      userId: map['userId'] as String,
-      title: map['title'] as String,
-      description: map['description'] as String,
-      starttime: map['starttime'] as String,
-      duetime: map['duetime'] as String,
-      teamMembers: List<TeamMember>.from(
-        (map['teamMembers'] as List? ?? []).map<TeamMember>(
-          (x) => TeamMember.fromMap(x as Map<String, dynamic>),
-        ),
-      ),
-      stages: List<TaskStage>.from(
-        (map['stages'] as List? ?? []).map<TaskStage>(
-          (x) => TaskStage.fromMap(x as Map<String, dynamic>),
-        ),
-      ),
+      uid: map['uid'].toString(),
+      userId: map['userId'].toString(),
+      title: map['title'].toString(),
+      description: map['description'].toString(),
+      starttime: map['starttime'].toString(),
+      duetime: map['duetime'].toString(),
+      teamMembers: [],
+      stages: [],
     );
   }
 
@@ -53,8 +45,8 @@ class Task extends DBModel {
       'description': description,
       'starttime': starttime,
       'duetime': duetime,
-      'teamMembers': teamMembers.map((x) => x.toMap()).toList(),
-      'stages': stages.map((x) => x.toMap()).toList(),
+      // 'teamMembers': teamMembers.map((x) => x.toMap()).toList(),
+      // 'stages': stages.map((x) => x.toMap()).toList(),
     };
   }
 }
@@ -84,10 +76,10 @@ class TaskStage extends DBModel {
 
   factory TaskStage.fromMap(Map<String, dynamic> map) {
     return TaskStage(
-      uid: map['uid'] as String,
-      taskUid: map['taskUid'] as String,
+      uid: map['uid'].toString(),
+      taskUid: map['taskUid'].toString(),
       isDone: map['isDone'] == "true",
-      stageName: map['stageName'] as String,
+      stageName: map['stageName'].toString(),
     );
   }
 }

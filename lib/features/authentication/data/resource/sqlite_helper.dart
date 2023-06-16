@@ -34,7 +34,7 @@ abstract class Hcm23DBHelper {
     }
 
     try {
-      String path = '${await getDatabasesPath()}-hcm23-03-dev-v1';
+      String path = '${await getDatabasesPath()}-hcm23-03-dev-v1-dung';
       _db = await openDatabase(path, version: _version, onCreate: onCreate);
     } catch (ex) {}
   }

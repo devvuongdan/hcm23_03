@@ -141,11 +141,6 @@ class _TodayRecordsPageState extends State<TodayTasksPage> {
         backgroundColor: const Color(0xFFB7ABFD),
         child: const Icon(Icons.add),
       ),
-      appBar: AppBar(
-        title: const Text(
-          "Today Task",
-        ),
-      ),
       body: Container(
           padding: const EdgeInsets.all(16),
           width: double.infinity,

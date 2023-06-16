@@ -70,7 +70,7 @@ class _HomePageState extends State<HomePage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(),
+      appBar: _buildAppBar(currentIndex ?? 0),
       drawer: _buildHomeDrawer(context),
       floatingActionButtonLocation: FloatingActionButtonLocation.endDocked,
       bottomNavigationBar: BubbleBottomBar(
@@ -131,6 +131,24 @@ class _HomePageState extends State<HomePage> {
         ],
       ),
       body: _buildBody(currentIndex ?? 1),
+    );
+  }
+
+  AppBar _buildAppBar(int currentIndex) {
+    late final Text text;
+    switch (currentIndex) {
+      case 0:
+        text = const Text("Home");
+        break;
+      case 1:
+        text = const Text("Today Tasks");
+        break;
+      default:
+        text = const Text("");
+        break;
+    }
+    return AppBar(
+      title: text,
     );
   }
 
@@ -267,9 +285,11 @@ class _HomePageState extends State<HomePage> {
           // tasks: _tasks,
         );
       default:
-        return const Center(
-          child: Text(
-            "Tính năng đang trong quá trìh phát triển",
+        return const Scaffold(
+          body: Center(
+            child: Text(
+              "Tính năng đang trong quá trìh phát triển",
+            ),
           ),
         );
     }

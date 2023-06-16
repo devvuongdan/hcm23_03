@@ -35,10 +35,16 @@ class _SplashPageState extends State<SplashPage> {
           await Hcm23DBHelper.query(Hcm23User.dbTable);
 
       try {
-        final user = users.firstWhere((user) => user['username'] == username);
-        print(user);
-        _navigateToHomePage(userId: user['uid']);
-      } catch (e) {}
+        final Map<String, dynamic> userMap =
+            users.firstWhere((user) => user['username'] == username);
+
+        final Hcm23User user = Hcm23User.fromMap(userMap);
+        if (user.password.toString() == password.toString()) {
+          _navigateToHomePage(userId: user.uid);
+        }
+      } catch (e) {
+        _navigateToLoginPage();
+      }
     } else {
       _navigateToLoginPage();
     }

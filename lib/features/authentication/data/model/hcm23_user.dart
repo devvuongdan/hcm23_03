@@ -22,9 +22,9 @@ class Hcm23User extends DBModel {
 
   factory Hcm23User.fromMap(Map<String, dynamic> map) {
     return Hcm23User(
-      uid: map['uid'] as String,
-      username: map['username'] as String,
-      password: map['password'] as String,
+      uid: map['uid'].toString(),
+      username: map['username'].toString(),
+      password: map['password'].toString(),
     );
   }
 }

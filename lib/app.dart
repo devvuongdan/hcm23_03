@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:hcm23_03/features/authentication/data/model/hcm23_user.dart';
 import 'features/forgot_password/pages/forgot_password_page.dart';
 import 'features/home/pages/home_page.dart';
 import 'features/login/pages/login_page.dart';
@@ -38,18 +39,19 @@ class MyApp extends StatelessWidget {
         home: const SplashPage(),
         onGenerateRoute: (setting) {
           if (setting.name == HomePage.routeName) {
-            final String userId = setting.arguments as String;
+            final Hcm23User user = setting.arguments as Hcm23User;
             return MaterialPageRoute(
               settings: const RouteSettings(name: HomePage.routeName),
               builder: (_) => HomePage(
-                userId: userId,
+                user: user,
               ),
             );
           }
           if (setting.name == ChangePasswordPage.routeName) {
+            final Hcm23User user = setting.arguments as Hcm23User;
             return MaterialPageRoute(
               settings: const RouteSettings(name: ChangePasswordPage.routeName),
-              builder: (_) => const ChangePasswordPage(),
+              builder: (_) => ChangePasswordPage(user: user),
             );
           }
           if (setting.name == NewTaskPage.routeName) {

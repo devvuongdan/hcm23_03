@@ -1,6 +1,7 @@
 // ignore_for_file: public_member_api_docs, sort_constructors_first, use_build_context_synchronously
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
+import 'package:hcm23_03/features/authentication/data/model/hcm23_user.dart';
 import 'package:hcm23_03/features/change_password/pages/change_password_page.dart';
 import 'package:hcm23_03/shared/shared_ui/btn/btn_default/btn_default.dart';
 import 'package:shared_preferences/shared_preferences.dart';
@@ -12,10 +13,10 @@ import '../widgets/bubble_bottom_bar.dart';
 
 class HomePage extends StatefulWidget {
   static const String routeName = "/HomePage";
-  final String userId;
+  final Hcm23User user;
   const HomePage({
     Key? key,
-    required this.userId,
+    required this.user,
   }) : super(key: key);
 
   @override
@@ -52,6 +53,7 @@ class _HomePageState extends State<HomePage> {
   void _navigateToChangePasswordPage() {
     Navigator.of(context).pushNamed(
       ChangePasswordPage.routeName,
+      arguments: widget.user,
     );
   }
 
@@ -269,7 +271,7 @@ class _HomePageState extends State<HomePage> {
     switch (index) {
       case 1:
         return TodayTasksPage(
-          userId: widget.userId,
+          userId: widget.user.uid,
           // tasks: _tasks,
         );
       default:

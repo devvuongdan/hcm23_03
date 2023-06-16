@@ -17,6 +17,7 @@ class SplashPage extends StatefulWidget {
 }
 
 class _SplashPageState extends State<SplashPage> {
+  late Hcm23User user;
   @override
   void initState() {
     super.initState();
@@ -38,7 +39,7 @@ class _SplashPageState extends State<SplashPage> {
         final Map<String, dynamic> userMap =
             users.firstWhere((user) => user['username'] == username);
 
-        final Hcm23User user = Hcm23User.fromMap(userMap);
+        user = Hcm23User.fromMap(userMap);
         if (user.password.toString() == password.toString()) {
           _navigateToHomePage(userId: user.uid);
         }
@@ -52,7 +53,7 @@ class _SplashPageState extends State<SplashPage> {
 
   void _navigateToHomePage({required String userId}) {
     Navigator.of(context).pushNamedAndRemoveUntil(
-        HomePage.routeName, arguments: userId, (route) => false);
+        HomePage.routeName, arguments: user, (route) => false);
   }
 
   void _navigateToLoginPage() {

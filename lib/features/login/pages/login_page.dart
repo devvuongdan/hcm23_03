@@ -92,9 +92,9 @@ class _LoginPageState extends State<LoginPage> {
     });
   }
 
-  void _navigateToHomePage(String userId) {
+  void _navigateToHomePage(Hcm23User user) {
     Navigator.of(context).pushNamedAndRemoveUntil(
-        HomePage.routeName, arguments: userId, (route) => false);
+        HomePage.routeName, arguments: user, (route) => false);
   }
 
   void _login() async {
@@ -104,18 +104,19 @@ class _LoginPageState extends State<LoginPage> {
     final List<Map<String, dynamic>> users =
         await Hcm23DBHelper.query(Hcm23User.dbTable);
 
-    final user = users.firstWhere((user) => user['username'] == username);
+    final userMap = users.firstWhere((user) => user['username'] == username);
+    final Hcm23User user = Hcm23User.fromMap(userMap);
 
-    if (user['password'].toString() == password) {
+    if (user.password.toString() == password.toString()) {
       // print("user da dang nhap");
       // print(user);
-      _navigateToHomePage(user['uid']);
+      _navigateToHomePage(user);
       if (remember) {
         final shared = await SharedPreferences.getInstance();
         shared.setString("username", username);
         shared.setString("password", password);
       }
-      _navigateToHomePage(user['uid']);
+      _navigateToHomePage(user);
       return;
     }
   }

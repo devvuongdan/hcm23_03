@@ -110,16 +110,19 @@ class _HomePageState extends State<HomePage> {
             Row(
               mainAxisAlignment: MainAxisAlignment.center,
               crossAxisAlignment: CrossAxisAlignment.center,
-              children: [
-                const Text("Wang Yin",
+              children: const [
+                Text("Wang Yin",
                     style: TextStyle(
                       fontSize: 18,
                       fontWeight: FontWeight.bold,
                     )),
-                const SizedBox(
+                SizedBox(
                   width: 6,
                 ),
-                Image.asset("assets/images/tick_square.png"),
+                Icon(
+                  Icons.check_rounded,
+                  color: Colors.green,
+                ),
               ],
             ),
             const SizedBox(
@@ -131,20 +134,17 @@ class _HomePageState extends State<HomePage> {
                   onPressed: () {},
                   child: Row(
                     mainAxisSize: MainAxisSize.min,
-                    children: [
-                      const Text(
+                    children: const [
+                      Text(
                         'Thông tin người dùng',
                         style: TextStyle(
                           fontSize: 16,
                         ),
                       ),
-                      const Spacer(),
-                      SvgPicture.asset(
-                        "assets/icons/angle_right_solid.svg",
-                        fit: BoxFit.contain,
-                        height: 20,
-                        width: 20,
-                      ),
+                      Spacer(),
+                      Icon(
+                        Icons.arrow_right,
+                      )
                     ],
                   ),
                 ),
@@ -160,19 +160,16 @@ class _HomePageState extends State<HomePage> {
                   },
                   child: Row(
                     mainAxisSize: MainAxisSize.min,
-                    children: [
-                      const Text(
+                    children: const [
+                      Text(
                         'Đổi mật khẩu',
                         style: TextStyle(
                           fontSize: 16,
                         ),
                       ),
-                      const Spacer(),
-                      SvgPicture.asset(
-                        "assets/icons/angle_right_solid.svg",
-                        fit: BoxFit.contain,
-                        height: 20,
-                        width: 20,
+                      Spacer(),
+                      Icon(
+                        Icons.arrow_right,
                       ),
                     ],
                   ),

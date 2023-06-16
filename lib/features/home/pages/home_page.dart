@@ -3,7 +3,6 @@ import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:hcm23_03/features/change_password/pages/change_password_page.dart';
 
-import 'package:hcm23_03/features/tasks/pages/new_task_page.dart';
 import 'package:hcm23_03/shared/shared_ui/btn/btn_default/btn_default.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
@@ -28,16 +27,6 @@ class _HomePageState extends State<HomePage> {
   int? currentIndex = 0;
   final PageController pageController = PageController(initialPage: 1);
   void changePage(int? idx) {}
-
-  void createNewTask() async {
-    Navigator.of(context).pushNamed(NewTaskPage.routeName);
-  }
-
-  void addNewTaskSuccess(Task task) {
-    setState(() {
-      _tasks.add(task);
-    });
-  }
 
   void viewTask() {}
   late final List<Task> _tasks = [];

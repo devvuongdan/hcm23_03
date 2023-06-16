@@ -52,7 +52,7 @@ class Task extends DBModel {
 class TaskStage extends DBModel {
   static const dbTable = "TaskStage";
   final bool isDone;
-  final String stageName;
+  String stageName;
   final String taskUid;
 
   TaskStage({

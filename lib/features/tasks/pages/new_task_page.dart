@@ -1,21 +1,34 @@
+// ignore_for_file: public_member_api_docs, sort_constructors_first
 // ignore_for_file: library_private_types_in_public_api
 
 import 'dart:math';
+
+import 'package:flutter/material.dart';
+
 import 'package:hcm23_03/features/tasks/entities/task_model.dart';
 import 'package:hcm23_03/features/tasks/pages/today_tasks_page.dart';
+import 'package:hcm23_03/features/tasks/widgets/task_stage_input.dart';
 import 'package:hcm23_03/shared/shared_ui/btn/btn_default/btn_default.dart';
-// import 'package:date_time_picker/date_time_picker.dart';
-import 'package:flutter/material.dart';
 import 'package:uuid/uuid.dart';
 
 import 'task_details_page.dart';
 
+class NewTaskPageArg {
+  final String userId;
+  final void Function(Task) onAddNewTask;
+  NewTaskPageArg({
+    required this.userId,
+    required this.onAddNewTask,
+  });
+}
+
 class NewTaskPage extends StatefulWidget {
   static const String routeName = "/NewTaskPage";
-  final void Function(Task newTask) addNewTask;
+  final NewTaskPageArg arg;
+
   const NewTaskPage({
     Key? key,
-    required this.addNewTask,
+    required this.arg,
   }) : super(key: key);
 
   @override
@@ -25,74 +38,41 @@ class NewTaskPage extends StatefulWidget {
 class _NewTaskPageState extends State<NewTaskPage> {
   final TextEditingController titleController = TextEditingController();
   final TextEditingController descriptionController = TextEditingController();
+
   late Task newTask;
   @override
   void initState() {
     super.initState();
     newTask = Task(
       uid: taskUid,
-      userId: "123",
-      title: "title",
-      description: "description",
+      userId: widget.arg.userId,
+      title: "",
+      description: "",
       starttime: DateTime.now().toString(),
       duetime: DateTime.now().toString(),
-      teamMembers: [
-        TeamMember(
-            taskUid: taskUid,
-            uid: const Uuid().v4(),
-            avatarUrl: "assets/images/Avatar2.png"),
-        TeamMember(
-            taskUid: taskUid,
-            uid: const Uuid().v4(),
-            avatarUrl: "assets/images/Avatar2.png"),
-        TeamMember(
-            taskUid: taskUid,
-            uid: const Uuid().v4(),
-            avatarUrl: "assets/images/Avatar2.png"),
-        TeamMember(
-            taskUid: taskUid,
-            uid: const Uuid().v4(),
-            avatarUrl: "assets/images/Avatar2.png"),
-        TeamMember(
-            taskUid: taskUid,
-            uid: const Uuid().v4(),
-            avatarUrl: "assets/images/Avatar2.png"),
-      ],
-      stages: [
-        TaskStage(
-          uid: const Uuid().v4(),
-          taskUid: taskUid,
-          isDone: true,
-          stageName: "stageName",
-        ),
-        TaskStage(
-          uid: const Uuid().v4(),
-          taskUid: taskUid,
-          isDone: true,
-          stageName: "stageName",
-        ),
-        TaskStage(
-          uid: const Uuid().v4(),
-          taskUid: taskUid,
-          isDone: true,
-          stageName: "stageName",
-        ),
-      ],
+      teamMembers: [],
+      stages: [],
     );
+    titleController.addListener(() {
+      setState(() {
+        newTask.title = titleController.text;
+      });
+    });
+    descriptionController.addListener(() {
+      newTask.description = descriptionController.text;
+    });
   }
 
   @override
   void dispose() {
-    titleController.dispose();
-    descriptionController.dispose();
     super.dispose();
   }
 
-  void createNewTask(BuildContext context) {
-    newTask.title = titleController.text;
-    newTask.description = descriptionController.text;
-    Navigator.pop(context, newTask);
-  }
+  // void createNewTask(BuildContext context) {
+  //   newTask.title = titleController.text;
+  //   newTask.description = descriptionController.text;
+  //   Navigator.pop(context, newTask);
+  // }
 
   @override
   Widget build(BuildContext context) {
@@ -271,7 +251,39 @@ class _NewTaskPageState extends State<NewTaskPage> {
               Column(
                 children: [
                   for (var i = 0; i < newTask.stages.length; i++)
-                    CheckListRow(content: newTask.stages[i].stageName),
+                    TaskStageInput(
+                      onRemove: () {
+                        setState(() {
+                          newTask.stages.removeWhere((element) =>
+                              element.uid == newTask.stages[i].uid);
+                        });
+                      },
+                      onChecked: (value) {
+                        setState(() {
+                          newTask.stages
+                              .firstWhere((element) =>
+                                  element.uid == newTask.stages[i].uid)
+                              .stageName = value;
+                        });
+                      },
+                    ),
+                  Align(
+                    alignment: Alignment.centerRight,
+                    child: BtnDefault(
+                      type: BtnDefaultType.secondary,
+                      title: "+",
+                      onTap: () {
+                        setState(() {
+                          final TaskStage newStage = TaskStage(
+                              taskUid: newTask.uid,
+                              isDone: false,
+                              stageName: "",
+                              uid: const Uuid().v4());
+                          newTask.stages.add(newStage);
+                        });
+                      },
+                    ),
+                  )
                 ],
               ),
               const SizedBox(
@@ -279,8 +291,7 @@ class _NewTaskPageState extends State<NewTaskPage> {
               ),
               BtnDefault(
                 onTap: (() {
-                  // createNewTask(context);
-                  widget.addNewTask.call(newTask);
+                  widget.arg.onAddNewTask.call(newTask);
                   Navigator.of(context).pop();
                 }),
                 title: 'Create Task',

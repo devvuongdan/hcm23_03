@@ -54,12 +54,12 @@ class MyApp extends StatelessWidget {
           }
           if (setting.name == NewTaskPage.routeName) {
             // final Task task = setting.arguments as Task;
-            final void Function(Task newTask) addNewTask =
-                setting.arguments as void Function(Task newTask);
+            final NewTaskPageArg arg = setting.arguments as NewTaskPageArg;
+
             return MaterialPageRoute(
               settings: const RouteSettings(name: NewTaskPage.routeName),
               builder: (_) => NewTaskPage(
-                addNewTask: addNewTask,
+                arg: arg,
               ),
             );
           }
@@ -103,17 +103,6 @@ class MyApp extends StatelessWidget {
             );
           }
 
-          if (setting.name == NewTaskPage.routeName) {
-            // final Task task = setting.arguments as Task;
-            final void Function(Task newTask) addNewTask =
-                setting.arguments as void Function(Task newTask);
-            return MaterialPageRoute(
-              settings: const RouteSettings(name: NewTaskPage.routeName),
-              builder: (_) => NewTaskPage(
-                addNewTask: addNewTask,
-              ),
-            );
-          }
           return null;
         },
         initialRoute: "/",

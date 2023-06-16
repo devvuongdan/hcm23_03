@@ -48,6 +48,10 @@ class _ChangePassword extends State<ChangePasswordPage> {
     });
   }
 
+  void changePassword()async{
+    
+  }
+
   @override
   void dispose() {
     _currentPassWordController.dispose();

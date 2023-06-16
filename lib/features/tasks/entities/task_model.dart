@@ -31,8 +31,16 @@ class Task extends DBModel {
       description: map['description'] as String,
       starttime: map['starttime'] as String,
       duetime: map['duetime'] as String,
-      teamMembers: [],
-      stages: [],
+      teamMembers: List<TeamMember>.from(
+        (map['teamMembers'] as List? ?? []).map<TeamMember>(
+          (x) => TeamMember.fromMap(x as Map<String, dynamic>),
+        ),
+      ),
+      stages: List<TaskStage>.from(
+        (map['stages'] as List? ?? []).map<TaskStage>(
+          (x) => TaskStage.fromMap(x as Map<String, dynamic>),
+        ),
+      ),
     );
   }
 
@@ -45,6 +53,8 @@ class Task extends DBModel {
       'description': description,
       'starttime': starttime,
       'duetime': duetime,
+      'teamMembers': teamMembers.map((x) => x.toMap()).toList(),
+      'stages': stages.map((x) => x.toMap()).toList(),
     };
   }
 }

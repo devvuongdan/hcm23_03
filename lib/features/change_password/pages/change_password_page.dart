@@ -9,7 +9,6 @@ import '../../../shared/shared_ui/btn/btn_default/btn_default.dart';
 import '../../../shared/shared_ui/inputs/input_clear/input_clear.dart';
 import '../../authentication/data/resource/sqlite_helper.dart';
 import '../../home/pages/home_page.dart';
-import 'package:flutter_easyloading/flutter_easyloading.dart';
 
 class ChangePasswordPage extends StatefulWidget {
   static const String routeName = "ChangePasswordPage";
@@ -54,36 +53,68 @@ class _ChangePassword extends State<ChangePasswordPage> {
   void changePassword() async {
     EasyLoading.show(status: 'loading...');
     String currentPassword = widget.user.password;
-    if (currentPassword == _currentPassWordController.text.toString()) {
-      if (_newPassWordController.text.toString() ==
-          _confirmNewPassWordController.text.toString()) {
-        if (_confirmNewPassWordController.text.toString() != currentPassword) {
-          await Hcm23DBHelper.update(
-            Hcm23User.dbTable,
-            Hcm23User(
-              uid: widget.user.uid,
-              username: widget.user.username,
-              password: _confirmNewPassWordController.text.toString(),
-            ),
-          );
-          await Future.delayed(const Duration(seconds: 1));
-          EasyLoading.showSuccess('Changed Succefully!');
-          await Future.delayed(const Duration(seconds: 1));
-          Navigator.of(context).popUntil(
-            ModalRoute.withName(HomePage.routeName),
-          );
-        } else {
-          await Future.delayed(const Duration(seconds: 1));
-          EasyLoading.showError('New Password must be different');
-        }
-      } else {
-        await Future.delayed(const Duration(seconds: 1));
-        EasyLoading.showError('Confirm Password is Wrong!');
-      }
-    } else {
+
+    // if (currentPassword == _currentPassWordController.text.toString()) {
+    //   if (_newPassWordController.text.toString() ==
+    //       _confirmNewPassWordController.text.toString()) {
+    //     if (_confirmNewPassWordController.text.toString() != currentPassword) {
+    //       await Hcm23DBHelper.update(
+    //         Hcm23User.dbTable,
+    //         // Hcm23User(
+    //         //   uid: widget.user.uid,
+    //         //   username: widget.user.username,
+    //         //   password: _confirmNewPassWordController.text.toString(),
+    //         // ),
+    //         widget.user.copyWith(password: _confirmNewPassWordController.text),
+    //       );
+    //       await Future.delayed(const Duration(seconds: 1));
+    //       EasyLoading.showSuccess('Changed Succefully!');
+    //       await Future.delayed(const Duration(seconds: 1));
+    //       Navigator.of(context).popUntil(
+    //         ModalRoute.withName(HomePage.routeName),
+    //       );
+    //     } else {
+    //       await Future.delayed(const Duration(seconds: 1));
+    //       EasyLoading.showError('New Password must be different');
+    //     }
+    //   } else {
+    //     await Future.delayed(const Duration(seconds: 1));
+    //     EasyLoading.showError('Confirm Password is Wrong!');
+    //   }
+    // } else {
+    //   await Future.delayed(const Duration(seconds: 1));
+    //   EasyLoading.showError('Wrong Password!');
+    // }
+    if (currentPassword != _currentPassWordController.text.toString()) {
       await Future.delayed(const Duration(seconds: 1));
       EasyLoading.showError('Wrong Password!');
+      return;
     }
+
+    if (_newPassWordController.text.toString() !=
+            _confirmNewPassWordController.text.toString() ||
+        _confirmNewPassWordController.text.isEmpty) {
+      await Future.delayed(const Duration(seconds: 1));
+      EasyLoading.showError('Confirm Password is Wrong or Empty!');
+      return;
+    }
+
+    if (_confirmNewPassWordController.text.toString() == currentPassword) {
+      await Future.delayed(const Duration(seconds: 1));
+      EasyLoading.showError('New Password must be different');
+      return;
+    }
+
+    await Hcm23DBHelper.update(
+      Hcm23User.dbTable,
+      widget.user.copyWith(password: _confirmNewPassWordController.text),
+    );
+    await Future.delayed(const Duration(seconds: 1));
+    EasyLoading.showSuccess('Changed Succefully!');
+    await Future.delayed(const Duration(seconds: 1));
+    Navigator.of(context).popUntil(
+      ModalRoute.withName(HomePage.routeName),
+    );
   }
 
   @override

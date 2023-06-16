@@ -148,8 +148,9 @@ class _ChangePassword extends State<ChangePasswordPage> {
                       title: "Huỷ",
                       type: BtnDefaultType.secondary,
                       onTap: () {
-                        Navigator.of(context).pushNamedAndRemoveUntil(
-                            HomePage.routeName, (route) => false);
+                        Navigator.of(context).popUntil(
+                          ModalRoute.withName(HomePage.routeName),
+                        );
                       },
                     ),
                   ),

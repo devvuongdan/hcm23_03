@@ -5,12 +5,12 @@ import 'package:hcm23_03/features/authentication/data/resource/sqlite_helper.dar
 class Task extends DBModel {
   static const dbTable = "Task";
   final String userId;
-  late final String title;
-  late final String description;
+  String title;
+  String description;
   final String starttime;
   final String duetime;
-  final List<TeamMember> teamMembers;
-  final List<TaskStage> stages;
+  List<TeamMember> teamMembers;
+  List<TaskStage> stages;
   Task({
     required super.uid,
     required this.userId,
@@ -31,8 +31,16 @@ class Task extends DBModel {
       description: map['description'] as String,
       starttime: map['starttime'] as String,
       duetime: map['duetime'] as String,
-      teamMembers: [],
-      stages: [],
+      teamMembers: List<TeamMember>.from(
+        (map['teamMembers'] as List? ?? []).map<TeamMember>(
+          (x) => TeamMember.fromMap(x as Map<String, dynamic>),
+        ),
+      ),
+      stages: List<TaskStage>.from(
+        (map['stages'] as List? ?? []).map<TaskStage>(
+          (x) => TaskStage.fromMap(x as Map<String, dynamic>),
+        ),
+      ),
     );
   }
 
@@ -45,6 +53,8 @@ class Task extends DBModel {
       'description': description,
       'starttime': starttime,
       'duetime': duetime,
+      'teamMembers': teamMembers.map((x) => x.toMap()).toList(),
+      'stages': stages.map((x) => x.toMap()).toList(),
     };
   }
 }
@@ -52,7 +62,7 @@ class Task extends DBModel {
 class TaskStage extends DBModel {
   static const dbTable = "TaskStage";
   final bool isDone;
-  final String stageName;
+  String stageName;
   final String taskUid;
 
   TaskStage({

@@ -1,8 +1,8 @@
+// ignore_for_file: unused_local_variable
+
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:hcm23_03/features/tasks/entities/task_model.dart';
-import '../../home/pages/home_page.dart';
-import '../../login/pages/login_page.dart';
 import 'package:uuid/uuid.dart';
 
 import '../../../shared/shared_ui/btn/btn_default/btn_default.dart';
@@ -12,7 +12,8 @@ import '../../../shared/shared_ui/themes/colors.dart';
 import '../../../shared/shared_ui/themes/text_styles.dart';
 import '../../authentication/data/model/hcm23_user.dart';
 import '../../authentication/data/resource/sqlite_helper.dart';
-
+import '../../home/pages/home_page.dart';
+import '../../login/pages/login_page.dart';
 
 class RegisterPage extends StatefulWidget {
   static const String routeName = '/RegisterPage';
@@ -31,6 +32,21 @@ class _RegisterPageState extends State<RegisterPage> {
       _hidePw = !_hidePw;
     });
   }
+
+  // signup() {
+  //   if (_usernameController.text.isEmpty || _passwordController.text.isEmpty) {
+  //     MotionToast.error(
+  //             title: Text("Đăng ký thất bại!"),
+  //             description: Text("Yêu cầu nhập lại tài khoản hoặc mật khẩu"))
+  //         .show(context);
+  //   } else {
+  //     Navigator.of(context).pushNamed(HomePage.routeName);
+  //     MotionToast.success(
+  //             title: Text("Đăng ký thành công!"),
+  //             description: Text("Chúc mừng bạn đã đăng ký thành công"))
+  //         .show(context);
+  //   }
+  // }
 
   FeedbackType passwordFeedbackType = FeedbackType.none;
   String? feedbackMessage;
@@ -57,12 +73,15 @@ class _RegisterPageState extends State<RegisterPage> {
     final String password = _passwordController.text;
     final List<Map<String, dynamic>> users =
         await Hcm23DBHelper.query(Hcm23User.dbTable);
-    print(users);
-    final user = users.firstWhere((user) => user['username'] == username);
+    // print(users);
+    final userMap = users.firstWhere((user) => user['username'] == username);
 
-    if (user['password'].toString() == password) {
+    final Hcm23User user = Hcm23User.fromMap(userMap);
+    if (user.password.toString() == password.toString()) {
       _getTasks();
-      _navigateToHomePage();
+      _navigateToHomePage(
+        user: user,
+      );
 
       return;
     }
@@ -117,20 +136,19 @@ class _RegisterPageState extends State<RegisterPage> {
   _getTasks() async {
     final List<Map<String, dynamic>> tasks =
         await Hcm23DBHelper.query(Task.dbTable);
-    print(tasks.first);
+    // print(tasks.length);
     final List<Map<String, dynamic>> taskStages =
         await Hcm23DBHelper.query(TaskStage.dbTable);
-    print(taskStages.first);
+    // print(taskStages.length);
     final List<Map<String, dynamic>> teamMembers =
         await Hcm23DBHelper.query(TeamMember.dbTable);
-    print(teamMembers.first);
+    // print(teamMembers.length);
   }
 
-  void _navigateToHomePage() {
-    Navigator.of(context)
-        .pushNamedAndRemoveUntil(HomePage.routeName, (route) => false);
+  void _navigateToHomePage({required Hcm23User user}) {
+    Navigator.of(context).pushNamedAndRemoveUntil(
+        HomePage.routeName, arguments: user, (route) => false);
   }
-
 
   @override
   Widget build(BuildContext context) {
@@ -149,25 +167,25 @@ class _RegisterPageState extends State<RegisterPage> {
                 padding: const EdgeInsets.symmetric(vertical: 16),
                 child: Image.asset("assets/images/image_login.png"),
               ),
-              Text(
-                "Xin chào Người dùng!",
-                style: tStyle.paragraph18().w500().copyWith(
-                      color: Hcm23Colors.colorTextTitle,
-                    ),
-              ),
-              const SizedBox(
-                height: 12,
-              ),
-              Text(
-                "Vui lòng điền thông tin tài khoản để đăng ký!",
-                style: tStyle
-                    .paragraph14()
-                    .w400()
-                    .copyWith(color: Hcm23Colors.colorTextPhude),
-              ),
-              const SizedBox(
-                height: 20,
-              ),
+              // Text(
+              //   "Xin chào Người dùng!",
+              //   style: tStyle.paragraph18().w500().copyWith(
+              //         color: Hcm23Colors.colorTextTitle,
+              //       ),
+              // ),
+              // const SizedBox(
+              //   height: 12,
+              // ),
+              // Text(
+              //   "Vui lòng điền thông tin tài khoản để đăng ký!",
+              //   style: tStyle
+              //       .paragraph14()
+              //       .w400()
+              //       .copyWith(color: Hcm23Colors.colorTextPhude),
+              // ),
+              // const SizedBox(
+              //   height: 20,
+              // ),
               InputClear(
                 controller: _usernameController,
                 placeholderText: "Tài khoản",

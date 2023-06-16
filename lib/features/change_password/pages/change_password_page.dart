@@ -1,11 +1,20 @@
+// ignore_for_file: public_member_api_docs, sort_constructors_first
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
+
+import 'package:hcm23_03/features/authentication/data/model/hcm23_user.dart';
+
 import '../../../shared/shared_ui/btn/btn_default/btn_default.dart';
 import '../../../shared/shared_ui/inputs/input_clear/input_clear.dart';
+import '../../home/pages/home_page.dart';
 
 class ChangePasswordPage extends StatefulWidget {
   static const String routeName = "ChangePasswordPage";
-  const ChangePasswordPage({super.key});
+  final Hcm23User user;
+  const ChangePasswordPage({
+    Key? key,
+    required this.user,
+  }) : super(key: key);
 
   @override
   State<ChangePasswordPage> createState() => _ChangePassword();
@@ -37,6 +46,10 @@ class _ChangePassword extends State<ChangePasswordPage> {
     setState(() {
       _obscureConfirmNewPassword = !_obscureConfirmNewPassword;
     });
+  }
+
+  void changePassword()async{
+    
   }
 
   @override
@@ -146,7 +159,11 @@ class _ChangePassword extends State<ChangePasswordPage> {
                     child: BtnDefault(
                       title: "Huỷ",
                       type: BtnDefaultType.secondary,
-                      onTap: () {},
+                      onTap: () {
+                        Navigator.of(context).popUntil(
+                          ModalRoute.withName(HomePage.routeName),
+                        );
+                      },
                     ),
                   ),
                   const SizedBox(

@@ -1,29 +1,36 @@
 import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
-import '../../authentication/data/model/hcm23_user.dart';
-import '../../forgot_password/pages/forgot_password_page.dart';
-import '../../register/pages/register_pages.dart';
+import 'package:shared_preferences/shared_preferences.dart';
+import 'package:uuid/uuid.dart';
 
 import '../../../shared/shared_ui/base_screen/base_screen.dart';
 import '../../../shared/shared_ui/btn/btn_default/btn_default.dart';
 import '../../../shared/shared_ui/inputs/input_clear/input_clear.dart';
 import '../../../shared/shared_ui/themes/colors.dart';
 import '../../../shared/shared_ui/themes/text_styles.dart';
+import '../../authentication/data/model/hcm23_user.dart';
 import '../../authentication/data/resource/sqlite_helper.dart';
+import '../../forgot_password/pages/forgot_password_page.dart';
 import '../../home/pages/home_page.dart';
+import '../../register/pages/register_pages.dart';
 
 class LoginPage extends StatefulWidget {
-  static const String routeName = "/LoginPage";
   const LoginPage({super.key});
-
+  static const String routeName = "/LoginPage";
   @override
   State<LoginPage> createState() => _LoginPageState();
 }
 
 class _LoginPageState extends State<LoginPage> {
+  // final formKey = GlobalKey<FormState>();
+  // late Task newTask;
   final TextEditingController _usernameController = TextEditingController();
+
   final TextEditingController _passwordController = TextEditingController();
+  bool hidePw = false;
+
+  bool remember = false;
   String? feedbackMessage;
 
   @override
@@ -31,9 +38,47 @@ class _LoginPageState extends State<LoginPage> {
     super.initState();
   }
 
-  bool hidePw = false;
-
-  bool remember = false;
+  final String taskUid = const Uuid().v4();
+  // newTask = Task(
+  //     uid: taskUid,
+  //     userId: "123",
+  //     title: "title",
+  //     description: "description",
+  //     starttime: DateTime.now().toString(),
+  //     duetime: DateTime.now().toString(),
+  //     teamMembers: [
+  //       TeamMember(
+  //           taskUid: taskUid, uid: const Uuid().v4(), avatarUrl: "avatarUrl"),
+  //       TeamMember(
+  //           taskUid: taskUid, uid: const Uuid().v4(), avatarUrl: "avatarUrl"),
+  //       TeamMember(
+  //           taskUid: taskUid, uid: const Uuid().v4(), avatarUrl: "avatarUrl"),
+  //       TeamMember(
+  //           taskUid: taskUid, uid: const Uuid().v4(), avatarUrl: "avatarUrl"),
+  //       TeamMember(
+  //           taskUid: taskUid, uid: const Uuid().v4(), avatarUrl: "avatarUrl"),
+  //     ],
+  //     stages: [
+  //       TaskStage(
+  //         uid: const Uuid().v4(),
+  //         taskUid: taskUid,
+  //         isDone: true,
+  //         stageName: "stageName",
+  //       ),
+  //       TaskStage(
+  //         uid: const Uuid().v4(),
+  //         taskUid: taskUid,
+  //         isDone: true,
+  //         stageName: "stageName",
+  //       ),
+  //       TaskStage(
+  //         uid: const Uuid().v4(),
+  //         taskUid: taskUid,
+  //         isDone: true,
+  //         stageName: "stageName",
+  //       ),
+  //     ],
+  //   );
 
   void _toggleHidePw() {
     setState(() {
@@ -41,15 +86,15 @@ class _LoginPageState extends State<LoginPage> {
     });
   }
 
-  void _toggleRememberAccount(bool? value) {
+  Future<void> _toggleRememberAccount(bool? value) async {
     setState(() {
       remember = value == true;
     });
   }
 
-  void _navigateToHomePage() {
-    Navigator.of(context)
-        .pushNamedAndRemoveUntil(HomePage.routeName, (route) => false);
+  void _navigateToHomePage(Hcm23User user) {
+    Navigator.of(context).pushNamedAndRemoveUntil(
+        HomePage.routeName, arguments: user, (route) => false);
   }
 
   void _login() async {
@@ -59,16 +104,27 @@ class _LoginPageState extends State<LoginPage> {
     final List<Map<String, dynamic>> users =
         await Hcm23DBHelper.query(Hcm23User.dbTable);
 
-    final user = users.firstWhere((user) => user['username'] == username);
+    final userMap = users.firstWhere((user) => user['username'] == username);
+    final Hcm23User user = Hcm23User.fromMap(userMap);
 
-    if (user['password'].toString() == password) {
-      _navigateToHomePage();
+    if (user.password.toString() == password.toString()) {
+      // print("user da dang nhap");
+      // print(user);
+      _navigateToHomePage(user);
+      if (remember) {
+        final shared = await SharedPreferences.getInstance();
+        shared.setString("username", username);
+        shared.setString("password", password);
+      }
+      _navigateToHomePage(user);
       return;
     }
   }
 
   @override
   void dispose() {
+    // _usernameController.dispose();
+    // _passwordController.dispose();
     super.dispose();
   }
 
@@ -83,6 +139,11 @@ class _LoginPageState extends State<LoginPage> {
     }
     return Colors.red;
   }
+
+  // void _navigateToHomePage({required String userId}) {
+  //   Navigator.of(context)
+  //       .pushNamedAndRemoveUntil(HomePage.routeName, (route) => false);
+  // }
 
   @override
   Widget build(BuildContext context) {

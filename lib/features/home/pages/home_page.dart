@@ -1,12 +1,23 @@
+// ignore_for_file: public_member_api_docs, sort_constructors_first, use_build_context_synchronously
 import 'package:flutter/material.dart';
+import 'package:flutter_svg/flutter_svg.dart';
+import 'package:hcm23_03/features/authentication/data/model/hcm23_user.dart';
+import 'package:hcm23_03/features/change_password/pages/change_password_page.dart';
+import 'package:hcm23_03/shared/shared_ui/btn/btn_default/btn_default.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
+import '../../login/pages/login_page.dart';
 import '../../tasks/entities/task_model.dart';
 import '../../tasks/pages/today_tasks_page.dart';
 import '../widgets/bubble_bottom_bar.dart';
 
 class HomePage extends StatefulWidget {
   static const String routeName = "/HomePage";
-  const HomePage({super.key});
+  final Hcm23User user;
+  const HomePage({
+    Key? key,
+    required this.user,
+  }) : super(key: key);
 
   @override
   State<HomePage> createState() => _HomePageState();
@@ -16,14 +27,6 @@ class _HomePageState extends State<HomePage> {
   int? currentIndex = 0;
   final PageController pageController = PageController(initialPage: 1);
   void changePage(int? idx) {}
-
-  void createNewTask() async {}
-
-  void addNewTaskSuccess(Task task) {
-    setState(() {
-      _tasks.add(task);
-    });
-  }
 
   void viewTask() {}
   late final List<Task> _tasks = [];
@@ -36,14 +39,29 @@ class _HomePageState extends State<HomePage> {
 
   void getTask() async {}
 
+  Future<void> _signOut() async {
+    final preferences = await SharedPreferences.getInstance();
+    await preferences.remove('remember');
+    await preferences.remove('username');
+    await preferences.remove('password');
+
+    // Navigate back to the LoginPage
+    Navigator.of(context)
+        .pushNamedAndRemoveUntil(LoginPage.routeName, (route) => false);
+  }
+
+  void _navigateToChangePasswordPage() {
+    Navigator.of(context).pushNamed(
+      ChangePasswordPage.routeName,
+      arguments: widget.user,
+    );
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      floatingActionButton: FloatingActionButton(
-        onPressed: createNewTask,
-        backgroundColor: const Color(0xFFB7ABFD),
-        child: const Icon(Icons.add),
-      ),
+      appBar: _buildAppBar(currentIndex ?? 0),
+      drawer: _buildHomeDrawer(context),
       floatingActionButtonLocation: FloatingActionButtonLocation.endDocked,
       bottomNavigationBar: BubbleBottomBar(
         hasNotch: true,
@@ -106,16 +124,162 @@ class _HomePageState extends State<HomePage> {
     );
   }
 
+  AppBar _buildAppBar(int currentIndex) {
+    late final Text text;
+    switch (currentIndex) {
+      case 0:
+        text = const Text("Home");
+        break;
+      case 1:
+        text = const Text("Today Tasks");
+        break;
+      default:
+        text = const Text("");
+        break;
+    }
+    return AppBar(
+      title: text,
+    );
+  }
+
+  Drawer _buildHomeDrawer(BuildContext context) {
+    return Drawer(
+      child: Container(
+        color: Colors.white,
+        height: MediaQuery.of(context).size.height,
+        width: MediaQuery.of(context).size.width * 0.75,
+        child: Column(children: [
+          Stack(
+            alignment: Alignment.bottomCenter,
+            children: [
+              Column(
+                children: [
+                  DrawerHeader(
+                    decoration: const BoxDecoration(
+                      color: Color(0xFFB7ABFD),
+                    ),
+                    child: SizedBox(
+                      width: MediaQuery.of(context).size.width * 0.75,
+                    ),
+                  ),
+                  const SizedBox(
+                    height: 40,
+                  )
+                ],
+              ),
+              const CircleAvatar(
+                radius: 60,
+                backgroundColor: Colors.green,
+                child: CircleAvatar(
+                  radius: 58,
+                  backgroundImage: AssetImage('assets/images/Avatar1.png'),
+                ),
+              )
+            ],
+          ),
+          const SizedBox(
+            height: 12,
+          ),
+          Row(
+            mainAxisAlignment: MainAxisAlignment.center,
+            crossAxisAlignment: CrossAxisAlignment.center,
+            children: [
+              const Text("Wang Yin",
+                  style: TextStyle(
+                    fontSize: 18,
+                    fontWeight: FontWeight.bold,
+                  )),
+              const SizedBox(
+                width: 6,
+              ),
+              Image.asset("assets/images/tick_square.png"),
+            ],
+          ),
+          const SizedBox(
+            height: 24,
+          ),
+          Column(
+            children: [
+              TextButton(
+                onPressed: () {},
+                child: Row(
+                  mainAxisSize: MainAxisSize.min,
+                  children: [
+                    const Text(
+                      'Thông tin người dùng',
+                      style: TextStyle(
+                        fontSize: 16,
+                      ),
+                    ),
+                    const Spacer(),
+                    SvgPicture.asset(
+                      "assets/icons/angle_right_solid.svg",
+                      fit: BoxFit.contain,
+                      height: 20,
+                      width: 20,
+                    ),
+                  ],
+                ),
+              ),
+              const Divider(
+                indent: 12,
+                endIndent: 12,
+                thickness: 1,
+                height: 16,
+              ),
+              TextButton(
+                onPressed: () {
+                  _navigateToChangePasswordPage();
+                },
+                child: Row(
+                  mainAxisSize: MainAxisSize.min,
+                  children: [
+                    const Text(
+                      'Đổi mật khẩu',
+                      style: TextStyle(
+                        fontSize: 16,
+                      ),
+                    ),
+                    const Spacer(),
+                    SvgPicture.asset(
+                      "assets/icons/angle_right_solid.svg",
+                      fit: BoxFit.contain,
+                      height: 20,
+                      width: 20,
+                    ),
+                  ],
+                ),
+              ),
+            ],
+          ),
+          const Spacer(),
+          Padding(
+              padding: const EdgeInsets.all(20),
+              child: BtnDefault(
+                onTap: _signOut,
+                title: "Đăng Xuất",
+                height: 64,
+                width: 128,
+                type: BtnDefaultType.secondary,
+              ))
+        ]),
+      ),
+    );
+  }
+
   Widget _buildBody(int index) {
     switch (index) {
       case 1:
         return TodayTasksPage(
-          tasks: _tasks,
+          userId: widget.user.uid,
+          // tasks: _tasks,
         );
       default:
-        return const Center(
-          child: Text(
-            "Tinh nang dang trong qua trinh phat trien",
+        return const Scaffold(
+          body: Center(
+            child: Text(
+              "Tính năng đang trong quá trìh phát triển",
+            ),
           ),
         );
     }

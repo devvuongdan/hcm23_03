@@ -5,12 +5,13 @@ import '../../../shared/shared_ui/btn/btn_default/btn_default.dart';
 import '../../../shared/shared_ui/inputs/input_normal/input_normal.dart';
 
 class TaskStageInput extends StatefulWidget {
-  final void Function() onRightIconTaped;
-  final void Function(String?) onChanged;
+  final void Function() onRemove;
+  final void Function(String) onChecked;
+  // final void Function(String?) onChanged;
   const TaskStageInput({
     Key? key,
-    required this.onRightIconTaped,
-    required this.onChanged,
+    required this.onRemove,
+    required this.onChecked,
   }) : super(key: key);
 
   @override
@@ -19,6 +20,7 @@ class TaskStageInput extends StatefulWidget {
 
 class _TaskStageInputState extends State<TaskStageInput> {
   final TextEditingController controller = TextEditingController();
+  bool enableEdit = true;
 
   @override
   Widget build(BuildContext context) {
@@ -27,6 +29,7 @@ class _TaskStageInputState extends State<TaskStageInput> {
       children: [
         Expanded(
           child: InputNormal(
+            enable: enableEdit,
             placeholderText: "Enter stage's description",
             controller: controller,
             minLines: 1,
@@ -35,7 +38,7 @@ class _TaskStageInputState extends State<TaskStageInput> {
               color: Color(0XFF111322),
               fontSize: 14,
             ),
-            onChanged: widget.onChanged,
+            // onChanged: widget.onChanged,
             decoration: const InputDecoration(contentPadding: EdgeInsets.zero),
           ),
         ),
@@ -45,17 +48,38 @@ class _TaskStageInputState extends State<TaskStageInput> {
         BtnDefault(
           type: BtnDefaultType.secondary,
           width: 40,
-          onTap: widget.onRightIconTaped,
+          onTap: widget.onRemove,
           customChild: Icon(
             getTaskStageIcon(controller.text),
             size: 16,
           ),
-        )
+        ),
+        const SizedBox(
+          width: 10,
+        ),
+        BtnDefault(
+          type: BtnDefaultType.secondary,
+          width: 40,
+          onTap: () {
+            setState(() {
+              enableEdit = !enableEdit;
+              widget.onChecked.call(controller.text);
+            });
+          },
+          customChild: Icon(
+            getTaskCheckedIcon(controller.text),
+            size: 16,
+          ),
+        ),
       ],
     );
   }
 
   IconData getTaskStageIcon(String text) {
     return Icons.remove;
+  }
+
+  IconData getTaskCheckedIcon(String text) {
+    return !enableEdit ? Icons.edit : Icons.check;
   }
 }

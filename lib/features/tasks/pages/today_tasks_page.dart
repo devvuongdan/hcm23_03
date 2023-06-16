@@ -27,21 +27,35 @@ final String taskUid = const Uuid().v4();
 
 class _TodayRecordsPageState extends State<TodayTasksPage> {
   Future<void> queryTask({required String userId}) async {
+    // print("queryTask");
     final List<Map<String, dynamic>> tasks =
         await Hcm23DBHelper.query(Task.dbTable);
     final List<Map<String, dynamic>> taskOfUser = tasks.where((element) {
       return element['userId'] == widget.userId;
     }).toList();
+    // print(taskOfUser);
     final List<Task> taskModels =
         taskOfUser.map((e) => Task.fromMap(e)).toList();
     for (int i = 0; i < taskOfUser.length; i++) {
       final List<TaskStage> taskStage =
           await queryStage(taskId: taskModels[i].uid);
-      taskModels[i].stages = taskStage;
+          taskModels[i].stages = taskStage;
+      final List<TeamMember> teammember =
+          await queryTeammember(taskId: taskModels[i].uid);
+          taskModels[i].teamMembers = teammember;
       setState(() {
         _tasks.add(taskModels[i]);
       });
     }
+
+    // for (int i = 0; i < taskOfUser.length; i++) {
+    //   final List<TeamMember> teammember =
+    //       await queryTeammember(taskId: taskModels[i].uid);
+    //   taskModels[i].teamMembers = teammember;
+    //   setState(() {
+    //     _hcm23Task.add(taskModels[i]);
+    //   });
+    // }
   }
 
   Future<List<TaskStage>> queryStage({
@@ -58,6 +72,21 @@ class _TodayRecordsPageState extends State<TodayTasksPage> {
     return stageModels;
   }
 
+  Future<List<TeamMember>> queryTeammember({
+    required String taskId,
+  }) async {
+    final List<Map<String, dynamic>> teammember =
+        await Hcm23DBHelper.query(TeamMember.dbTable);
+    final List<Map<String, dynamic>> listTeammember =
+        teammember.where((element) {
+      return element['taskUid'] == taskId;
+    }).toList();
+    final List<TeamMember> teammembers =
+        listTeammember.map((e) => TeamMember.fromMap(e)).toList();
+
+    return teammembers;
+  }
+
   void getTasks({required String userId}) async {
     await queryTask(userId: userId);
   }
@@ -65,6 +94,7 @@ class _TodayRecordsPageState extends State<TodayTasksPage> {
   @override
   void initState() {
     super.initState();
+    
 
     getTasks(userId: widget.userId);
   }

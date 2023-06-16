@@ -3,8 +3,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:hcm23_03/features/tasks/entities/task_model.dart';
-import '../../home/pages/home_page.dart';
-import '../../login/pages/login_page.dart';
 import 'package:uuid/uuid.dart';
 
 import '../../../shared/shared_ui/btn/btn_default/btn_default.dart';
@@ -14,6 +12,8 @@ import '../../../shared/shared_ui/themes/colors.dart';
 import '../../../shared/shared_ui/themes/text_styles.dart';
 import '../../authentication/data/model/hcm23_user.dart';
 import '../../authentication/data/resource/sqlite_helper.dart';
+import '../../home/pages/home_page.dart';
+import '../../login/pages/login_page.dart';
 
 class RegisterPage extends StatefulWidget {
   static const String routeName = '/RegisterPage';
@@ -74,12 +74,13 @@ class _RegisterPageState extends State<RegisterPage> {
     final List<Map<String, dynamic>> users =
         await Hcm23DBHelper.query(Hcm23User.dbTable);
     // print(users);
-    final user = users.firstWhere((user) => user['username'] == username);
+    final userMap = users.firstWhere((user) => user['username'] == username);
 
-    if (user['password'].toString() == password) {
+    final Hcm23User user = Hcm23User.fromMap(userMap);
+    if (user.password.toString() == password.toString()) {
       _getTasks();
       _navigateToHomePage(
-        userId: user['uid'],
+        user: user,
       );
 
       return;
@@ -144,9 +145,9 @@ class _RegisterPageState extends State<RegisterPage> {
     // print(teamMembers.length);
   }
 
-  void _navigateToHomePage({required String userId}) {
+  void _navigateToHomePage({required Hcm23User user}) {
     Navigator.of(context).pushNamedAndRemoveUntil(
-        HomePage.routeName, arguments: userId, (route) => false);
+        HomePage.routeName, arguments: user, (route) => false);
   }
 
   @override

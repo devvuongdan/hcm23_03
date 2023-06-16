@@ -1,7 +1,7 @@
 import 'dart:async';
 
 import 'package:flutter/material.dart';
-import 'package:hcm23_03/features/login/pages/login_page.dart';
+import '../../login/pages/login_page.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 import '../../authentication/data/model/hcm23_user.dart';
@@ -17,6 +17,7 @@ class SplashPage extends StatefulWidget {
 }
 
 class _SplashPageState extends State<SplashPage> {
+  late Hcm23User user;
   @override
   void initState() {
     super.initState();
@@ -35,10 +36,16 @@ class _SplashPageState extends State<SplashPage> {
           await Hcm23DBHelper.query(Hcm23User.dbTable);
 
       try {
-        final user = users.firstWhere((user) => user['username'] == username);
-        print(user);
-        _navigateToHomePage(userId: user['uid']);
-      } catch (e) {}
+        final Map<String, dynamic> userMap =
+            users.firstWhere((user) => user['username'] == username);
+
+        user = Hcm23User.fromMap(userMap);
+        if (user.password.toString() == password.toString()) {
+          _navigateToHomePage(userId: user.uid);
+        }
+      } catch (e) {
+        _navigateToLoginPage();
+      }
     } else {
       _navigateToLoginPage();
     }
@@ -46,7 +53,7 @@ class _SplashPageState extends State<SplashPage> {
 
   void _navigateToHomePage({required String userId}) {
     Navigator.of(context).pushNamedAndRemoveUntil(
-        HomePage.routeName, arguments: userId, (route) => false);
+        HomePage.routeName, arguments: user, (route) => false);
   }
 
   void _navigateToLoginPage() {

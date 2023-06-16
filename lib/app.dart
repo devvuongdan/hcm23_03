@@ -1,14 +1,15 @@
 import 'package:flutter/material.dart';
-import 'package:hcm23_03/features/forgot_password/pages/forgot_password_page.dart';
-import 'package:hcm23_03/features/home/pages/home_page.dart';
-import 'package:hcm23_03/features/login/pages/login_page.dart';
-import 'package:hcm23_03/features/onboarding/pages/onboarding_page.dart';
-import 'package:hcm23_03/features/register/pages/register_pages.dart';
-import 'package:hcm23_03/features/splash/pages/splash_page.dart';
-import 'package:hcm23_03/features/tasks/pages/new_task_page.dart';
-import 'package:hcm23_03/features/tasks/pages/task_details_page.dart';
-import 'package:hcm23_03/features/change_password/pages/change_password_page.dart';
-
+import 'package:hcm23_03/features/authentication/data/model/hcm23_user.dart';
+import 'features/forgot_password/pages/forgot_password_page.dart';
+import 'features/home/pages/home_page.dart';
+import 'features/login/pages/login_page.dart';
+import 'features/onboarding/pages/onboarding_page.dart';
+import 'features/register/pages/register_pages.dart';
+import 'features/splash/pages/splash_page.dart';
+import 'features/tasks/pages/new_task_page.dart';
+import 'features/tasks/pages/task_details_page.dart';
+import 'features/change_password/pages/change_password_page.dart';
+import 'package:flutter_easyloading/flutter_easyloading.dart';
 import 'features/tasks/entities/task_model.dart';
 
 class MyApp extends StatelessWidget {
@@ -18,6 +19,7 @@ class MyApp extends StatelessWidget {
   Widget build(BuildContext context) {
     return Builder(builder: (context) {
       return MaterialApp(
+        builder: EasyLoading.init(),
         title: 'Flutter Demo',
         theme: ThemeData(
           appBarTheme: const AppBarTheme(
@@ -38,28 +40,29 @@ class MyApp extends StatelessWidget {
         home: const SplashPage(),
         onGenerateRoute: (setting) {
           if (setting.name == HomePage.routeName) {
-            final String userId = setting.arguments as String;
+            final Hcm23User user = setting.arguments as Hcm23User;
             return MaterialPageRoute(
               settings: const RouteSettings(name: HomePage.routeName),
               builder: (_) => HomePage(
-                userId: userId,
+                user: user,
               ),
             );
           }
           if (setting.name == ChangePasswordPage.routeName) {
+            final Hcm23User user = setting.arguments as Hcm23User;
             return MaterialPageRoute(
               settings: const RouteSettings(name: ChangePasswordPage.routeName),
-              builder: (_) => const ChangePasswordPage(),
+              builder: (_) => ChangePasswordPage(user: user),
             );
           }
           if (setting.name == NewTaskPage.routeName) {
             // final Task task = setting.arguments as Task;
-            final void Function(Task newTask) addNewTask =
-                setting.arguments as void Function(Task newTask);
+            final NewTaskPageArg arg = setting.arguments as NewTaskPageArg;
+
             return MaterialPageRoute(
               settings: const RouteSettings(name: NewTaskPage.routeName),
               builder: (_) => NewTaskPage(
-                addNewTask: addNewTask,
+                arg: arg,
               ),
             );
           }
@@ -103,17 +106,6 @@ class MyApp extends StatelessWidget {
             );
           }
 
-          if (setting.name == NewTaskPage.routeName) {
-            // final Task task = setting.arguments as Task;
-            final void Function(Task newTask) addNewTask =
-                setting.arguments as void Function(Task newTask);
-            return MaterialPageRoute(
-              settings: const RouteSettings(name: NewTaskPage.routeName),
-              builder: (_) => NewTaskPage(
-                addNewTask: addNewTask,
-              ),
-            );
-          }
           return null;
         },
         initialRoute: "/",

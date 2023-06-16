@@ -1,72 +1,22 @@
+// ignore_for_file: public_member_api_docs, sort_constructors_first
 // ignore_for_file: library_private_types_in_public_api
 
 import 'dart:math';
 
 import 'package:intl/intl.dart';
-// import 'package:date_time_picker/date_time_picker.dart';
+
+import 'package:hcm23_03/shared/shared_ui/btn/btn_default/btn_default.dart';
+
 import '../entities/task_model.dart';
 import 'package:flutter/material.dart';
+
+import '../widgets/task_stage_view.dart';
 
 String formatDueTime(String duetime) {
   DateTime dueDateTime = DateTime.parse(duetime);
   String formattedDueTime =
       DateFormat('hh:mm a, dd MMM yyyy').format(dueDateTime);
   return formattedDueTime;
-}
-
-class CheckListRow extends StatefulWidget {
-  final String content;
-
-  const CheckListRow({super.key, required this.content});
-
-  @override
-  _CheckListRowState createState() => _CheckListRowState();
-}
-
-class _CheckListRowState extends State<CheckListRow> {
-  bool isChecked = false;
-
-  @override
-  Widget build(BuildContext context) {
-    return Padding(
-      padding: const EdgeInsets.only(top: 12),
-      child: Container(
-        width: double.infinity,
-        height: 70,
-        decoration: BoxDecoration(
-          color: const Color.fromARGB(255, 235, 235, 241),
-          borderRadius: BorderRadius.circular(16),
-        ),
-        child: Row(
-          children: [
-            const SizedBox(
-              width: 10,
-            ),
-            Checkbox(
-              shape: const CircleBorder(),
-              checkColor: Colors.white,
-              value: isChecked,
-              onChanged: (value) {
-                setState(() {
-                  isChecked = value ?? false;
-                });
-              },
-            ),
-            const SizedBox(width: 16),
-            Text(
-              widget.content,
-              style: const TextStyle(
-                fontWeight: FontWeight.w500,
-                fontSize: 16,
-                height: 24 / 16,
-                color: Color(0xFF30374F),
-              ),
-            ),
-          ],
-        ),
-      ),
-    );
-  }
 }
 
 class TaskDetailsPage extends StatefulWidget {
@@ -294,18 +244,20 @@ class _TaskDetailsPageState extends State<TaskDetailsPage> {
                 Column(
                   children: [
                     for (var i = 0; i < widget.task.stages.length; i++)
-                      CheckListRow(content: widget.task.stages[i].stageName),
+                      CheckListRow(
+                          onChangeStatus: (p0) {},
+                          stage: widget.task.stages[i]),
                   ],
                 ),
-                // Align(
-                //   alignment: Alignment.bottomCenter,
-                //   child: isEditing
-                //       ? BtnDefault(
-                //           onTap: saveChanges,
-                //           title: 'Save Changes',
-                //         )
-                //       : const SizedBox.shrink(),
-                // ),
+                const SizedBox(
+                  height: 40,
+                ),
+                Align(
+                    alignment: Alignment.bottomCenter,
+                    child: BtnDefault(
+                      onTap: () {},
+                      title: 'Edit task',
+                    )),
               ]),
         ),
       ),

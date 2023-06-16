@@ -1,12 +1,23 @@
+// ignore_for_file: public_member_api_docs, sort_constructors_first
 import 'package:flutter/material.dart';
+import 'package:flutter_easyloading/flutter_easyloading.dart';
 import 'package:flutter_svg/flutter_svg.dart';
+
+import 'package:hcm23_03/features/authentication/data/model/hcm23_user.dart';
+
 import '../../../shared/shared_ui/btn/btn_default/btn_default.dart';
 import '../../../shared/shared_ui/inputs/input_clear/input_clear.dart';
+import '../../authentication/data/resource/sqlite_helper.dart';
 import '../../home/pages/home_page.dart';
+import 'package:flutter_easyloading/flutter_easyloading.dart';
 
 class ChangePasswordPage extends StatefulWidget {
   static const String routeName = "ChangePasswordPage";
-  const ChangePasswordPage({super.key});
+  final Hcm23User user;
+  const ChangePasswordPage({
+    Key? key,
+    required this.user,
+  }) : super(key: key);
 
   @override
   State<ChangePasswordPage> createState() => _ChangePassword();
@@ -38,6 +49,41 @@ class _ChangePassword extends State<ChangePasswordPage> {
     setState(() {
       _obscureConfirmNewPassword = !_obscureConfirmNewPassword;
     });
+  }
+
+  void changePassword() async {
+    EasyLoading.show(status: 'loading...');
+    String currentPassword = widget.user.password;
+    if (currentPassword == _currentPassWordController.text.toString()) {
+      if (_newPassWordController.text.toString() ==
+          _confirmNewPassWordController.text.toString()) {
+        if (_confirmNewPassWordController.text.toString() != currentPassword) {
+          await Hcm23DBHelper.update(
+            Hcm23User.dbTable,
+            Hcm23User(
+              uid: widget.user.uid,
+              username: widget.user.username,
+              password: _confirmNewPassWordController.text.toString(),
+            ),
+          );
+          await Future.delayed(const Duration(seconds: 1));
+          EasyLoading.showSuccess('Changed Succefully!');
+          await Future.delayed(const Duration(seconds: 1));
+          Navigator.of(context).popUntil(
+            ModalRoute.withName(HomePage.routeName),
+          );
+        } else {
+          await Future.delayed(const Duration(seconds: 1));
+          EasyLoading.showError('New Password must be different');
+        }
+      } else {
+        await Future.delayed(const Duration(seconds: 1));
+        EasyLoading.showError('Confirm Password is Wrong!');
+      }
+    } else {
+      await Future.delayed(const Duration(seconds: 1));
+      EasyLoading.showError('Wrong Password!');
+    }
   }
 
   @override
@@ -148,8 +194,9 @@ class _ChangePassword extends State<ChangePasswordPage> {
                       title: "Huỷ",
                       type: BtnDefaultType.secondary,
                       onTap: () {
-                        Navigator.of(context).pushNamedAndRemoveUntil(
-                            HomePage.routeName, (route) => false);
+                        Navigator.of(context).popUntil(
+                          ModalRoute.withName(HomePage.routeName),
+                        );
                       },
                     ),
                   ),
@@ -159,7 +206,9 @@ class _ChangePassword extends State<ChangePasswordPage> {
                   Expanded(
                     child: BtnDefault(
                       title: "Cập nhật",
-                      onTap: () {},
+                      onTap: () {
+                        changePassword();
+                      },
                     ),
                   ),
                 ],

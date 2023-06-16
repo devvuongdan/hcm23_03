@@ -3,8 +3,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:hcm23_03/features/tasks/entities/task_model.dart';
-import '../../home/pages/home_page.dart';
-import '../../login/pages/login_page.dart';
 import 'package:uuid/uuid.dart';
 
 import '../../../shared/shared_ui/btn/btn_default/btn_default.dart';
@@ -14,6 +12,8 @@ import '../../../shared/shared_ui/themes/colors.dart';
 import '../../../shared/shared_ui/themes/text_styles.dart';
 import '../../authentication/data/model/hcm23_user.dart';
 import '../../authentication/data/resource/sqlite_helper.dart';
+import '../../home/pages/home_page.dart';
+import '../../login/pages/login_page.dart';
 
 class RegisterPage extends StatefulWidget {
   static const String routeName = '/RegisterPage';

@@ -1,7 +1,7 @@
 import 'dart:async';
 
 import 'package:flutter/material.dart';
-import 'package:hcm23_03/features/login/pages/login_page.dart';
+import '../../login/pages/login_page.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 import '../../authentication/data/model/hcm23_user.dart';

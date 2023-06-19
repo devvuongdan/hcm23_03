@@ -1,8 +1,10 @@
 // ignore_for_file: public_member_api_docs, sort_constructors_first
 // ignore_for_file: library_private_types_in_public_api
 
+import 'dart:convert';
 import 'dart:math';
-
+import 'package:hcm23_03/features/tasks/pages/today_tasks_page.dart';
+import 'package:http/http.dart' as http;
 import 'package:intl/intl.dart';
 
 import 'package:hcm23_03/shared/shared_ui/btn/btn_default/btn_default.dart';
@@ -39,6 +41,7 @@ class _TaskDetailsPageState extends State<TaskDetailsPage> {
     titleController = TextEditingController(text: widget.task.title);
     descriptionController =
         TextEditingController(text: widget.task.description);
+        getTask();
   }
 
   @override
@@ -53,6 +56,20 @@ class _TaskDetailsPageState extends State<TaskDetailsPage> {
       isEditing = !isEditing;
     });
   }
+  Future<http.Response> getTask(
+    {String taskuid = "69196993-7832-4af4-947f-a445c30ef651"}) async{
+      //Fetch Data
+      final response = await http.get(Uri.parse(
+        "https://hcm23-03-dev-default-rtdb.asia-southeast1.firebasedatabase.app/tasks/sdk53jUx82QqLdURqYw8R6mvhoe2/$taskUid.json"));
+        // convert data =>> Map<String, dynamic>
+        final Map<String, dynamic> taskMap = 
+        jsonDecode(response.body) as Map<String, dynamic>;
+        
+      final Task taskObj = Task.fromMap(taskMap);
+      print(taskObj.toString());
+      return response;
+    }
+
 
   @override
   Widget build(BuildContext context) {

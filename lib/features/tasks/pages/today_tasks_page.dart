@@ -39,10 +39,10 @@ class _TodayRecordsPageState extends State<TodayTasksPage> {
     for (int i = 0; i < taskOfUser.length; i++) {
       final List<TaskStage> taskStage =
           await queryStage(taskId: taskModels[i].uid);
-          taskModels[i].stages = taskStage;
+      taskModels[i].stages = taskStage;
       final List<TeamMember> teammember =
           await queryTeammember(taskId: taskModels[i].uid);
-          taskModels[i].teamMembers = teammember;
+      taskModels[i].teamMembers = teammember;
       setState(() {
         _tasks.add(taskModels[i]);
       });
@@ -94,7 +94,6 @@ class _TodayRecordsPageState extends State<TodayTasksPage> {
   @override
   void initState() {
     super.initState();
-    
 
     getTasks(userId: widget.userId);
   }
@@ -112,7 +111,6 @@ class _TodayRecordsPageState extends State<TodayTasksPage> {
   }
 
   void addNewTaskSuccess(Task task) {
-    print(task.title);
     setState(() {
       _tasks.add(task);
     });

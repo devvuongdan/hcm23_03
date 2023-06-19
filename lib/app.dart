@@ -9,6 +9,7 @@ import 'features/splash/pages/splash_page.dart';
 import 'features/tasks/pages/new_task_page.dart';
 import 'features/tasks/pages/task_details_page.dart';
 import 'features/change_password/pages/change_password_page.dart';
+import 'package:flutter_easyloading/flutter_easyloading.dart';
 
 import 'features/tasks/entities/task_model.dart';
 
@@ -19,6 +20,7 @@ class MyApp extends StatelessWidget {
   Widget build(BuildContext context) {
     return Builder(builder: (context) {
       return MaterialApp(
+        builder: EasyLoading.init(),
         title: 'Flutter Demo',
         theme: ThemeData(
           appBarTheme: const AppBarTheme(

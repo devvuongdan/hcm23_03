@@ -1,12 +1,12 @@
 // ignore_for_file: public_member_api_docs, sort_constructors_first
 import 'package:flutter/material.dart';
+import 'package:flutter_easyloading/flutter_easyloading.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 
 import 'package:hcm23_03/features/authentication/data/model/hcm23_user.dart';
 
 import '../../../shared/shared_ui/btn/btn_default/btn_default.dart';
 import '../../../shared/shared_ui/inputs/input_clear/input_clear.dart';
-import '../../home/pages/home_page.dart';
 
 class ChangePasswordPage extends StatefulWidget {
   static const String routeName = "ChangePasswordPage";
@@ -48,9 +48,7 @@ class _ChangePassword extends State<ChangePasswordPage> {
     });
   }
 
-  void changePassword()async{
-    
-  }
+  void changePassword() async {}
 
   @override
   void dispose() {
@@ -160,9 +158,10 @@ class _ChangePassword extends State<ChangePasswordPage> {
                       title: "Huỷ",
                       type: BtnDefaultType.secondary,
                       onTap: () {
-                        Navigator.of(context).popUntil(
-                          ModalRoute.withName(HomePage.routeName),
-                        );
+                        EasyLoading.dismiss();
+                        // Navigator.of(context).popUntil(
+                        //   ModalRoute.withName(HomePage.routeName),
+                        // );
                       },
                     ),
                   ),
@@ -172,7 +171,9 @@ class _ChangePassword extends State<ChangePasswordPage> {
                   Expanded(
                     child: BtnDefault(
                       title: "Cập nhật",
-                      onTap: () {},
+                      onTap: () {
+                        EasyLoading.show();
+                      },
                     ),
                   ),
                 ],

@@ -1,7 +1,9 @@
 // ignore_for_file: public_member_api_docs, sort_constructors_first
 // ignore_for_file: library_private_types_in_public_api
 
+import 'dart:convert';
 import 'dart:math';
+import 'package:http/http.dart' as http;
 
 import 'package:intl/intl.dart';
 
@@ -29,6 +31,7 @@ class TaskDetailsPage extends StatefulWidget {
 }
 
 class _TaskDetailsPageState extends State<TaskDetailsPage> {
+  Task? currentTask;
   bool isEditing = false;
   late TextEditingController titleController;
   late TextEditingController descriptionController;
@@ -36,9 +39,8 @@ class _TaskDetailsPageState extends State<TaskDetailsPage> {
   @override
   void initState() {
     super.initState();
-    titleController = TextEditingController(text: widget.task.title);
-    descriptionController =
-        TextEditingController(text: widget.task.description);
+
+    getTaskAPI();
   }
 
   @override
@@ -54,6 +56,25 @@ class _TaskDetailsPageState extends State<TaskDetailsPage> {
     });
   }
 
+  Future<http.Response> getTaskAPI(
+      {String taskID = "69196993-7832-4af4-947f-a445c30ef651"}) async {
+    final url = Uri.parse(
+        'https://hcm23-03-dev-default-rtdb.asia-southeast1.firebasedatabase.app/tasks/sdk53jUx82QqLdURqYw8R6mvhoe2/$taskID.json');
+    final response = await http.get(url);
+
+    final Map<String, dynamic> taskMap =
+        jsonDecode(response.body) as Map<String, dynamic>;
+
+    final Task taskObj = Task.fromMap(taskMap);
+    setState(() {
+      currentTask = taskObj;
+      titleController = TextEditingController(text: currentTask!.title);
+      descriptionController =
+          TextEditingController(text: currentTask!.description);
+    });
+    return response;
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -66,201 +87,206 @@ class _TaskDetailsPageState extends State<TaskDetailsPage> {
         //   ),
         // ],
       ),
-      body: SingleChildScrollView(
-        child: Padding(
-          padding: const EdgeInsets.all(16.0),
-          child: Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              mainAxisAlignment: MainAxisAlignment.start,
-              children: [
-                const Text(
-                  'Task Title',
-                  style: TextStyle(
-                    fontSize: 14,
-                    fontWeight: FontWeight.w500,
-                    color: Color(0xFF5D6B98),
-                    height: 20 / 14,
-                  ),
-                ),
-                const SizedBox(height: 12),
-                // isEditing
-                //     ? TextField(
-                //         controller: titleController,
-                //         style: const TextStyle(
-                //           fontSize: 20,
-                //           fontWeight: FontWeight.w600,
-                //           color: Color(0xFF1D2939),
-                //           height: 30 / 20,
-                //         ),
-                //       )
-                //     :
-                Text(
-                  widget.task.title,
-                  style: const TextStyle(
-                    fontSize: 20,
-                    fontWeight: FontWeight.w600,
-                    color: Color(0xFF1D2939),
-                    height: 30 / 20,
-                  ),
-                ),
-                const SizedBox(height: 21),
-                const Text(
-                  'Due Date',
-                  style: TextStyle(
-                    fontSize: 14,
-                    fontWeight: FontWeight.w500,
-                    color: Color(0xFF5D6B98),
-                    height: 20 / 14,
-                  ),
-                ),
-                const SizedBox(height: 20),
-                Row(
-                    mainAxisSize: MainAxisSize.min,
+      body: (currentTask == null)
+          ? const Center(
+              child: CircularProgressIndicator(),
+            )
+          : SingleChildScrollView(
+              child: Padding(
+                padding: const EdgeInsets.all(16.0),
+                child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
                     mainAxisAlignment: MainAxisAlignment.start,
-                    crossAxisAlignment: CrossAxisAlignment.center,
                     children: [
-                      const Icon(
-                        Icons.access_time,
-                        color: Colors.grey,
+                      const Text(
+                        'Task Title',
+                        style: TextStyle(
+                          fontSize: 14,
+                          fontWeight: FontWeight.w500,
+                          color: Color(0xFF5D6B98),
+                          height: 20 / 14,
+                        ),
                       ),
-                      const SizedBox(width: 8),
-                      Text(formatDueTime(widget.task.duetime),
-                          style: const TextStyle(
-                            fontSize: 14,
-                            fontWeight: FontWeight.w500,
-                            height: 18 / 14,
-                            color: Color(0xFF111322),
-                          )),
-                      const Spacer(),
-                      Container(
-                          height: 34,
-                          width: 95,
-                          padding: const EdgeInsets.symmetric(
-                              horizontal: 12, vertical: 6),
-                          decoration: BoxDecoration(
-                            color: const Color.fromRGBO(3, 152, 85, 0.1),
-                            borderRadius: BorderRadius.circular(16),
-                          ),
-                          child: const Text(
-                            'On Progress',
-                            textAlign: TextAlign.center,
-                            style: TextStyle(
-                              fontSize: 12,
-                              color: Color(0xFF039855),
-                              fontWeight: FontWeight.w500,
-                              height: 18 / 12,
+                      const SizedBox(height: 12),
+                      // isEditing
+                      //     ? TextField(
+                      //         controller: titleController,
+                      //         style: const TextStyle(
+                      //           fontSize: 20,
+                      //           fontWeight: FontWeight.w600,
+                      //           color: Color(0xFF1D2939),
+                      //           height: 30 / 20,
+                      //         ),
+                      //       )
+                      //     :
+                      Text(
+                        currentTask!.title,
+                        style: const TextStyle(
+                          fontSize: 20,
+                          fontWeight: FontWeight.w600,
+                          color: Color(0xFF1D2939),
+                          height: 30 / 20,
+                        ),
+                      ),
+                      const SizedBox(height: 21),
+                      const Text(
+                        'Due Date',
+                        style: TextStyle(
+                          fontSize: 14,
+                          fontWeight: FontWeight.w500,
+                          color: Color(0xFF5D6B98),
+                          height: 20 / 14,
+                        ),
+                      ),
+                      const SizedBox(height: 20),
+                      Row(
+                          mainAxisSize: MainAxisSize.min,
+                          mainAxisAlignment: MainAxisAlignment.start,
+                          crossAxisAlignment: CrossAxisAlignment.center,
+                          children: [
+                            const Icon(
+                              Icons.access_time,
+                              color: Colors.grey,
                             ),
-                          )),
-                    ]),
-                const SizedBox(height: 27),
-                const Text(
-                  'Description',
-                  style: TextStyle(
-                    fontSize: 14,
-                    fontWeight: FontWeight.w500,
-                    color: Color(0xFF5D6B98),
-                    height: 20 / 14,
-                  ),
-                ),
-                const SizedBox(height: 12),
-                // isEditing
-                //     ? TextField(
-                //         controller: descriptionController,
-                //         style: const TextStyle(
-                //           fontSize: 16,
-                //           fontWeight: FontWeight.w500,
-                //           height: 20 / 14,
-                //         ),
-                //       )
-                //     :
-                Text(
-                  widget.task.description,
-                  style: const TextStyle(
-                    fontSize: 16,
-                    fontWeight: FontWeight.w500,
-                    height: 20 / 14,
-                  ),
-                ),
-                const SizedBox(height: 15),
-                Row(
-                  mainAxisAlignment: MainAxisAlignment.start,
-                  crossAxisAlignment: CrossAxisAlignment.center,
-                  children: [
-                    SizedBox(
-                      height: 40,
-                      width: 80,
-                      child: Stack(
-                        alignment: Alignment.centerLeft,
-                        children: [
-                          for (var i = 0;
-                              i < min(widget.task.teamMembers.length, 3);
-                              i++)
-                            Positioned(
-                              left: (i * 22),
-                              top: 0,
-                              child: CircleAvatar(
-                                backgroundColor: Colors.white,
-                                radius: 16,
-                                child: Container(
-                                  clipBehavior: Clip.antiAlias,
-                                  decoration: BoxDecoration(
-                                    border: Border.all(
-                                        color: Colors.white, width: 2),
-                                    borderRadius: BorderRadius.circular(50),
+                            const SizedBox(width: 8),
+                            Text(formatDueTime(currentTask!.duetime),
+                                style: const TextStyle(
+                                  fontSize: 14,
+                                  fontWeight: FontWeight.w500,
+                                  height: 18 / 14,
+                                  color: Color(0xFF111322),
+                                )),
+                            const Spacer(),
+                            Container(
+                                height: 34,
+                                width: 95,
+                                padding: const EdgeInsets.symmetric(
+                                    horizontal: 12, vertical: 6),
+                                decoration: BoxDecoration(
+                                  color: const Color.fromRGBO(3, 152, 85, 0.1),
+                                  borderRadius: BorderRadius.circular(16),
+                                ),
+                                child: const Text(
+                                  'On Progress',
+                                  textAlign: TextAlign.center,
+                                  style: TextStyle(
+                                    fontSize: 12,
+                                    color: Color(0xFF039855),
+                                    fontWeight: FontWeight.w500,
+                                    height: 18 / 12,
                                   ),
-                                  child: Image.asset(
-                                    widget.task.teamMembers[i].avatarUrl,
+                                )),
+                          ]),
+                      const SizedBox(height: 27),
+                      const Text(
+                        'Description',
+                        style: TextStyle(
+                          fontSize: 14,
+                          fontWeight: FontWeight.w500,
+                          color: Color(0xFF5D6B98),
+                          height: 20 / 14,
+                        ),
+                      ),
+                      const SizedBox(height: 12),
+                      // isEditing
+                      //     ? TextField(
+                      //         controller: descriptionController,
+                      //         style: const TextStyle(
+                      //           fontSize: 16,
+                      //           fontWeight: FontWeight.w500,
+                      //           height: 20 / 14,
+                      //         ),
+                      //       )
+                      //     :
+                      Text(
+                        currentTask!.description,
+                        style: const TextStyle(
+                          fontSize: 16,
+                          fontWeight: FontWeight.w500,
+                          height: 20 / 14,
+                        ),
+                      ),
+                      const SizedBox(height: 15),
+                      Row(
+                        mainAxisAlignment: MainAxisAlignment.start,
+                        crossAxisAlignment: CrossAxisAlignment.center,
+                        children: [
+                          SizedBox(
+                            height: 40,
+                            width: 80,
+                            child: Stack(
+                              alignment: Alignment.centerLeft,
+                              children: [
+                                for (var i = 0;
+                                    i < min(currentTask!.teamMembers.length, 3);
+                                    i++)
+                                  Positioned(
+                                    left: (i * 22),
+                                    top: 0,
+                                    child: CircleAvatar(
+                                      backgroundColor: Colors.white,
+                                      radius: 16,
+                                      child: Container(
+                                        clipBehavior: Clip.antiAlias,
+                                        decoration: BoxDecoration(
+                                          border: Border.all(
+                                              color: Colors.white, width: 2),
+                                          borderRadius:
+                                              BorderRadius.circular(50),
+                                        ),
+                                        child: Image.asset(
+                                          currentTask!.teamMembers[i].avatarUrl,
+                                        ),
+                                      ),
+                                    ),
+                                  ),
+                              ],
+                            ),
+                          ),
+                          if (currentTask!.teamMembers.length > 3)
+                            Flexible(
+                              child: Padding(
+                                padding: const EdgeInsets.only(bottom: 6),
+                                child: Text(
+                                  "+${currentTask!.teamMembers.length - 3}",
+                                  style: const TextStyle(
+                                    color: Colors.black,
                                   ),
                                 ),
                               ),
                             ),
                         ],
                       ),
-                    ),
-                    if (widget.task.teamMembers.length > 3)
-                      Flexible(
-                        child: Padding(
-                          padding: const EdgeInsets.only(bottom: 6),
-                          child: Text(
-                            "+${widget.task.teamMembers.length - 3}",
-                            style: const TextStyle(
-                              color: Colors.black,
-                            ),
-                          ),
-                        ),
+                      const SizedBox(height: 28),
+                      const Text('Stages of Task',
+                          style: TextStyle(
+                            fontSize: 16,
+                            fontWeight: FontWeight.w500,
+                            color: Colors.black54,
+                          )),
+                      const SizedBox(
+                        height: 12,
                       ),
-                  ],
-                ),
-                const SizedBox(height: 28),
-                const Text('Stages of Task',
-                    style: TextStyle(
-                      fontSize: 16,
-                      fontWeight: FontWeight.w500,
-                      color: Colors.black54,
-                    )),
-                const SizedBox(
-                  height: 12,
-                ),
-                Column(
-                  children: [
-                    for (var i = 0; i < widget.task.stages.length; i++)
-                      CheckListRow(
-                          onChangeStatus: (p0) {},
-                          stage: widget.task.stages[i]),
-                  ],
-                ),
-                const SizedBox(
-                  height: 40,
-                ),
-                Align(
-                    alignment: Alignment.bottomCenter,
-                    child: BtnDefault(
-                      onTap: () {},
-                      title: 'Edit task',
-                    )),
-              ]),
-        ),
-      ),
+                      Column(
+                        children: [
+                          for (var i = 0; i < currentTask!.stages.length; i++)
+                            CheckListRow(
+                                onChangeStatus: (p0) {},
+                                stage: currentTask!.stages[i]),
+                        ],
+                      ),
+                      const SizedBox(
+                        height: 40,
+                      ),
+                      Align(
+                          alignment: Alignment.bottomCenter,
+                          child: BtnDefault(
+                            onTap: () {},
+                            title: 'Edit task',
+                          )),
+                    ]),
+              ),
+            ),
     );
   }
 }

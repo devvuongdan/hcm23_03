@@ -57,6 +57,11 @@ class Task extends DBModel {
       'stages': stages.map((x) => x.toMap()).toList(),
     };
   }
+
+  @override
+  String toString() {
+    return 'Task(userId: $userId, title: $title, description: $description, starttime: $starttime, duetime: $duetime, teamMembers: $teamMembers, stages: $stages)';
+  }
 }
 
 class TaskStage extends DBModel {

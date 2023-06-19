@@ -42,8 +42,11 @@ class _SplashPageState extends State<SplashPage> {
         user = Hcm23User.fromMap(userMap);
         if (user.password.toString() == password.toString()) {
           _navigateToHomePage(userId: user.uid);
+        } else {
+          _navigateToLoginPage();
         }
       } catch (e) {
+        print(e);
         _navigateToLoginPage();
       }
     } else {

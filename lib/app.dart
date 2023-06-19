@@ -37,7 +37,7 @@ class MyApp extends StatelessWidget {
         navigatorObservers: [
           NavigatorObserver(),
         ],
-        home: const SplashPage(),
+        home: SplashPage(),
         onGenerateRoute: (setting) {
           if (setting.name == HomePage.routeName) {
             final Hcm23User user = setting.arguments as Hcm23User;

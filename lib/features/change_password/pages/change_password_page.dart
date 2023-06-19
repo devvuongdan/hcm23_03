@@ -117,6 +117,8 @@ class _ChangePassword extends State<ChangePasswordPage> {
     );
   }
 
+  //void changePassword() async {}
+
   @override
   void dispose() {
     _currentPassWordController.dispose();
@@ -225,9 +227,10 @@ class _ChangePassword extends State<ChangePasswordPage> {
                       title: "Huỷ",
                       type: BtnDefaultType.secondary,
                       onTap: () {
-                        Navigator.of(context).popUntil(
-                          ModalRoute.withName(HomePage.routeName),
-                        );
+                        EasyLoading.dismiss();
+                        // Navigator.of(context).popUntil(
+                        //   ModalRoute.withName(HomePage.routeName),
+                        // );
                       },
                     ),
                   ),
@@ -238,7 +241,7 @@ class _ChangePassword extends State<ChangePasswordPage> {
                     child: BtnDefault(
                       title: "Cập nhật",
                       onTap: () {
-                        changePassword();
+                        EasyLoading.show();
                       },
                     ),
                   ),

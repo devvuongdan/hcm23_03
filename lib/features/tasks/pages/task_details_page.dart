@@ -1,4 +1,4 @@
-// ignore_for_file: public_member_api_docs, sort_constructors_first
+// ignore_for_file: public_member_api_docs, sort_constructors_first, unused_import
 // ignore_for_file: library_private_types_in_public_api
 
 import 'dart:convert';
@@ -12,6 +12,7 @@ import 'package:hcm23_03/shared/shared_ui/btn/btn_default/btn_default.dart';
 import '../entities/task_model.dart';
 import 'package:flutter/material.dart';
 
+import '../repositories/tasks_repo.dart';
 import '../widgets/task_stage_view.dart';
 
 String formatDueTime(String duetime) {
@@ -31,17 +32,11 @@ class TaskDetailsPage extends StatefulWidget {
 }
 
 class _TaskDetailsPageState extends State<TaskDetailsPage> {
-  Task? currentTask;
   bool isEditing = false;
   late TextEditingController titleController;
   late TextEditingController descriptionController;
 
-  @override
-  void initState() {
-    super.initState();
-
-    getTaskAPI();
-  }
+  Task? currentTask;
 
   @override
   void dispose() {
@@ -76,18 +71,47 @@ class _TaskDetailsPageState extends State<TaskDetailsPage> {
   }
 
   @override
+  void initState() {
+    super.initState();
+
+    getTask();
+  }
+
+  bool isError = false;
+
+  Future<Task?> getTask(
+      {String taskUid = "69196993-7832-4af4-947f-a445c30ef651"}) async {
+    // Fetch Data
+
+    final Task? taskObj = await TaskRepo.getTask(
+      userId: "sdk53jUx82QqLdURqYw8R6mvhoe2",
+      taskUid: taskUid,
+    );
+
+    if (taskObj != null) {
+      setState(() {
+        isError = false;
+        currentTask = taskObj;
+        titleController = TextEditingController(text: currentTask!.title);
+        descriptionController =
+            TextEditingController(text: currentTask!.description);
+      });
+    } else {
+      setState(() {
+        isError = true;
+      });
+    }
+    return taskObj;
+  }
+
+  @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
         title: const Text("Task Details"),
         // actions: [
-        //   IconButton(
-        //     icon: const Icon(Icons.edit),
-        //     onPressed: toggleEditMode,
-        //   ),
-        // ],
       ),
-      body: (currentTask == null)
+      body: currentTask == null
           ? const Center(
               child: CircularProgressIndicator(),
             )
@@ -207,56 +231,55 @@ class _TaskDetailsPageState extends State<TaskDetailsPage> {
                         ),
                       ),
                       const SizedBox(height: 15),
-                      Row(
-                        mainAxisAlignment: MainAxisAlignment.start,
-                        crossAxisAlignment: CrossAxisAlignment.center,
-                        children: [
-                          SizedBox(
-                            height: 40,
-                            width: 80,
-                            child: Stack(
-                              alignment: Alignment.centerLeft,
-                              children: [
-                                for (var i = 0;
-                                    i < min(currentTask!.teamMembers.length, 3);
-                                    i++)
-                                  Positioned(
-                                    left: (i * 22),
-                                    top: 0,
-                                    child: CircleAvatar(
-                                      backgroundColor: Colors.white,
-                                      radius: 16,
-                                      child: Container(
-                                        clipBehavior: Clip.antiAlias,
-                                        decoration: BoxDecoration(
-                                          border: Border.all(
-                                              color: Colors.white, width: 2),
-                                          borderRadius:
-                                              BorderRadius.circular(50),
-                                        ),
-                                        child: Image.asset(
-                                          currentTask!.teamMembers[i].avatarUrl,
-                                        ),
-                                      ),
-                                    ),
-                                  ),
-                              ],
-                            ),
-                          ),
-                          if (currentTask!.teamMembers.length > 3)
-                            Flexible(
-                              child: Padding(
-                                padding: const EdgeInsets.only(bottom: 6),
-                                child: Text(
-                                  "+${currentTask!.teamMembers.length - 3}",
-                                  style: const TextStyle(
-                                    color: Colors.black,
-                                  ),
-                                ),
-                              ),
-                            ),
-                        ],
-                      ),
+                      // Row(
+                      //   mainAxisAlignment: MainAxisAlignment.start,
+                      //   crossAxisAlignment: CrossAxisAlignment.center,
+                      //   children: [
+                      //     SizedBox(
+                      //       height: 40,
+                      //       width: 80,
+                      //       child: Stack(
+                      //         alignment: Alignment.centerLeft,
+                      //         children: [
+                      //           for (var i = 0;
+                      //               i < min(currentTask!.teamMembers.length, 3);
+                      //               i++)
+                      //             Positioned(
+                      //               left: (i * 22),
+                      //               top: 0,
+                      //               child: CircleAvatar(
+                      //                 backgroundColor: Colors.white,
+                      //                 radius: 16,
+                      //                 child: Container(
+                      //                   clipBehavior: Clip.antiAlias,
+                      //                   decoration: BoxDecoration(
+                      //                     border: Border.all(
+                      //                         color: Colors.white, width: 2),
+                      //                     borderRadius: BorderRadius.circular(50),
+                      //                   ),
+                      //                   child: Image.asset(
+                      //                     currentTask!.teamMembers[i].avatarUrl,
+                      //                   ),
+                      //                 ),
+                      //               ),
+                      //             ),
+                      //         ],
+                      //       ),
+                      //     ),
+                      // if (currentTask!.teamMembers.length > 3)
+                      //   Flexible(
+                      //     child: Padding(
+                      //       padding: const EdgeInsets.only(bottom: 6),
+                      //       child: Text(
+                      //         "+${currentTask!.teamMembers.length - 3}",
+                      //         style: const TextStyle(
+                      //           color: Colors.black,
+                      //         ),
+                      //       ),
+                      //     ),
+                      //   ),
+                      //   ],
+                      // ),
                       const SizedBox(height: 28),
                       const Text('Stages of Task',
                           style: TextStyle(

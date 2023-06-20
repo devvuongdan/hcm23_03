@@ -1,6 +1,8 @@
 // ignore_for_file: public_member_api_docs, sort_constructors_first
 import 'dart:convert';
 import 'dart:math' as math;
+import 'package:hcm23_03/features/tasks/repositories/tasks_repo.dart';
+import 'package:http/http.dart' as http;
 
 import 'package:http/http.dart' as http;
 
@@ -10,8 +12,6 @@ import 'package:hcm23_03/features/tasks/pages/new_task_page.dart';
 import 'package:uuid/uuid.dart';
 
 import 'package:hcm23_03/features/tasks/widgets/task_card.dart';
-
-import '../../authentication/data/resource/sqlite_helper.dart';
 
 class TodayTasksPage extends StatefulWidget {
   // final List<Task> tasks;
@@ -29,106 +29,96 @@ class TodayTasksPage extends StatefulWidget {
 final String taskUid = const Uuid().v4();
 
 class _TodayRecordsPageState extends State<TodayTasksPage> {
-  Future<void> queryTask({required String userId}) async {
-    // print("queryTask");
-    final List<Map<String, dynamic>> tasks =
-        await Hcm23DBHelper.query(Task.dbTable);
-    final List<Map<String, dynamic>> taskOfUser = tasks.where((element) {
-      return element['userId'] == widget.userId;
-    }).toList();
-    // print(taskOfUser);
-    final List<Task> taskModels =
-        taskOfUser.map((e) => Task.fromMap(e)).toList();
-    for (int i = 0; i < taskOfUser.length; i++) {
-      final List<TaskStage> taskStage =
-          await queryStage(taskId: taskModels[i].uid);
-      taskModels[i].stages = taskStage;
-      final List<TeamMember> teammember =
-          await queryTeammember(taskId: taskModels[i].uid);
-      taskModels[i].teamMembers = teammember;
-      setState(() {
-        _tasks.add(taskModels[i]);
-      });
-    }
+  // Future<void> queryTask({required String userId}) async {
+  // print("queryTask");
+  // final List<Map<String, dynamic>> tasks =
+  //     await Hcm23DBHelper.query(Task.dbTable);
+  // final List<Map<String, dynamic>> taskOfUser = tasks.where((element) {
+  //   return element['userId'] == widget.userId;
+  // }).toList();
+  // print(taskOfUser);
+  // final List<Task> taskModels =
+  //     taskOfUser.map((e) => Task.fromMap(e)).toList();
+  // for (int i = 0; i < taskOfUser.length; i++) {
+  //   final List<TaskStage> taskStage =
+  //       await queryStage(taskId: taskModels[i].uid);
+  //   taskModels[i].stages = taskStage;
+  //   final List<TeamMember> teammember =
+  //       await queryTeammember(taskId: taskModels[i].uid);
+  //   taskModels[i].teamMembers = teammember;
+  //   setState(() {
+  //     _tasks.add(taskModels[i]);
+  //   });
+  // }
 
-    // for (int i = 0; i < taskOfUser.length; i++) {
-    //   final List<TeamMember> teammember =
-    //       await queryTeammember(taskId: taskModels[i].uid);
-    //   taskModels[i].teamMembers = teammember;
-    //   setState(() {
-    //     _hcm23Task.add(taskModels[i]);
-    //   });
-    // }
-  }
+  // for (int i = 0; i < taskOfUser.length; i++) {
+  //   final List<TeamMember> teammember =
+  //       await queryTeammember(taskId: taskModels[i].uid);
+  //   taskModels[i].teamMembers = teammember;
+  //   setState(() {
+  //     _hcm23Task.add(taskModels[i]);
+  //   });
+  // }
+  // }
 
-  Future<List<TaskStage>> queryStage({
-    required String taskId,
-  }) async {
-    final List<Map<String, dynamic>> stages =
-        await Hcm23DBHelper.query(TaskStage.dbTable);
-    final List<Map<String, dynamic>> stageOfTask = stages.where((element) {
-      return element['taskUid'] == taskId;
-    }).toList();
-    final List<TaskStage> stageModels =
-        stageOfTask.map((e) => TaskStage.fromMap(e)).toList();
+  // Future<List<TaskStage>> queryStage({
+  //   required String taskId,
+  // }) async {
+  //   final List<Map<String, dynamic>> stages =
+  //       await Hcm23DBHelper.query(TaskStage.dbTable);
+  //   final List<Map<String, dynamic>> stageOfTask = stages.where((element) {
+  //     return element['taskUid'] == taskId;
+  //   }).toList();
+  //   final List<TaskStage> stageModels =
+  //       stageOfTask.map((e) => TaskStage.fromMap(e)).toList();
 
-    return stageModels;
-  }
+  //   return stageModels;
+  // }
 
-  Future<List<TeamMember>> queryTeammember({
-    required String taskId,
-  }) async {
-    final List<Map<String, dynamic>> teammember =
-        await Hcm23DBHelper.query(TeamMember.dbTable);
-    final List<Map<String, dynamic>> listTeammember =
-        teammember.where((element) {
-      return element['taskUid'] == taskId;
-    }).toList();
-    final List<TeamMember> teammembers =
-        listTeammember.map((e) => TeamMember.fromMap(e)).toList();
+  // Future<List<TeamMember>> queryTeammember({
+  //   required String taskId,
+  // }) async {
+  //   final List<Map<String, dynamic>> teammember =
+  //       await Hcm23DBHelper.query(TeamMember.dbTable);
+  //   final List<Map<String, dynamic>> listTeammember =
+  //       teammember.where((element) {
+  //     return element['taskUid'] == taskId;
+  //   }).toList();
+  //   final List<TeamMember> teammembers =
+  //       listTeammember.map((e) => TeamMember.fromMap(e)).toList();
 
-    return teammembers;
-  }
+  //   return teammembers;
+  // }
 
-  void getTasks({required String userId}) async {
-    // await queryTask(userId: userId);
-  }
+  // void getTasks({required String userId}) async {
+  // await queryTask(userId: userId);
+  // }
 
   @override
   void initState() {
     super.initState();
-    getTaskList();
+    getTasksList();
 
-    //getTasks(userId: widget.userId);
+    // getTasks(userId: widget.userId);
   }
 
   bool isError = false;
 
-  Future<http.Response?> getTaskList(
-      {String userID = "sdk53jUx82QqLdURqYw8R6mvhoe2"}) async {
-    final url = Uri.parse(
-        'https://hcm23-03-dev-default-rtdb.asia-southeast1.firebasedatabase.app/tasks/$userID.json');
+  Future<http.Response?> getTasksList() async {
+    final List<Task>? tasks =
+        await TaskRepo.getTasksList(userId: "sdk53jUx82QqLdURqYw8R6mvhoe2");
 
-    try {
-      isError = false;
-      final response = await http.get(url);
-
-      final Map<String, dynamic> originMap =
-          jsonDecode(response.body) as Map<String, dynamic>;
-      final List<Map<String, dynamic>> tasksMap = originMap.values
-          .map((e) => jsonDecode(jsonEncode(e)) as Map<String, dynamic>)
-          .toList();
-      final List<Task> taskList = tasksMap.map((e) => Task.fromMap(e)).toList();
+    if (tasks != null) {
       setState(() {
-        _tasks.addAll(taskList);
+        _tasks.addAll(tasks);
+        isError = false;
       });
-      return response;
-    } catch (e) {
-      print(e);
+    } else {
       setState(() {
         isError = true;
       });
     }
+    return null;
   }
 
   final List<Task> _tasks = [];
@@ -152,43 +142,44 @@ class _TodayRecordsPageState extends State<TodayTasksPage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-        floatingActionButton: FloatingActionButton(
-          onPressed: createNewTask,
-          backgroundColor: const Color(0xFFB7ABFD),
-          child: const Icon(Icons.add),
-        ),
-        body: Container(
+      floatingActionButton: FloatingActionButton(
+        onPressed: createNewTask,
+        backgroundColor: const Color(0xFFB7ABFD),
+        child: const Icon(Icons.add),
+      ),
+      body: Container(
           padding: const EdgeInsets.all(16),
           width: double.infinity,
           height: double.infinity,
           child: _tasks.isEmpty
-              ? Center(child: CircularProgressIndicator())
-              : (isError
-                  ? Center(child: Text("Không có dữ liệu"))
-                  : ListView.separated(
-                      padding: const EdgeInsets.only(bottom: 20),
-                      itemBuilder: (context, index) {
-                        final color = Color(
-                                (math.Random().nextDouble() * 0xFFFFFF).toInt())
+              ? Center(
+                  child: !isError
+                      ? const CircularProgressIndicator()
+                      : const Text("Khong co du lieu"))
+              : ListView.separated(
+                  padding: const EdgeInsets.only(bottom: 20),
+                  itemBuilder: (context, index) {
+                    final color =
+                        Color((math.Random().nextDouble() * 0xFFFFFF).toInt())
                             .withOpacity(0.1);
-                        return TaskCard(
-                          key: UniqueKey(),
-                          task: _tasks[index],
-                          color: color,
-                          deleteTask: () {},
-                          updateTask: ((task) {}),
-                        );
-                      },
-                      separatorBuilder: (context, index) {
-                        return Container(
-                          margin: const EdgeInsets.symmetric(vertical: 8),
-                          height: 0.5,
-                          width: double.infinity,
-                          color: Colors.black.withOpacity(0.5),
-                        );
-                      },
-                      itemCount: _tasks.length,
-                    )),
-        ));
+                    return TaskCard(
+                      key: UniqueKey(),
+                      task: _tasks[index],
+                      color: color,
+                      deleteTask: () {},
+                      updateTask: ((task) {}),
+                    );
+                  },
+                  separatorBuilder: (context, index) {
+                    return Container(
+                      margin: const EdgeInsets.symmetric(vertical: 8),
+                      height: 0.5,
+                      width: double.infinity,
+                      color: Colors.black.withOpacity(0.5),
+                    );
+                  },
+                  itemCount: _tasks.length,
+                )),
+    );
   }
 }

@@ -1,5 +1,7 @@
 // ignore_for_file: public_member_api_docs, sort_constructors_first
+import 'dart:convert';
 import 'dart:math' as math;
+import 'package:hcm23_03/features/authentication/data/resource/sqlite_helper.dart';
 import 'package:hcm23_03/features/tasks/repositories/tasks_repo.dart';
 import 'package:http/http.dart' as http;
 
@@ -95,6 +97,7 @@ class _TodayRecordsPageState extends State<TodayTasksPage> {
   void initState() {
     super.initState();
     getTasksList();
+    // deleteTask();
 
     // getTasks(userId: widget.userId);
   }
@@ -117,6 +120,48 @@ class _TodayRecordsPageState extends State<TodayTasksPage> {
     }
     return null;
   }
+  
+  Future<http.Response?> deleteTask() async {
+    final uri = Uri.parse(
+        "https://hcm23-03-dev-default-rtdb.asia-southeast1.firebasedatabase.app/tasks/sdk53jUx82QqLdURqYw8R6mvhoe2/$taskUid.json");
+
+    final response = await http.delete(uri);
+
+    if (response.statusCode == 200) {
+      print('Task deleted successfully.');
+      // Remove the task from the list
+
+      return null;
+      // Update the UI
+    } else {
+      throw Exception('Failed to delete task: ${response.body}');
+      // print('Failed to delete task: ${response.body}');
+    }
+  }
+
+ 
+
+// Future<http.Response?> getTask(
+//       {String taskUid = "69196993-7832-4af4-947f-a445c30ef651"}) async {
+
+//     try {
+//       final respone = await http.delete(Uri.parse(
+//           "https://hcm23-03-dev-default-rtdb.asia-southeast1.firebasedatabase.app/tasks/sdk53jUx82QqLdURqYw8R6mvhoe2/1.json"));
+
+//       setState(() {
+//         isError = false;
+
+//       });
+//       return respone;
+//     } catch (e) {
+//       print(e);
+//       setState(() {
+//         isError = true;
+//       });
+//       return null;
+//     }
+
+//   }
 
   final List<Task> _tasks = [];
 
@@ -163,8 +208,19 @@ class _TodayRecordsPageState extends State<TodayTasksPage> {
                       key: UniqueKey(),
                       task: _tasks[index],
                       color: color,
-                      deleteTask: () {},
-                      updateTask: ((task) {}),
+                      deleteTask: () {
+                        // setState(() {
+                        //   deleteTask();
+                        // });
+                        deleteTask();
+                        setState(() {
+                           _tasks.removeAt(index);
+                        });
+                       
+                      },
+                      updateTask: ((task) {
+                        // updateTask();
+                      }),
                     );
                   },
                   separatorBuilder: (context, index) {

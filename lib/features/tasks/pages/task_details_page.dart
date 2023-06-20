@@ -3,6 +3,7 @@
 
 import 'dart:convert';
 import 'dart:math';
+import 'package:dio/dio.dart';
 import 'package:http/http.dart' as http;
 
 import 'package:intl/intl.dart';
@@ -55,7 +56,17 @@ class _TaskDetailsPageState extends State<TaskDetailsPage> {
     super.initState();
 
     getTask();
+    // deleteTask();
   }
+
+  // Future<http.Response?> getTask(
+  //     {String taskUid = "69196993-7832-4af4-947f-a445c30ef651"}) async {
+  //   final respone = await http.get(Uri.parse(
+  //       "https://hcm23-03-dev-default-rtdb.asia-southeast1.firebasedatabase.app/tasks/sdk53jUx82QqLdURqYw8R6mvhoe2/$taskUid.json"));
+  //   print("RESPONSE");
+  //   print("${respone.body}");
+  //   return respone;
+  // }
 
   bool isError = false;
   Future<http.Response?> getTask(
@@ -86,6 +97,52 @@ class _TaskDetailsPageState extends State<TaskDetailsPage> {
       return null;
     }
   }
+
+  // Future<http.Response?> updateTask() async {
+  //   final uri = Uri.parse(
+  //       "https://hcm23-03-dev-default-rtdb.asia-southeast1.firebasedatabase.app/tasks/sdk53jUx82QqLdURqYw8R6mvhoe2/69196993-7832-4af4-947f-a445c30ef651.json");
+
+  //   final response = await http.put(uri);
+  //   // ignore: unused_local_variable
+  //   Map<String, dynamic> req = {
+  //     'uid': "uid".toString(),
+  //     'userId': "userId".toString(),
+  //     'title': "title".toString(),
+  //     'description': "description".toString(),
+  //     'starttime': "starttime".toString(),
+  //   };
+
+  //   if (response.statusCode == 200) {
+  //     return json.decode(response.body);
+
+     
+  //   } else {
+  //     throw Exception('Failed to load ');
+  //     // print('Failed to delete task: ${response.body}');
+  //   }
+  // }
+  // Future<http.Response?> getTask(
+  //     {String taskUid = "69196993-7832-4af4-947f-a445c30ef651"}) async {
+  //   //Fetch data
+
+  //   final respone = await http.get(Uri.parse(
+  //       "https://hcm23-03-dev-default-rtdb.asia-southeast1.firebasedatabase.app/tasks/sdk53jUx82QqLdURqYw8R6mvhoe2/$taskUid.json"));
+  //   //Convert data => Map<String,dynamic>
+  //   final Map<String, dynamic> taskMap =
+  //       jsonDecode(respone.body) as Map<String, dynamic>;
+  //   //Convert data to Model
+  //   final Task taskObj = Task.fromMap(taskMap);
+  //   print(taskObj.toString());
+  //   return respone;
+
+  // print("RESPONSE");
+
+  // print("${respone.body}");
+  // return respone;
+
+  // Future<http.Response?> deleteTask({String taskUid = "69196993-7832-4af4-947f-a445c30ef651"})async{
+
+  // }
 
   @override
   Widget build(BuildContext context) {
@@ -287,7 +344,9 @@ class _TaskDetailsPageState extends State<TaskDetailsPage> {
                       Align(
                           alignment: Alignment.bottomCenter,
                           child: BtnDefault(
-                            onTap: () {},
+                            onTap: () {
+                              // updateTask();
+                            },
                             title: 'Edit task',
                           )),
                     ]),

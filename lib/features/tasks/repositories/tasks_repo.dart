@@ -60,6 +60,25 @@ class TaskRepo {
     required String taskId,
     required Task updatedTask,
   }) async {
+    try {
+      final response = await http.post(
+        Uri.parse('$baseUrl/$repository/$userId.json'),
+        body: jsonEncode(updatedTask.toMap()),
+      );
+
+      if (response.statusCode == 200) {
+        return true;
+      } else {
+        // Handle error response
+        print('Add new task failed');
+        print('Status code: ${response.statusCode}');
+        return false;
+      }
+    } catch (e) {
+      // Handle error
+      print(e);
+      return false;
+    }
     throw UnimplementedError();
   }
 
@@ -67,6 +86,23 @@ class TaskRepo {
     required String userId,
     required String taskId,
   }) async {
+    try {
+      final response = await http
+          .delete(Uri.parse('$baseUrl/$repository/$userId/$taskId.json'));
+
+      if (response.statusCode == 200) {
+        return true;
+      } else {
+        // Handle error response
+        print('Delete failed');
+        print('Status code: ${response.statusCode}');
+        return false;
+      }
+    } catch (e) {
+      // Handle error
+      print(e);
+      return false;
+    }
     throw UnimplementedError();
   }
 }

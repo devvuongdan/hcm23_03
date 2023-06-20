@@ -38,7 +38,10 @@ class _TaskCardState extends State<TaskCard> {
   }
 
   void viewTask() {
-    Navigator.of(context).pushNamed("/TaskDetailsPage", arguments: widget.task);
+    Navigator.of(context).pushNamed("/TaskDetailsPage", arguments: {
+      'userId': widget.task.userId,
+      'taskId': widget.task.uid,
+    });
   }
 
   @override

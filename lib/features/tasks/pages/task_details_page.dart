@@ -37,6 +37,8 @@ class _TaskDetailsPageState extends State<TaskDetailsPage> {
   late TextEditingController descriptionController;
 
   Task? currentTask;
+  late String userId;
+  late String taskId;
 
   @override
   void dispose() {
@@ -51,24 +53,24 @@ class _TaskDetailsPageState extends State<TaskDetailsPage> {
     });
   }
 
-  Future<http.Response> getTaskAPI(
-      {String taskID = "69196993-7832-4af4-947f-a445c30ef651"}) async {
-    final url = Uri.parse(
-        'https://hcm23-03-dev-default-rtdb.asia-southeast1.firebasedatabase.app/tasks/sdk53jUx82QqLdURqYw8R6mvhoe2/$taskID.json');
-    final response = await http.get(url);
+  // Future<http.Response> getTaskAPI(
+  //     {String taskID = "69196993-7832-4af4-947f-a445c30ef651"}) async {
+  //   final url = Uri.parse(
+  //       'https://hcm23-03-dev-default-rtdb.asia-southeast1.firebasedatabase.app/tasks/sdk53jUx82QqLdURqYw8R6mvhoe2/$taskID.json');
+  //   final response = await http.get(url);
 
-    final Map<String, dynamic> taskMap =
-        jsonDecode(response.body) as Map<String, dynamic>;
+  //   final Map<String, dynamic> taskMap =
+  //       jsonDecode(response.body) as Map<String, dynamic>;
 
-    final Task taskObj = Task.fromMap(taskMap);
-    setState(() {
-      currentTask = taskObj;
-      titleController = TextEditingController(text: currentTask!.title);
-      descriptionController =
-          TextEditingController(text: currentTask!.description);
-    });
-    return response;
-  }
+  //   final Task taskObj = Task.fromMap(taskMap);
+  //   setState(() {
+  //     currentTask = taskObj;
+  //     titleController = TextEditingController(text: currentTask!.title);
+  //     descriptionController =
+  //         TextEditingController(text: currentTask!.description);
+  //   });
+  //   return response;
+  // }
 
   @override
   void initState() {
@@ -79,29 +81,34 @@ class _TaskDetailsPageState extends State<TaskDetailsPage> {
 
   bool isError = false;
 
-  Future<Task?> getTask(
-      {String taskUid = "69196993-7832-4af4-947f-a445c30ef651"}) async {
-    // Fetch Data
+  Future<Task?> getTask() async {
+    final Map<String, dynamic>? args =
+        ModalRoute.of(context)?.settings.arguments as Map<String, dynamic>?;
 
-    final Task? taskObj = await TaskRepo.getTask(
-      userId: "sdk53jUx82QqLdURqYw8R6mvhoe2",
-      taskUid: taskUid,
-    );
+    if (args != null) {
+      userId = args['userId'];
+      taskId = args['taskId'];
+      final Task? taskObj = await TaskRepo.getTask(
+        userId: userId,
+        taskUid: taskId,
+      );
 
-    if (taskObj != null) {
-      setState(() {
-        isError = false;
-        currentTask = taskObj;
-        titleController = TextEditingController(text: currentTask!.title);
-        descriptionController =
-            TextEditingController(text: currentTask!.description);
-      });
-    } else {
-      setState(() {
-        isError = true;
-      });
+      if (taskObj != null) {
+        setState(() {
+          isError = false;
+          currentTask = taskObj;
+          titleController = TextEditingController(text: currentTask!.title);
+          descriptionController =
+              TextEditingController(text: currentTask!.description);
+        });
+      } else {
+        setState(() {
+          isError = true;
+        });
+      }
+      return taskObj;
     }
-    return taskObj;
+    return null;
   }
 
   @override

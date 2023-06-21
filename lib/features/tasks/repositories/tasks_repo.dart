@@ -52,6 +52,25 @@ class TaskRepo {
     required String taskId,
     required Task updatedTask,
   }) async {
+    try {
+      final response = await http.put(
+        Uri.parse('$baseUrl/$repository/$userId/$taskId.json'),
+        body: jsonEncode(updatedTask.toMap()),
+      );
+
+      if (response.statusCode == 200) {
+        return true;
+      } else {
+        // Handle error response
+        print('Update task failed');
+        print('Status code: ${response.statusCode}');
+        return false;
+      }
+    } catch (e) {
+      // Handle error
+      print(e);
+      return false;
+    }
     throw UnimplementedError();
   }
 

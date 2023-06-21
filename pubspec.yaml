@@ -47,11 +47,7 @@ dependencies:
   date_time_picker: ^2.1.0
   shared_preferences: ^2.1.2
   flutter_easyloading: ^3.0.5
-<<<<<<< HEAD
-  http: ^0.13.6
-=======
   http: ^0.13.5
->>>>>>> dev-v1
 
 dev_dependencies:
   flutter_test:

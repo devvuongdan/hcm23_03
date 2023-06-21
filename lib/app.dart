@@ -100,10 +100,14 @@ class MyApp extends StatelessWidget {
             );
           }
           if (setting.name == "/TaskDetailsPage") {
-            final Task task = setting.arguments as Task;
+            // final Task task = setting.arguments as Task;
+            final TaskDetailsArg arg = setting.arguments as TaskDetailsArg;
             return MaterialPageRoute(
               settings: const RouteSettings(name: "/TaskDetailsPage"),
-              builder: (_) => TaskDetailsPage(task: task),
+              builder: (_) => TaskDetailsPage(
+                // task: task,
+                arg: arg,
+              ),
             );
           }
 

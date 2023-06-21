@@ -3,6 +3,7 @@
 
 import 'dart:convert';
 import 'dart:math';
+import 'package:hcm23_03/features/tasks/repositories/tasks_repo.dart';
 import 'package:http/http.dart' as http;
 
 import 'package:intl/intl.dart';
@@ -21,10 +22,24 @@ String formatDueTime(String duetime) {
   return formattedDueTime;
 }
 
-class TaskDetailsPage extends StatefulWidget {
-  final Task task;
+class TaskDetailsArg {
+  final String userId;
+  final String taskUid;
+  TaskDetailsArg({
+    required this.userId,
+    required this.taskUid,
+  });
+}
 
-  const TaskDetailsPage({Key? key, required this.task}) : super(key: key);
+class TaskDetailsPage extends StatefulWidget {
+  static String routeName = "/TaskDetailsPage";
+  // final Task task;
+  final TaskDetailsArg arg;
+  const TaskDetailsPage({
+    Key? key,
+    // required this.task,
+    required this.arg,
+  }) : super(key: key);
 
   @override
   _TaskDetailsPageState createState() => _TaskDetailsPageState();
@@ -36,11 +51,10 @@ class _TaskDetailsPageState extends State<TaskDetailsPage> {
   late TextEditingController descriptionController;
 
   Task? currentTask;
-
   @override
   void dispose() {
-    titleController.dispose();
-    descriptionController.dispose();
+    // titleController.dispose();
+    // descriptionController.dispose();
     super.dispose();
   }
 
@@ -58,33 +72,48 @@ class _TaskDetailsPageState extends State<TaskDetailsPage> {
   }
 
   bool isError = false;
-  Future<http.Response?> getTask(
-      {String taskUid = "69196993-7832-4af4-947f-a445c30ef651"}) async {
-    // Fetch Data
-    try {
-      final respone = await http.get(Uri.parse(
-          "https://hcm23-03-dev-default-rtdb.asia-southeast1.firebasedatabase.app/tasks/sdk53jUx82QqLdURqYw8R6mvhoe2/$taskUid.json"));
-      // Convert data => Map<String, dynamic>
-      final Map<String, dynamic> taskMap =
-          jsonDecode(respone.body) as Map<String, dynamic>;
-
-      // Convert data to Model
-      final Task taskObj = Task.fromMap(taskMap);
+  Future<http.Response?> getTask() async {
+    final task = await TaskRepo.getTask(
+        userId: widget.arg.userId, taskUid: widget.arg.taskUid);
+    if (task != null) {
       setState(() {
-        isError = false;
-        currentTask = taskObj;
-        titleController = TextEditingController(text: currentTask!.title);
+        currentTask = task;
+        titleController = TextEditingController(text: currentTask?.title);
         descriptionController =
-            TextEditingController(text: currentTask!.description);
+            TextEditingController(text: currentTask?.description);
+        isError = false;
       });
-      return respone;
-    } catch (e) {
-      print(e);
+    } else {
       setState(() {
         isError = true;
       });
-      return null;
     }
+    return null;
+    // Fetch Data
+    // try {
+    //   final respone = await http.get(Uri.parse(
+    //       "https://hcm23-03-dev-default-rtdb.asia-southeast1.firebasedatabase.app/tasks/sdk53jUx82QqLdURqYw8R6mvhoe2/$taskUid.json"));
+    //   // Convert data => Map<String, dynamic>
+    //   final Map<String, dynamic> taskMap =
+    //       jsonDecode(respone.body) as Map<String, dynamic>;
+
+    //   // Convert data to Model
+    //   final Task taskObj = Task.fromMap(taskMap);
+    //   setState(() {
+    //     isError = false;
+    //     currentTask = taskObj;
+    //     titleController = TextEditingController(text: currentTask!.title);
+    //     descriptionController =
+    //         TextEditingController(text: currentTask!.description);
+    //   });
+    //   return respone;
+    // } catch (e) {
+    //   print(e);
+    //   setState(() {
+    //     isError = true;
+    //   });
+    //   return null;
+    // }
   }
 
   @override

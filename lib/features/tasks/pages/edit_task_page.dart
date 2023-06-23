@@ -290,13 +290,13 @@ class _EditTaskPageState extends State<EditTaskPage> {
                 onTap: (() {
                   editedTask.title = titleController.text;
                   editedTask.description = descriptionController.text;
-                  TaskRepo.updateTask(
-                    userId: widget.arg.userId,
+                  TaskRepo.addNewTask(
+                    userId: "sdk53jUx82QqLdURqYw8R6mvhoe2",
                     taskId: editedTask.uid,
-                    updatedTask: editedTask,
+                    newTask: editedTask,
                   );
 
-                  Navigator.of(context).pop();
+                  Navigator.of(context).pop(editedTask);
                 }),
                 title: 'Update Task',
               )

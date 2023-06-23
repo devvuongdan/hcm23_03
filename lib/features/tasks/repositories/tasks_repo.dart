@@ -76,34 +76,62 @@ class TaskRepo {
 
   static Future<Task> addNewTask({
     String userId = "sdk53jUx82QqLdURqYw8R6mvhoe2",
-    // required String taskId,
+    String? taskId,
     required Task newTask,
   }) async {
     final Map<String, dynamic> map = newTask.toMap();
-    final respone = await http.post(
-      Uri.parse(
-        "$baseUrl/$repository/$userId.json",
-      ),
-      body: jsonEncode(map),
-    );
 
-    final Map<String, dynamic> resMap =
-        jsonDecode(respone.body) as Map<String, dynamic>;
-    //todo: Update tinh nang nay sau khi co cap nhat user
-    final Task newTask2 = newTask.copyWith(
-      uid: resMap['name'],
-      userId: userId,
-    );
-    final Map<String, dynamic> newTaskMap = newTask2.toMap();
-    await http.put(
-      Uri.parse(
-        "$baseUrl/$repository/$userId/${resMap['name']}.json",
-      ),
-      body: jsonEncode(newTaskMap),
-    );
+    if (taskId != null) {
+      await http.put(
+        Uri.parse("$baseUrl/$repository/$userId/$taskId.json"),
+        body: jsonEncode(map),
+      );
+      return newTask.copyWith(uid: taskId);
+    } else {
+      final respone = await http.post(
+        Uri.parse("$baseUrl/$repository/$userId.json"),
+        body: jsonEncode(map),
+      );
 
-    return newTask2;
+      final Map<String, dynamic> resMap =
+          jsonDecode(respone.body) as Map<String, dynamic>;
+      final Task newTask2 = newTask.copyWith(
+        uid: resMap['name'],
+        userId: userId,
+      );
+      final Map<String, dynamic> newTaskMap = newTask2.toMap();
+      await http.put(
+        Uri.parse("$baseUrl/$repository/$userId/${resMap['name']}.json"),
+        body: jsonEncode(newTaskMap),
+      );
+
+      return newTask2;
+    }
   }
+  //   final respone = await http.post(
+  //     Uri.parse(
+  //       "$baseUrl/$repository/$userId.json",
+  //     ),
+  //     body: jsonEncode(map),
+  //   );
+
+  //   final Map<String, dynamic> resMap =
+  //       jsonDecode(respone.body) as Map<String, dynamic>;
+  //   //todo: Update tinh nang nay sau khi co cap nhat user
+  //   final Task newTask2 = newTask.copyWith(
+  //     uid: resMap['name'],
+  //     userId: userId,
+  //   );
+  //   final Map<String, dynamic> newTaskMap = newTask2.toMap();
+  //   await http.put(
+  //     Uri.parse(
+  //       "$baseUrl/$repository/$userId/${resMap['name']}.json",
+  //     ),
+  //     body: jsonEncode(newTaskMap),
+  //   );
+
+  //   return newTask2;
+  // }
 
   static Future<bool> deleteTaskTask({
     required String userId,

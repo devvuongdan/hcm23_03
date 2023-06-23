@@ -16,6 +16,7 @@ import 'package:flutter/material.dart';
 
 import '../repositories/tasks_repo.dart';
 import '../widgets/task_stage_view.dart';
+import 'edit_task_page.dart';
 
 String formatDueTime(String duetime) {
   DateTime dueDateTime = DateTime.parse(duetime);
@@ -336,7 +337,27 @@ class _TaskDetailsPageState extends State<TaskDetailsPage> {
                       Align(
                           alignment: Alignment.bottomCenter,
                           child: BtnDefault(
-                            onTap: () {},
+                            onTap: () {
+                              if (currentTask != null) {
+                                final editedTask = Navigator.push(
+                                  context,
+                                  MaterialPageRoute(
+                                    builder: (context) => EditTaskPage(
+                                      arg: EditTaskPageArg(
+                                        task: currentTask!,
+                                        userId: 'sdk53jUx82QqLdURqYw8R6mvhoe2',
+                                      ),
+                                    ),
+                                  ),
+                                ).then((editedTask) {
+                                  if (editedTask != null) {
+                                    setState(() {
+                                      currentTask = editedTask as Task;
+                                    });
+                                  }
+                                });
+                              }
+                            },
                             title: 'Edit task',
                           )),
                     ]),

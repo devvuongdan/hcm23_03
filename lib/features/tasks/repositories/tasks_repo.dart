@@ -51,7 +51,18 @@ class TaskRepo {
     required String taskId,
     required Task updatedTask,
   }) async {
-    throw UnimplementedError();
+    final url = '$baseUrl/$repository/$userId/$taskId.json';
+
+    try {
+      await http.put(
+        Uri.parse(url),
+        body: jsonEncode(updatedTask.toMap()),
+      );
+      return true;
+    } catch (e) {
+      print('Error update task: $e');
+      return false;
+    }
   }
 
   static Future<bool> addNewTask({
@@ -66,6 +77,14 @@ class TaskRepo {
     required String userId,
     required String taskId,
   }) async {
-    throw UnimplementedError();
+    final url = '$baseUrl/$repository/$userId/$taskId.json';
+
+    try {
+      await http.delete(Uri.parse(url));
+      return true;
+    } catch (e) {
+      print('Error delete task: $e');
+      return false;
+    }
   }
 }

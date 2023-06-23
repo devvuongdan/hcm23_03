@@ -1,8 +1,9 @@
 // ignore_for_file: public_member_api_docs, sort_constructors_first
 // ignore_for_file: library_private_types_in_public_api
 
+import 'dart:convert';
 import 'dart:math';
-
+import 'package:http/http.dart' as http;
 import 'package:flutter/material.dart';
 
 import 'package:hcm23_03/features/tasks/entities/task_model.dart';
@@ -66,6 +67,24 @@ class _NewTaskPageState extends State<NewTaskPage> {
   @override
   void dispose() {
     super.dispose();
+  }
+  Future<http.Response?> createTask() async {
+   
+    final uri = Uri.parse(
+        "https://hcm23-03-dev-default-rtdb.asia-southeast1.firebasedatabase.app/tasks/sdk53jUx82QqLdURqYw8R6mvhoe2/$taskUid.json");
+
+    final response = await http.post(uri, body: jsonEncode(Task.dbTable));
+
+    if (response.statusCode == 200) {
+      print('Task created successfully.');
+      // Remove the task from the list
+
+      return null;
+      // Update the UI
+    } else {
+      throw Exception('Failed to created task: ${response.body}');
+      // print('Failed to delete task: ${response.body}');
+    }
   }
 
   // void createNewTask(BuildContext context) {
@@ -293,6 +312,7 @@ class _NewTaskPageState extends State<NewTaskPage> {
                 onTap: (() {
                   widget.arg.onAddNewTask.call(newTask);
                   Navigator.of(context).pop();
+                  createTask();
                 }),
                 title: 'Create Task',
               )

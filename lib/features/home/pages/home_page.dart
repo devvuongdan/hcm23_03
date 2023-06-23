@@ -7,7 +7,6 @@ import 'package:hcm23_03/shared/shared_ui/btn/btn_default/btn_default.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 import '../../login/pages/login_page.dart';
-import '../../tasks/entities/task_model.dart';
 import '../../tasks/pages/today_tasks_page.dart';
 import '../widgets/bubble_bottom_bar.dart';
 
@@ -27,9 +26,6 @@ class _HomePageState extends State<HomePage> {
   int? currentIndex = 0;
   final PageController pageController = PageController(initialPage: 1);
   void changePage(int? idx) {}
-
-  void viewTask() {}
-  late final List<Task> _tasks = [];
 
   @override
   void initState() {

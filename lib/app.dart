@@ -10,7 +10,6 @@ import 'features/tasks/pages/new_task_page.dart';
 import 'features/tasks/pages/task_details_page.dart';
 import 'features/change_password/pages/change_password_page.dart';
 import 'package:flutter_easyloading/flutter_easyloading.dart';
-import 'features/tasks/entities/task_model.dart';
 
 class MyApp extends StatelessWidget {
   const MyApp({super.key});
@@ -99,10 +98,14 @@ class MyApp extends StatelessWidget {
             );
           }
           if (setting.name == "/TaskDetailsPage") {
-            final Task task = setting.arguments as Task;
+            // final Task task = setting.arguments as Task;
+            final TaskDetailsArg arg = setting.arguments as TaskDetailsArg;
             return MaterialPageRoute(
               settings: const RouteSettings(name: "/TaskDetailsPage"),
-              builder: (_) => TaskDetailsPage(task: task),
+              builder: (_) => TaskDetailsPage(
+                // task: task,
+                arg: arg,
+              ),
             );
           }
 

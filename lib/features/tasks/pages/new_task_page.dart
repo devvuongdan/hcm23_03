@@ -6,7 +6,6 @@ import 'dart:math';
 import 'package:flutter/material.dart';
 
 import 'package:hcm23_03/features/tasks/entities/task_model.dart';
-import 'package:hcm23_03/features/tasks/pages/today_tasks_page.dart';
 import 'package:hcm23_03/features/tasks/widgets/task_stage_input.dart';
 import 'package:hcm23_03/shared/shared_ui/btn/btn_default/btn_default.dart';
 import 'package:uuid/uuid.dart';
@@ -43,6 +42,7 @@ class _NewTaskPageState extends State<NewTaskPage> {
   @override
   void initState() {
     super.initState();
+    final String taskUid = const Uuid().v4();
     newTask = Task(
       uid: taskUid,
       userId: widget.arg.userId,

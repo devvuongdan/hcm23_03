@@ -10,7 +10,7 @@ class TaskRepo {
   static const String repository = "tasks";
 
   static Future<Task?> getTask({
-    required String userId,
+    String userId = "sdk53jUx82QqLdURqYw8R6mvhoe2",
     required String taskUid,
   }) async {
     try {
@@ -19,6 +19,7 @@ class TaskRepo {
 
       final Map<String, dynamic> taskMap =
           jsonDecode(respone.body) as Map<String, dynamic>;
+
       final Task taskObj = Task.fromMap(taskMap);
       return taskObj;
     } catch (e) {
@@ -27,7 +28,7 @@ class TaskRepo {
   }
 
   static Future<List<Task>?> getTasksList({
-    required String userId,
+    String userId = "sdk53jUx82QqLdURqYw8R6mvhoe2",
   }) async {
     try {
       final respone =
@@ -41,7 +42,6 @@ class TaskRepo {
       final List<Task> taskList = tasksMap.map((e) => Task.fromMap(e)).toList();
       return taskList;
     } catch (e) {
-      print(e);
       return null;
     }
   }
@@ -74,31 +74,35 @@ class TaskRepo {
     throw UnimplementedError();
   }
 
-  static Future<bool> addNewTask({
-    required String userId,
-    required String taskId,
-    required Task updatedTask,
+  static Future<Task> addNewTask({
+    String userId = "sdk53jUx82QqLdURqYw8R6mvhoe2",
+    // required String taskId,
+    required Task newTask,
   }) async {
-    try {
-      final response = await http.post(
-        Uri.parse('$baseUrl/$repository/$userId.json'),
-        body: jsonEncode(updatedTask.toMap()),
-      );
+    final Map<String, dynamic> map = newTask.toMap();
+    final respone = await http.post(
+      Uri.parse(
+        "$baseUrl/$repository/$userId.json",
+      ),
+      body: jsonEncode(map),
+    );
 
-      if (response.statusCode == 200) {
-        return true;
-      } else {
-        // Handle error response
-        print('Add new task failed');
-        print('Status code: ${response.statusCode}');
-        return false;
-      }
-    } catch (e) {
-      // Handle error
-      print(e);
-      return false;
-    }
-    throw UnimplementedError();
+    final Map<String, dynamic> resMap =
+        jsonDecode(respone.body) as Map<String, dynamic>;
+    //todo: Update tinh nang nay sau khi co cap nhat user
+    final Task newTask2 = newTask.copyWith(
+      uid: resMap['name'],
+      userId: userId,
+    );
+    final Map<String, dynamic> newTaskMap = newTask2.toMap();
+    await http.put(
+      Uri.parse(
+        "$baseUrl/$repository/$userId/${resMap['name']}.json",
+      ),
+      body: jsonEncode(newTaskMap),
+    );
+
+    return newTask2;
   }
 
   static Future<bool> deleteTaskTask({

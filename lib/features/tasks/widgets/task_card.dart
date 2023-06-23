@@ -2,8 +2,8 @@
 import 'dart:async';
 
 import 'package:flutter/material.dart';
+import 'package:hcm23_03/features/tasks/pages/task_details_page.dart';
 import 'package:intl/intl.dart';
-
 import '../entities/task_model.dart';
 
 class TaskCard extends StatefulWidget {
@@ -38,10 +38,13 @@ class _TaskCardState extends State<TaskCard> {
   }
 
   void viewTask() {
-    Navigator.of(context).pushNamed("/TaskDetailsPage", arguments: {
-      'userId': widget.task.userId,
-      'taskId': widget.task.uid,
-    });
+    Navigator.of(context).pushNamed(
+      TaskDetailsPage.routeName,
+      arguments: TaskDetailsArg(
+        userId: widget.task.userId,
+        taskUid: widget.task.uid,
+      ),
+    );
   }
 
   @override

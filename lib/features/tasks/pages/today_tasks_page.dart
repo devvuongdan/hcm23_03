@@ -124,11 +124,14 @@ class _TodayRecordsPageState extends State<TodayTasksPage> {
         onAddNewTask: addNewTaskSuccess,
       ),
     );
-    getTasksList();
+    // getTasksList();
   }
 
   void addNewTaskSuccess(Task task) async {
-    await TaskRepo.addNewTask(newTask: task);
+    final Task newTask = await TaskRepo.addNewTask(newTask: task);
+    setState(() {
+      _tasks.add(newTask);
+    });
   }
 
   @override

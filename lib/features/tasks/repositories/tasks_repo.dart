@@ -54,7 +54,7 @@ class TaskRepo {
     throw UnimplementedError();
   }
 
-  static Future<String> addNewTask({
+  static Future<Task> addNewTask({
     String userId = "sdk53jUx82QqLdURqYw8R6mvhoe2",
     // required String taskId,
     required Task newTask,
@@ -82,7 +82,7 @@ class TaskRepo {
       body: jsonEncode(newTaskMap),
     );
 
-    return resMap['name'];
+    return newTask2;
   }
 
   static Future<bool> deleteTaskTask({

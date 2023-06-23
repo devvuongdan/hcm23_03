@@ -53,14 +53,36 @@ class Task extends DBModel {
       'description': description,
       'starttime': starttime,
       'duetime': duetime,
-      'teamMembers': teamMembers.map((x) => x.toMap()).toList(),
-      'stages': stages.map((x) => x.toMap()).toList(),
+      // 'teamMembers': teamMembers.map((x) => x.toMap()).toList(),
+      // 'stages': stages.map((x) => x.toMap()).toList(),
     };
   }
 
   @override
   String toString() {
     return 'Task(userId: $userId, title: $title, description: $description, starttime: $starttime, duetime: $duetime, teamMembers: $teamMembers, stages: $stages)';
+  }
+
+  Task copyWith({
+    String? uid,
+    String? userId,
+    String? title,
+    String? description,
+    String? starttime,
+    String? duetime,
+    List<TeamMember>? teamMembers,
+    List<TaskStage>? stages,
+  }) {
+    return Task(
+      uid: uid ?? this.uid,
+      userId: userId ?? this.userId,
+      title: title ?? this.title,
+      description: description ?? this.description,
+      starttime: starttime ?? this.starttime,
+      duetime: duetime ?? this.duetime,
+      teamMembers: teamMembers ?? this.teamMembers,
+      stages: stages ?? this.stages,
+    );
   }
 }
 

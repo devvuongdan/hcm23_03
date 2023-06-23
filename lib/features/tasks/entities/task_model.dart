@@ -25,12 +25,12 @@ class Task extends DBModel {
   @override
   factory Task.fromMap(Map<String, dynamic> map) {
     return Task(
-      uid: map['uid'] as String,
-      userId: map['userId'] as String,
-      title: map['title'] as String,
-      description: map['description'] as String,
-      starttime: map['starttime'] as String,
-      duetime: map['duetime'] as String,
+      uid: map['uid'].toString(),
+      userId: map['userId'].toString(),
+      title: map['title'].toString(),
+      description: map['description'].toString(),
+      starttime: map['starttime'].toString(),
+      duetime: map['duetime'].toString(),
       teamMembers: List<TeamMember>.from(
         (map['teamMembers'] as List? ?? []).map<TeamMember>(
           (x) => TeamMember.fromMap(x as Map<String, dynamic>),
@@ -53,9 +53,36 @@ class Task extends DBModel {
       'description': description,
       'starttime': starttime,
       'duetime': duetime,
-      'teamMembers': teamMembers.map((x) => x.toMap()).toList(),
-      'stages': stages.map((x) => x.toMap()).toList(),
+      // 'teamMembers': teamMembers.map((x) => x.toMap()).toList(),
+      // 'stages': stages.map((x) => x.toMap()).toList(),
     };
+  }
+
+  @override
+  String toString() {
+    return 'Task(userId: $userId, title: $title, description: $description, starttime: $starttime, duetime: $duetime, teamMembers: $teamMembers, stages: $stages)';
+  }
+
+  Task copyWith({
+    String? uid,
+    String? userId,
+    String? title,
+    String? description,
+    String? starttime,
+    String? duetime,
+    List<TeamMember>? teamMembers,
+    List<TaskStage>? stages,
+  }) {
+    return Task(
+      uid: uid ?? this.uid,
+      userId: userId ?? this.userId,
+      title: title ?? this.title,
+      description: description ?? this.description,
+      starttime: starttime ?? this.starttime,
+      duetime: duetime ?? this.duetime,
+      teamMembers: teamMembers ?? this.teamMembers,
+      stages: stages ?? this.stages,
+    );
   }
 }
 
@@ -84,10 +111,10 @@ class TaskStage extends DBModel {
 
   factory TaskStage.fromMap(Map<String, dynamic> map) {
     return TaskStage(
-      uid: map['uid'] as String,
-      taskUid: map['taskUid'] as String,
+      uid: map['uid'].toString(),
+      taskUid: map['taskUid'].toString(),
       isDone: map['isDone'] == "true",
-      stageName: map['stageName'] as String,
+      stageName: map['stageName'].toString(),
     );
   }
 }
@@ -126,7 +153,7 @@ class TeamMember extends DBModel {
     return TeamMember(
       taskUid: map['taskUid'],
       uid: map['uid'],
-      avatarUrl: map['avatarUrl'] as String,
+      avatarUrl: map['avatarUrl'].toString(),
     );
   }
 }

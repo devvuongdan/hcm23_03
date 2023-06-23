@@ -9,7 +9,7 @@ class TaskRepo {
       "https://hcm23-03-dev-default-rtdb.asia-southeast1.firebasedatabase.app";
   static const String repository = "tasks";
   static Future<Task?> getTask({
-    required String userId,
+    String userId = "sdk53jUx82QqLdURqYw8R6mvhoe2",
     required String taskUid,
   }) async {
     try {
@@ -18,6 +18,7 @@ class TaskRepo {
 
       final Map<String, dynamic> taskMap =
           jsonDecode(respone.body) as Map<String, dynamic>;
+
       final Task taskObj = Task.fromMap(taskMap);
       return taskObj;
     } catch (e) {
@@ -26,7 +27,7 @@ class TaskRepo {
   }
 
   static Future<List<Task>?> getTasksList({
-    required String userId,
+    String userId = "sdk53jUx82QqLdURqYw8R6mvhoe2",
   }) async {
     try {
       final respone =
@@ -40,7 +41,6 @@ class TaskRepo {
       final List<Task> taskList = tasksMap.map((e) => Task.fromMap(e)).toList();
       return taskList;
     } catch (e) {
-      print(e);
       return null;
     }
   }
@@ -54,12 +54,35 @@ class TaskRepo {
     throw UnimplementedError();
   }
 
-  static Future<bool> addNewTask({
-    required String userId,
-    required String taskId,
-    required Task updatedTask,
+  static Future<String> addNewTask({
+    String userId = "sdk53jUx82QqLdURqYw8R6mvhoe2",
+    // required String taskId,
+    required Task newTask,
   }) async {
-    throw UnimplementedError();
+    final Map<String, dynamic> map = newTask.toMap();
+    final respone = await http.post(
+      Uri.parse(
+        "$baseUrl/$repository/$userId.json",
+      ),
+      body: jsonEncode(map),
+    );
+
+    final Map<String, dynamic> resMap =
+        jsonDecode(respone.body) as Map<String, dynamic>;
+    //todo: Update tinh nang nay sau khi co cap nhat user
+    final Task newTask2 = newTask.copyWith(
+      uid: resMap['name'],
+      userId: userId,
+    );
+    final Map<String, dynamic> newTaskMap = newTask2.toMap();
+    await http.put(
+      Uri.parse(
+        "$baseUrl/$repository/$userId/${resMap['name']}.json",
+      ),
+      body: jsonEncode(newTaskMap),
+    );
+
+    return resMap['name'];
   }
 
   static Future<bool> deleteTaskTask({

@@ -3,6 +3,7 @@
 
 import 'dart:convert';
 import 'dart:math';
+import 'package:hcm23_03/features/tasks/pages/today_tasks_page.dart';
 import 'package:hcm23_03/features/tasks/repositories/tasks_repo.dart';
 import 'package:http/http.dart' as http;
 
@@ -73,8 +74,7 @@ class _TaskDetailsPageState extends State<TaskDetailsPage> {
 
   bool isError = false;
   Future<http.Response?> getTask() async {
-    final task = await TaskRepo.getTask(
-        userId: widget.arg.userId, taskUid: widget.arg.taskUid);
+    final task = await TaskRepo.getTask(taskUid: widget.arg.taskUid);
     if (task != null) {
       setState(() {
         currentTask = task;

@@ -1,12 +1,10 @@
 // ignore_for_file: public_member_api_docs, sort_constructors_first
 import 'dart:async';
 
-import 'package:dio/dio.dart';
 import 'package:flutter/material.dart';
 import 'package:hcm23_03/features/tasks/pages/task_details_page.dart';
 import 'package:intl/intl.dart';
 import '../entities/task_model.dart';
-import '../repositories/tasks_repo.dart';
 
 class TaskCard extends StatefulWidget {
   final Task task;
@@ -44,7 +42,7 @@ class _TaskCardState extends State<TaskCard> {
       TaskDetailsPage.routeName,
       arguments: TaskDetailsArg(
         userId: widget.task.userId,
-        taskUid: widget.task.stages[0].taskUid,
+        taskUid: widget.task.uid,
       ),
     );
   }

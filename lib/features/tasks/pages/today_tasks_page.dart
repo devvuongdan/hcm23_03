@@ -6,7 +6,6 @@ import 'package:http/http.dart' as http;
 import 'package:flutter/material.dart';
 import 'package:hcm23_03/features/tasks/entities/task_model.dart';
 import 'package:hcm23_03/features/tasks/pages/new_task_page.dart';
-import 'package:uuid/uuid.dart';
 
 import 'package:hcm23_03/features/tasks/widgets/task_card.dart';
 
@@ -22,8 +21,6 @@ class TodayTasksPage extends StatefulWidget {
   @override
   State<TodayTasksPage> createState() => _TodayRecordsPageState();
 }
-
-final String taskUid = const Uuid().v4();
 
 class _TodayRecordsPageState extends State<TodayTasksPage> {
   // Future<void> queryTask({required String userId}) async {
@@ -102,8 +99,7 @@ class _TodayRecordsPageState extends State<TodayTasksPage> {
   bool isError = false;
 
   Future<http.Response?> getTasksList() async {
-    final List<Task>? tasks =
-        await TaskRepo.getTasksList(userId: "sdk53jUx82QqLdURqYw8R6mvhoe2");
+    final List<Task>? tasks = await TaskRepo.getTasksList();
 
     if (tasks != null) {
       setState(() {
@@ -121,19 +117,18 @@ class _TodayRecordsPageState extends State<TodayTasksPage> {
   final List<Task> _tasks = [];
 
   void createNewTask() async {
-    Navigator.of(context).pushNamed(
+    await Navigator.of(context).pushNamed(
       NewTaskPage.routeName,
       arguments: NewTaskPageArg(
         userId: widget.userId,
         onAddNewTask: addNewTaskSuccess,
       ),
     );
+    getTasksList();
   }
 
-  void addNewTaskSuccess(Task task) {
-    setState(() {
-      _tasks.add(task);
-    });
+  void addNewTaskSuccess(Task task) async {
+    await TaskRepo.addNewTask(newTask: task);
   }
 
   @override

@@ -54,20 +54,13 @@ class TaskRepo {
     final url = '$baseUrl/$repository/$userId/$taskId.json';
 
     try {
-      final response = await http.put(
+      await http.put(
         Uri.parse(url),
         body: jsonEncode(updatedTask.toMap()),
       );
-
-      if (response.statusCode == 200) {
-        return true;
-      } else {
-        print('Update failed');
-        print('Status code: ${response.statusCode}');
-        return false;
-      }
-    } catch (ex) {
-      print('Error updating task: $ex');
+      return true;
+    } catch (e) {
+      print('Error update task: $e');
       return false;
     }
   }

@@ -89,7 +89,7 @@ class _TodayRecordsPageState extends State<TodayTasksPage> {
       body: Container(
           padding: const EdgeInsets.all(16),
           width: double.infinity,
-          height: double.infinity,
+          height: 50,
           child: _tasks.isEmpty
               ? Center(
                   child: !isError

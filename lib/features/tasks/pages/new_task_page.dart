@@ -59,7 +59,9 @@ class _NewTaskPageState extends State<NewTaskPage> {
       });
     });
     descriptionController.addListener(() {
-      newTask.description = descriptionController.text;
+      setState(() {
+        newTask.description = descriptionController.text;
+      });
     });
   }
 
@@ -67,12 +69,6 @@ class _NewTaskPageState extends State<NewTaskPage> {
   void dispose() {
     super.dispose();
   }
-
-  // void createNewTask(BuildContext context) {
-  //   newTask.title = titleController.text;
-  //   newTask.description = descriptionController.text;
-  //   Navigator.pop(context, newTask);
-  // }
 
   @override
   Widget build(BuildContext context) {
@@ -252,6 +248,12 @@ class _NewTaskPageState extends State<NewTaskPage> {
                 children: [
                   for (var i = 0; i < newTask.stages.length; i++)
                     TaskStageInput(
+                      onChanged: (value) {
+                        newTask.stages
+                            .firstWhere((element) =>
+                                element.uid == newTask.stages[i].uid)
+                            .stageName = value ?? "";
+                      },
                       onRemove: () {
                         setState(() {
                           newTask.stages.removeWhere((element) =>
@@ -259,12 +261,12 @@ class _NewTaskPageState extends State<NewTaskPage> {
                         });
                       },
                       onChecked: (value) {
-                        setState(() {
-                          newTask.stages
-                              .firstWhere((element) =>
-                                  element.uid == newTask.stages[i].uid)
-                              .stageName = value;
-                        });
+                        // setState(() {
+                        //   newTask.stages
+                        //       .firstWhere((element) =>
+                        //           element.uid == newTask.stages[i].uid)
+                        //       .stageName = value;
+                        // });
                       },
                     ),
                   Align(

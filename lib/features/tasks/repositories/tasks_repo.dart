@@ -19,7 +19,7 @@ class TaskRepo {
       final Map<String, dynamic> taskMap =
           jsonDecode(respone.body) as Map<String, dynamic>;
 
-      final Task taskObj = Task.fromMap(taskMap);
+      final Task taskObj = Task.fromMapToFullDetails(taskMap);
       return taskObj;
     } catch (e) {
       return null;
@@ -38,7 +38,8 @@ class TaskRepo {
       final List<Map<String, dynamic>> tasksMap = originMap.values
           .map((e) => jsonDecode(jsonEncode(e)) as Map<String, dynamic>)
           .toList();
-      final List<Task> taskList = tasksMap.map((e) => Task.fromMap(e)).toList();
+      final List<Task> taskList =
+          tasksMap.map((e) => Task.fromMapToThumbnail(e)).toList();
       return taskList;
     } catch (e) {
       return null;
@@ -56,7 +57,6 @@ class TaskRepo {
 
   static Future<Task> addNewTask({
     String userId = "sdk53jUx82QqLdURqYw8R6mvhoe2",
-    // required String taskId,
     required Task newTask,
   }) async {
     final Map<String, dynamic> map = newTask.toMap();

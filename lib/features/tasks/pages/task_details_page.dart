@@ -89,31 +89,6 @@ class _TaskDetailsPageState extends State<TaskDetailsPage> {
       });
     }
     return null;
-    // Fetch Data
-    // try {
-    //   final respone = await http.get(Uri.parse(
-    //       "https://hcm23-03-dev-default-rtdb.asia-southeast1.firebasedatabase.app/tasks/sdk53jUx82QqLdURqYw8R6mvhoe2/$taskUid.json"));
-    //   // Convert data => Map<String, dynamic>
-    //   final Map<String, dynamic> taskMap =
-    //       jsonDecode(respone.body) as Map<String, dynamic>;
-
-    //   // Convert data to Model
-    //   final Task taskObj = Task.fromMap(taskMap);
-    //   setState(() {
-    //     isError = false;
-    //     currentTask = taskObj;
-    //     titleController = TextEditingController(text: currentTask!.title);
-    //     descriptionController =
-    //         TextEditingController(text: currentTask!.description);
-    //   });
-    //   return respone;
-    // } catch (e) {
-    //   print(e);
-    //   setState(() {
-    //     isError = true;
-    //   });
-    //   return null;
-    // }
   }
 
   @override

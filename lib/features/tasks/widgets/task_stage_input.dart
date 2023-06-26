@@ -5,13 +5,16 @@ import '../../../shared/shared_ui/btn/btn_default/btn_default.dart';
 import '../../../shared/shared_ui/inputs/input_normal/input_normal.dart';
 
 class TaskStageInput extends StatefulWidget {
+  final String stageName;
   final void Function() onRemove;
   final void Function(String) onChecked;
-  // final void Function(String?) onChanged;
+  final void Function(String?) onChanged;
   const TaskStageInput({
     Key? key,
+    required this.stageName,
     required this.onRemove,
     required this.onChecked,
+    required this.onChanged,
   }) : super(key: key);
 
   @override
@@ -19,8 +22,15 @@ class TaskStageInput extends StatefulWidget {
 }
 
 class _TaskStageInputState extends State<TaskStageInput> {
+  @override
+  void initState() {
+    super.initState();
+    controller.text = widget.stageName;
+    enableEdit = controller.text.isEmpty;
+  }
+
   final TextEditingController controller = TextEditingController();
-  bool enableEdit = true;
+  late bool enableEdit;
 
   @override
   Widget build(BuildContext context) {
@@ -38,7 +48,7 @@ class _TaskStageInputState extends State<TaskStageInput> {
               color: Color(0XFF111322),
               fontSize: 14,
             ),
-            // onChanged: widget.onChanged,
+            onChanged: widget.onChanged,
             decoration: const InputDecoration(contentPadding: EdgeInsets.zero),
           ),
         ),

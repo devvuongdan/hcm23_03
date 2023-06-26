@@ -3,6 +3,7 @@
 
 import 'dart:convert';
 import 'dart:math';
+import 'package:hcm23_03/features/tasks/pages/edit_task_page.dart';
 import 'package:hcm23_03/features/tasks/pages/today_tasks_page.dart';
 import 'package:hcm23_03/features/tasks/repositories/tasks_repo.dart';
 import 'package:http/http.dart' as http;
@@ -34,11 +35,10 @@ class TaskDetailsArg {
 
 class TaskDetailsPage extends StatefulWidget {
   static String routeName = "/TaskDetailsPage";
-  // final Task task;
+
   final TaskDetailsArg arg;
   const TaskDetailsPage({
     Key? key,
-    // required this.task,
     required this.arg,
   }) : super(key: key);
 
@@ -47,34 +47,30 @@ class TaskDetailsPage extends StatefulWidget {
 }
 
 class _TaskDetailsPageState extends State<TaskDetailsPage> {
-  bool isEditing = false;
   late TextEditingController titleController;
   late TextEditingController descriptionController;
 
   Task? currentTask;
   @override
   void dispose() {
-    // titleController.dispose();
-    // descriptionController.dispose();
     super.dispose();
-  }
-
-  void toggleEditMode() {
-    setState(() {
-      isEditing = !isEditing;
-    });
   }
 
   @override
   void initState() {
     super.initState();
 
-    getTask();
+    getTaskDetails();
   }
 
   bool isError = false;
-  Future<http.Response?> getTask() async {
+  Future<Task?> getTask() async {
     final task = await TaskRepo.getTask(taskUid: widget.arg.taskUid);
+    return task;
+  }
+
+  void getTaskDetails() async {
+    final task = await getTask();
     if (task != null) {
       setState(() {
         currentTask = task;
@@ -88,32 +84,16 @@ class _TaskDetailsPageState extends State<TaskDetailsPage> {
         isError = true;
       });
     }
-    return null;
-    // Fetch Data
-    // try {
-    //   final respone = await http.get(Uri.parse(
-    //       "https://hcm23-03-dev-default-rtdb.asia-southeast1.firebasedatabase.app/tasks/sdk53jUx82QqLdURqYw8R6mvhoe2/$taskUid.json"));
-    //   // Convert data => Map<String, dynamic>
-    //   final Map<String, dynamic> taskMap =
-    //       jsonDecode(respone.body) as Map<String, dynamic>;
+  }
 
-    //   // Convert data to Model
-    //   final Task taskObj = Task.fromMap(taskMap);
-    //   setState(() {
-    //     isError = false;
-    //     currentTask = taskObj;
-    //     titleController = TextEditingController(text: currentTask!.title);
-    //     descriptionController =
-    //         TextEditingController(text: currentTask!.description);
-    //   });
-    //   return respone;
-    // } catch (e) {
-    //   print(e);
-    //   setState(() {
-    //     isError = true;
-    //   });
-    //   return null;
-    // }
+  void reloadTask(Task task) async {
+    final bool result =
+        await TaskRepo.updateTask(taskId: task.uid, updatedTask: task);
+    if (result) {
+      setState(() {
+        currentTask = task;
+      });
+    }
   }
 
   @override
@@ -316,7 +296,24 @@ class _TaskDetailsPageState extends State<TaskDetailsPage> {
                       Align(
                           alignment: Alignment.bottomCenter,
                           child: BtnDefault(
-                            onTap: () {},
+                            onTap: () {
+                              if (currentTask != null) {
+                                Navigator.of(context).pushNamed(
+                                  EditTaskPage.routeName,
+                                  arguments: EditTaskPageArg(
+                                    userId: widget.arg.userId,
+                                    task: currentTask!,
+                                    onEditSuccess: ((p0) async {
+                                      // Navigator.of(context).popUntil(
+                                      //   ModalRoute.withName(
+                                      //       TaskDetailsPage.routeName),
+                                      // );
+                                      reloadTask(p0);
+                                    }),
+                                  ),
+                                );
+                              }
+                            },
                             title: 'Edit task',
                           )),
                     ]),

@@ -23,7 +23,20 @@ class Task extends DBModel {
   });
 
   @override
-  factory Task.fromMap(Map<String, dynamic> map) {
+  factory Task.fromMapToThumbnail(Map<String, dynamic> map) {
+    return Task(
+      uid: map['uid'].toString(),
+      userId: map['userId'].toString(),
+      title: map['title'].toString(),
+      description: map['description'].toString(),
+      starttime: map['starttime'].toString(),
+      duetime: map['duetime'].toString(),
+      teamMembers: [],
+      stages: [],
+    );
+  }
+
+  factory Task.fromMapToFullDetails(Map<String, dynamic> map) {
     return Task(
       uid: map['uid'].toString(),
       userId: map['userId'].toString(),
@@ -53,8 +66,8 @@ class Task extends DBModel {
       'description': description,
       'starttime': starttime,
       'duetime': duetime,
-      // 'teamMembers': teamMembers.map((x) => x.toMap()).toList(),
-      // 'stages': stages.map((x) => x.toMap()).toList(),
+      'teamMembers': teamMembers.map((x) => x.toMap()).toList(),
+      'stages': stages.map((x) => x.toMap()).toList(),
     };
   }
 
@@ -88,7 +101,7 @@ class Task extends DBModel {
 
 class TaskStage extends DBModel {
   static const dbTable = "TaskStage";
-  final bool isDone;
+  bool isDone;
   String stageName;
   final String taskUid;
 

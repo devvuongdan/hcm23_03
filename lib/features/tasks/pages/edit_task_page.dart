@@ -4,63 +4,58 @@
 import 'dart:math';
 
 import 'package:flutter/material.dart';
+import 'package:uuid/uuid.dart';
 
 import 'package:hcm23_03/features/tasks/entities/task_model.dart';
 import 'package:hcm23_03/features/tasks/widgets/task_stage_input.dart';
 import 'package:hcm23_03/shared/shared_ui/btn/btn_default/btn_default.dart';
-import 'package:uuid/uuid.dart';
 
 import 'task_details_page.dart';
 
-class NewTaskPageArg {
+class EditTaskPageArg {
   final String userId;
-  final void Function(Task) onAddNewTask;
-  NewTaskPageArg({
+  final Task task;
+  final void Function(Task) onEditSuccess;
+  EditTaskPageArg({
     required this.userId,
-    required this.onAddNewTask,
+    required this.task,
+    required this.onEditSuccess,
   });
 }
 
-class NewTaskPage extends StatefulWidget {
-  static const String routeName = "/NewTaskPage";
-  final NewTaskPageArg arg;
+class EditTaskPage extends StatefulWidget {
+  static const String routeName = "/EditTaskPage";
+  final EditTaskPageArg arg;
 
-  const NewTaskPage({
+  const EditTaskPage({
     Key? key,
     required this.arg,
   }) : super(key: key);
 
   @override
-  _NewTaskPageState createState() => _NewTaskPageState();
+  _EditTaskPageState createState() => _EditTaskPageState();
 }
 
-class _NewTaskPageState extends State<NewTaskPage> {
+class _EditTaskPageState extends State<EditTaskPage> {
   final TextEditingController titleController = TextEditingController();
   final TextEditingController descriptionController = TextEditingController();
 
-  late Task newTask;
+  late Task curentTask;
   @override
   void initState() {
     super.initState();
-    final String taskUid = const Uuid().v4();
-    newTask = Task(
-      uid: taskUid,
-      userId: widget.arg.userId,
-      title: "",
-      description: "",
-      starttime: DateTime.now().toString(),
-      duetime: DateTime.now().toString(),
-      teamMembers: [],
-      stages: [],
-    );
+    curentTask = widget.arg.task;
+    titleController.text = widget.arg.task.title;
+    descriptionController.text = widget.arg.task.description;
+
     titleController.addListener(() {
       setState(() {
-        newTask.title = titleController.text;
+        curentTask.title = titleController.text;
       });
     });
     descriptionController.addListener(() {
       setState(() {
-        newTask.description = descriptionController.text;
+        curentTask.description = descriptionController.text;
       });
     });
   }
@@ -74,7 +69,7 @@ class _NewTaskPageState extends State<NewTaskPage> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: const Text("New Task"),
+        title: const Text("Edit task"),
       ),
       body: SingleChildScrollView(
         child: Padding(
@@ -130,7 +125,7 @@ class _NewTaskPageState extends State<NewTaskPage> {
                       color: Colors.grey,
                     ),
                     const SizedBox(width: 8),
-                    Text(formatDueTime(newTask.duetime),
+                    Text(formatDueTime(curentTask.duetime),
                         style: const TextStyle(
                           fontSize: 14,
                           fontWeight: FontWeight.w500,
@@ -196,7 +191,7 @@ class _NewTaskPageState extends State<NewTaskPage> {
                       alignment: Alignment.centerLeft,
                       children: [
                         for (var i = 0;
-                            i < min(newTask.teamMembers.length, 3);
+                            i < min(curentTask.teamMembers.length, 3);
                             i++)
                           Positioned(
                             left: (i * 22),
@@ -212,7 +207,7 @@ class _NewTaskPageState extends State<NewTaskPage> {
                                   borderRadius: BorderRadius.circular(50),
                                 ),
                                 child: Image.asset(
-                                  newTask.teamMembers[i].avatarUrl,
+                                  curentTask.teamMembers[i].avatarUrl,
                                 ),
                               ),
                             ),
@@ -220,12 +215,12 @@ class _NewTaskPageState extends State<NewTaskPage> {
                       ],
                     ),
                   ),
-                  if (newTask.teamMembers.length > 3)
+                  if (curentTask.teamMembers.length > 3)
                     Flexible(
                       child: Padding(
                         padding: const EdgeInsets.only(bottom: 6),
                         child: Text(
-                          "+${newTask.teamMembers.length - 3}",
+                          "+${curentTask.teamMembers.length - 3}",
                           style: const TextStyle(
                             color: Colors.black,
                           ),
@@ -246,28 +241,28 @@ class _NewTaskPageState extends State<NewTaskPage> {
               ),
               Column(
                 children: [
-                  for (var i = 0; i < newTask.stages.length; i++)
+                  for (var i = 0; i < curentTask.stages.length; i++)
                     TaskStageInput(
-                      stageName: newTask.stages[i].stageName,
+                      stageName: curentTask.stages[i].stageName,
                       onChanged: (value) {
-                        newTask.stages
+                        curentTask.stages
                             .firstWhere((element) =>
-                                element.uid == newTask.stages[i].uid)
+                                element.uid == curentTask.stages[i].uid)
                             .stageName = value ?? "";
                       },
                       onRemove: () {
                         setState(() {
-                          newTask.stages.removeWhere((element) =>
-                              element.uid == newTask.stages[i].uid);
+                          curentTask.stages.removeWhere((element) =>
+                              element.uid == curentTask.stages[i].uid);
                         });
                       },
                       onChecked: (value) {
-                        // setState(() {
-                        //   newTask.stages
-                        //       .firstWhere((element) =>
-                        //           element.uid == newTask.stages[i].uid)
-                        //       .stageName = value;
-                        // });
+                        setState(() {
+                          curentTask.stages
+                              .firstWhere((element) =>
+                                  element.uid == curentTask.stages[i].uid)
+                              .isDone = true;
+                        });
                       },
                     ),
                   Align(
@@ -278,11 +273,12 @@ class _NewTaskPageState extends State<NewTaskPage> {
                       onTap: () {
                         setState(() {
                           final TaskStage newStage = TaskStage(
-                              taskUid: newTask.uid,
-                              isDone: false,
-                              stageName: "",
-                              uid: const Uuid().v4());
-                          newTask.stages.add(newStage);
+                            taskUid: curentTask.uid,
+                            isDone: false,
+                            stageName: "",
+                            uid: const Uuid().v4(),
+                          );
+                          curentTask.stages.add(newStage);
                         });
                       },
                     ),
@@ -294,10 +290,10 @@ class _NewTaskPageState extends State<NewTaskPage> {
               ),
               BtnDefault(
                 onTap: (() {
-                  widget.arg.onAddNewTask.call(newTask);
+                  widget.arg.onEditSuccess.call(curentTask);
                   Navigator.of(context).pop();
                 }),
-                title: 'Create Task',
+                title: 'Save changes',
               )
             ],
           ),

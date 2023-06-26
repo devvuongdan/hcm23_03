@@ -23,77 +23,10 @@ class TodayTasksPage extends StatefulWidget {
 }
 
 class _TodayRecordsPageState extends State<TodayTasksPage> {
-  // Future<void> queryTask({required String userId}) async {
-  // print("queryTask");
-  // final List<Map<String, dynamic>> tasks =
-  //     await Hcm23DBHelper.query(Task.dbTable);
-  // final List<Map<String, dynamic>> taskOfUser = tasks.where((element) {
-  //   return element['userId'] == widget.userId;
-  // }).toList();
-  // print(taskOfUser);
-  // final List<Task> taskModels =
-  //     taskOfUser.map((e) => Task.fromMap(e)).toList();
-  // for (int i = 0; i < taskOfUser.length; i++) {
-  //   final List<TaskStage> taskStage =
-  //       await queryStage(taskId: taskModels[i].uid);
-  //   taskModels[i].stages = taskStage;
-  //   final List<TeamMember> teammember =
-  //       await queryTeammember(taskId: taskModels[i].uid);
-  //   taskModels[i].teamMembers = teammember;
-  //   setState(() {
-  //     _tasks.add(taskModels[i]);
-  //   });
-  // }
-
-  // for (int i = 0; i < taskOfUser.length; i++) {
-  //   final List<TeamMember> teammember =
-  //       await queryTeammember(taskId: taskModels[i].uid);
-  //   taskModels[i].teamMembers = teammember;
-  //   setState(() {
-  //     _hcm23Task.add(taskModels[i]);
-  //   });
-  // }
-  // }
-
-  // Future<List<TaskStage>> queryStage({
-  //   required String taskId,
-  // }) async {
-  //   final List<Map<String, dynamic>> stages =
-  //       await Hcm23DBHelper.query(TaskStage.dbTable);
-  //   final List<Map<String, dynamic>> stageOfTask = stages.where((element) {
-  //     return element['taskUid'] == taskId;
-  //   }).toList();
-  //   final List<TaskStage> stageModels =
-  //       stageOfTask.map((e) => TaskStage.fromMap(e)).toList();
-
-  //   return stageModels;
-  // }
-
-  // Future<List<TeamMember>> queryTeammember({
-  //   required String taskId,
-  // }) async {
-  //   final List<Map<String, dynamic>> teammember =
-  //       await Hcm23DBHelper.query(TeamMember.dbTable);
-  //   final List<Map<String, dynamic>> listTeammember =
-  //       teammember.where((element) {
-  //     return element['taskUid'] == taskId;
-  //   }).toList();
-  //   final List<TeamMember> teammembers =
-  //       listTeammember.map((e) => TeamMember.fromMap(e)).toList();
-
-  //   return teammembers;
-  // }
-
-  // void getTasks({required String userId}) async {
-  // await queryTask(userId: userId);
-  // }
-
   @override
   void initState() {
     super.initState();
     getTasksList();
-
-    // getTasks(userId: widget.userId);
   }
 
   bool isError = false;
@@ -124,7 +57,6 @@ class _TodayRecordsPageState extends State<TodayTasksPage> {
         onAddNewTask: addNewTaskSuccess,
       ),
     );
-    // getTasksList();
   }
 
   void addNewTaskSuccess(Task task) async {
@@ -132,6 +64,18 @@ class _TodayRecordsPageState extends State<TodayTasksPage> {
     setState(() {
       _tasks.add(newTask);
     });
+  }
+
+  void deleteTask(String taskUid) async {
+    final bool result = await TaskRepo.deleteTask(taskId: taskUid);
+    if (result) {
+      setState(() {
+        final int index =
+            _tasks.indexWhere((element) => element.uid == taskUid);
+
+        _tasks.removeAt(index);
+      });
+    }
   }
 
   @override
@@ -161,7 +105,7 @@ class _TodayRecordsPageState extends State<TodayTasksPage> {
                       key: UniqueKey(),
                       task: _tasks[index],
                       color: color,
-                      deleteTask: () {},
+                      deleteTask: deleteTask,
                       updateTask: ((task) {}),
                     );
                   },

@@ -9,7 +9,7 @@ import '../entities/task_model.dart';
 class TaskCard extends StatefulWidget {
   final Task task;
   final Color color;
-  final void Function() deleteTask;
+  final void Function(String taskUid) deleteTask;
   final void Function(Task? task) updateTask;
   const TaskCard({
     Key? key,
@@ -30,9 +30,11 @@ class _TaskCardState extends State<TaskCard> {
     setState(() {
       isSelecting = true;
       Future.delayed(const Duration(seconds: 3), () {
-        setState(() {
-          isSelecting = false;
-        });
+        if (mounted) {
+          setState(() {
+            isSelecting = false;
+          });
+        }
       });
     });
   }
@@ -114,7 +116,7 @@ class _TaskCardState extends State<TaskCard> {
                 children: [
                   IconButton(
                     onPressed: () {
-                      widget.deleteTask.call();
+                      widget.deleteTask.call(widget.task.uid);
                     },
                     icon: const Icon(
                       Icons.delete,

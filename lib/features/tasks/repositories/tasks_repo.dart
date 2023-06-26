@@ -85,10 +85,15 @@ class TaskRepo {
     return newTask2;
   }
 
-  static Future<bool> deleteTaskTask({
-    required String userId,
+  static Future<bool> deleteTask({
+    String userId = "sdk53jUx82QqLdURqYw8R6mvhoe2",
     required String taskId,
   }) async {
-    throw UnimplementedError();
+    final respone = await http.delete(
+      Uri.parse(
+        "$baseUrl/$repository/$userId/$taskId.json",
+      ),
+    );
+    return respone.statusCode == 200;
   }
 }

@@ -66,6 +66,18 @@ class _TodayRecordsPageState extends State<TodayTasksPage> {
     });
   }
 
+  void deleteTask(String taskUid) async {
+    final bool result = await TaskRepo.deleteTask(taskId: taskUid);
+    if (result) {
+      setState(() {
+        final int index =
+            _tasks.indexWhere((element) => element.uid == taskUid);
+
+        _tasks.removeAt(index);
+      });
+    }
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -93,7 +105,7 @@ class _TodayRecordsPageState extends State<TodayTasksPage> {
                       key: UniqueKey(),
                       task: _tasks[index],
                       color: color,
-                      deleteTask: () {},
+                      deleteTask: deleteTask,
                       updateTask: ((task) {}),
                     );
                   },

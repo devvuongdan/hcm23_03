@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:hcm23_03/features/authentication/data/model/hcm23_user.dart';
+import 'package:hcm23_03/features/tasks/pages/edit_task_page.dart';
 import 'features/forgot_password/pages/forgot_password_page.dart';
 import 'features/home/pages/home_page.dart';
 import 'features/login/pages/login_page.dart';
@@ -65,6 +66,17 @@ class MyApp extends StatelessWidget {
               ),
             );
           }
+          if (setting.name == EditTaskPage.routeName) {
+            // final Task task = setting.arguments as Task;
+            final EditTaskPageArg arg = setting.arguments as EditTaskPageArg;
+
+            return MaterialPageRoute(
+              settings: const RouteSettings(name: EditTaskPage.routeName),
+              builder: (_) => EditTaskPage(
+                arg: arg,
+              ),
+            );
+          }
           if (setting.name == LoginPage.routeName) {
             return MaterialPageRoute(
               settings: const RouteSettings(name: LoginPage.routeName),
@@ -98,12 +110,10 @@ class MyApp extends StatelessWidget {
             );
           }
           if (setting.name == "/TaskDetailsPage") {
-            // final Task task = setting.arguments as Task;
             final TaskDetailsArg arg = setting.arguments as TaskDetailsArg;
             return MaterialPageRoute(
               settings: const RouteSettings(name: "/TaskDetailsPage"),
               builder: (_) => TaskDetailsPage(
-                // task: task,
                 arg: arg,
               ),
             );

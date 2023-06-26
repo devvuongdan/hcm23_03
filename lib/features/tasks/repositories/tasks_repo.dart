@@ -1,20 +1,21 @@
 import 'dart:convert';
 
 import 'package:http/http.dart' as http;
+import 'package:http/http.dart';
 
 import '../entities/task_model.dart';
 
 class TaskRepo {
   static const String baseUrl =
       "https://hcm23-03-dev-default-rtdb.asia-southeast1.firebasedatabase.app";
-  static const String repository = "tasks";
+  static const String category = "tasks";
   static Future<Task?> getTask({
     String userId = "sdk53jUx82QqLdURqYw8R6mvhoe2",
     required String taskUid,
   }) async {
     try {
-      final respone = await http
-          .get(Uri.parse("$baseUrl/$repository/$userId/$taskUid.json"));
+      final respone =
+          await http.get(Uri.parse("$baseUrl/$category/$userId/$taskUid.json"));
 
       final Map<String, dynamic> taskMap =
           jsonDecode(respone.body) as Map<String, dynamic>;
@@ -31,7 +32,7 @@ class TaskRepo {
   }) async {
     try {
       final respone =
-          await http.get(Uri.parse("$baseUrl/$repository/$userId.json"));
+          await http.get(Uri.parse("$baseUrl/$category/$userId.json"));
 
       final Map<String, dynamic> originMap =
           jsonDecode(respone.body) as Map<String, dynamic>;
@@ -48,11 +49,18 @@ class TaskRepo {
 
   // Bai tap ve nha
   static Future<bool> updateTask({
-    required String userId,
+    String userId = "sdk53jUx82QqLdURqYw8R6mvhoe2",
     required String taskId,
     required Task updatedTask,
   }) async {
-    throw UnimplementedError();
+    final Map<String, dynamic> updatedTaskMap = updatedTask.toMap();
+    final Response response = await http.put(
+      Uri.parse(
+        "$baseUrl/$category/$userId/${updatedTask.uid}.json",
+      ),
+      body: jsonEncode(updatedTaskMap),
+    );
+    return response.statusCode == 200;
   }
 
   static Future<Task> addNewTask({
@@ -62,7 +70,7 @@ class TaskRepo {
     final Map<String, dynamic> map = newTask.toMap();
     final respone = await http.post(
       Uri.parse(
-        "$baseUrl/$repository/$userId.json",
+        "$baseUrl/$category/$userId.json",
       ),
       body: jsonEncode(map),
     );
@@ -77,7 +85,7 @@ class TaskRepo {
     final Map<String, dynamic> newTaskMap = newTask2.toMap();
     await http.put(
       Uri.parse(
-        "$baseUrl/$repository/$userId/${resMap['name']}.json",
+        "$baseUrl/$category/$userId/${resMap['name']}.json",
       ),
       body: jsonEncode(newTaskMap),
     );
@@ -91,7 +99,7 @@ class TaskRepo {
   }) async {
     final respone = await http.delete(
       Uri.parse(
-        "$baseUrl/$repository/$userId/$taskId.json",
+        "$baseUrl/$category/$userId/$taskId.json",
       ),
     );
     return respone.statusCode == 200;

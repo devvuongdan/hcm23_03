@@ -13,6 +13,7 @@ import 'package:hcm23_03/features/tasks/pages/new_task_page.dart';
 import 'package:hcm23_03/features/tasks/widgets/task_card.dart';
 
 class TodayTasksPage extends StatefulWidget {
+  static const String routeName = "/TodayTasksPage";
   // final List<Task> tasks;
   final String userId;
 
